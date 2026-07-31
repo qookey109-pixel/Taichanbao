@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>台產報｜台灣品牌推薦與產地透明平台</title>
+  <meta name="description" content="找到值得支持的台灣品牌，看懂每項產品真正的產地與製造履歷。" />
+  <style>
+    :root {
+      --ink: #17322a;
+      --muted: #60756d;
+      --paper: #f6f3ea;
+      --card: #fffdf8;
+      --green: #176b52;
+      --green-2: #dcebe3;
+      --red: #bb3f35;
+      --gold: #d69a28;
+      --line: #d9ded7;
+      --shadow: 0 16px 38px rgba(31, 66, 54, .09);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 80% -5%, rgba(214,154,40,.13), transparent 28rem),
+        linear-gradient(180deg, #fbfaf5 0%, var(--paper) 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    .wrap { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 30;
+      backdrop-filter: blur(18px);
+      background: rgba(251,250,245,.86);
+      border-bottom: 1px solid rgba(23,50,42,.08);
+    }
+    .nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 900; letter-spacing: .08em; text-decoration: none; }
+    .mark {
+      width: 38px; aspect-ratio: 1; border-radius: 13px; display: grid; place-items: center;
+      color: white; background: var(--green); box-shadow: 0 7px 18px rgba(23,107,82,.25);
+    }
+    .navlinks { display: flex; gap: 24px; font-size: 14px; color: var(--muted); }
+    .navlinks a { text-decoration: none; }
+    .nav-cta { border: 0; color: white; background: var(--red); padding: 10px 16px; border-radius: 999px; font-weight: 800; }
+
+    .hero { padding: 78px 0 48px; }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 56px; align-items: center; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; color: var(--green); background: var(--green-2); border-radius: 999px; padding: 7px 12px; font-size: 13px; font-weight: 800; }
+    h1 { margin: 20px 0 18px; font-size: clamp(42px, 7vw, 78px); line-height: 1.02; letter-spacing: -.045em; }
+    h1 span { color: var(--red); }
+    .lead { max-width: 720px; margin: 0 0 28px; color: var(--muted); font-size: clamp(18px, 2.2vw, 23px); }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { border: 1px solid var(--line); background: white; padding: 13px 19px; border-radius: 14px; font-weight: 850; text-decoration: none; cursor: pointer; }
+    .btn.primary { background: var(--green); color: white; border-color: var(--green); }
+    .hero-card {
+      position: relative; overflow: hidden; min-height: 390px; padding: 28px;
+      border-radius: 34px; background: var(--ink); color: white; box-shadow: var(--shadow);
+    }
+    .hero-card::after {
+      content: "台"; position: absolute; right: -24px; bottom: -96px; font-size: 330px; line-height: 1; font-weight: 1000;
+      color: rgba(255,255,255,.045); transform: rotate(-8deg);
+    }
+    .card-kicker { color: #b8d6cb; font-size: 13px; font-weight: 800; }
+    .hero-card h2 { margin: 10px 0 24px; font-size: 31px; line-height: 1.25; }
+    .track { display: grid; gap: 10px; position: relative; z-index: 1; }
+    .track-row { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.08); }
+    .track-row strong { font-size: 14px; }
+    .track-row small { color: #c3d8d1; }
+    .dot { width: 10px; aspect-ratio: 1; border-radius: 50%; background: #70d2a9; box-shadow: 0 0 0 5px rgba(112,210,169,.14); }
+    .dot.warn { background: #f2bd59; box-shadow: 0 0 0 5px rgba(242,189,89,.14); }
+
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 14px auto 58px; }
+    .stat { padding: 22px; background: rgba(255,255,255,.72); border: 1px solid rgba(23,50,42,.08); border-radius: 18px; }
+    .stat b { display: block; font-size: 29px; }
+    .stat span { color: var(--muted); font-size: 14px; }
+
+    section { padding: 50px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+    .section-head h2 { margin: 0; font-size: clamp(29px, 4vw, 44px); line-height: 1.15; letter-spacing: -.025em; }
+    .section-head p { margin: 0; color: var(--muted); max-width: 520px; }
+
+    .searchbox { padding: 18px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+    .searchrow { display: grid; grid-template-columns: 1fr auto; gap: 12px; }
+    .searchrow input { width: 100%; border: 1px solid var(--line); border-radius: 13px; padding: 13px 15px; outline: none; background: white; }
+    .searchrow input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(23,107,82,.11); }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 13px; }
+    .chip { border: 1px solid var(--line); background: white; color: var(--muted); border-radius: 999px; padding: 8px 12px; cursor: pointer; }
+    .chip.active { background: var(--green); border-color: var(--green); color: white; }
+
+    .products { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 24px; }
+    .product { display: flex; flex-direction: column; min-height: 100%; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: 0 10px 24px rgba(31,66,54,.055); }
+    .product-top { min-height: 170px; padding: 21px; position: relative; background: linear-gradient(135deg, #eaf1e9, #f7ebd4); }
+    .product-icon { font-size: 61px; filter: drop-shadow(0 9px 9px rgba(23,50,42,.1)); }
+    .level { position: absolute; top: 16px; right: 16px; color: white; background: var(--green); border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 900; }
+    .level.c { background: var(--gold); color: #3f2d0a; }
+    .product-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+    .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge { font-size: 12px; font-weight: 750; background: #eef1ed; color: var(--muted); padding: 4px 8px; border-radius: 8px; }
+    .badge.brand-badge { color: var(--red); background: #f8e5e1; }
+    .product h3 { margin: 13px 0 2px; font-size: 22px; }
+    .maker { color: var(--muted); font-size: 14px; }
+    .product-desc { color: var(--muted); font-size: 14px; margin: 12px 0 16px; }
+    .meter { height: 8px; background: #e5e8e3; border-radius: 99px; overflow: hidden; }
+    .meter > span { height: 100%; display: block; background: var(--green); border-radius: inherit; }
+    .meter-label { display: flex; justify-content: space-between; margin-top: 7px; font-size: 12px; color: var(--muted); }
+    .product-foot { margin-top: auto; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eceee9; }
+    .recommend { color: var(--green); font-weight: 900; font-size: 14px; }
+    .detail { font-size: 13px; color: var(--muted); }
+    .empty { grid-column: 1/-1; text-align: center; color: var(--muted); padding: 46px; border: 1px dashed var(--line); border-radius: var(--radius); }
+
+    .principles { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .principle { background: var(--ink); color: white; padding: 25px; border-radius: 22px; }
+    .principle:nth-child(2) { background: var(--green); }
+    .principle:nth-child(3) { background: #845a24; }
+    .principle b { display: block; font-size: 18px; margin: 12px 0 8px; }
+    .principle p { margin: 0; opacity: .78; font-size: 14px; }
+    .num { display: grid; place-items: center; width: 37px; aspect-ratio: 1; border-radius: 12px; background: rgba(255,255,255,.14); font-weight: 900; }
+
+    .cta { margin: 54px auto 76px; padding: 38px; border-radius: 28px; color: white; background: linear-gradient(120deg, var(--red), #8c2e29); display: flex; align-items: center; justify-content: space-between; gap: 25px; }
+    .cta h2 { margin: 0 0 7px; font-size: 31px; }
+    .cta p { margin: 0; color: rgba(255,255,255,.8); }
+    .cta .btn { border-color: white; white-space: nowrap; }
+    footer { padding: 30px 0 48px; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 20px; }
+
+    @media (max-width: 900px) {
+      .hero-grid, .products, .principles { grid-template-columns: 1fr 1fr; }
+      .hero-grid > :first-child { grid-column: 1/-1; }
+      .hero-card { min-height: auto; }
+      .products .product:last-child { grid-column: 1/-1; }
+    }
+    @media (max-width: 650px) {
+      .wrap { width: min(100% - 24px, 1180px); }
+      .navlinks { display: none; }
+      .hero { padding-top: 48px; }
+      .hero-grid, .products, .principles, .stats { grid-template-columns: 1fr; gap: 12px; }
+      .products .product:last-child { grid-column: auto; }
+      .section-head, .cta, .footer-row { align-items: flex-start; flex-direction: column; }
+      .searchrow { grid-template-columns: 1fr; }
+      .hero-card { padding: 22px; }
+      .cta { padding: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top"><span class="mark">台</span><span>台產報</span></a>
+      <nav class="navlinks" aria-label="主要導覽">
+        <a href="#products">找產品</a>
+        <a href="#method">查證原則</a>
+        <a href="#about">關於台產報</a>
+      </nav>
+      <button class="nav-cta" onclick="document.querySelector('#products').scrollIntoView()">支持台灣品牌</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">🇹🇼 台灣品牌推薦 × 產地透明</span>
+          <h1>買台灣品牌，<br><span>也買得明白。</span></h1>
+          <p class="lead">找到值得支持的台灣品牌，看懂產品從研發、製造到包裝的台灣參與程度。推薦不模糊，產地不隱藏。</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#products">探索台灣品牌</a>
+            <a class="btn" href="#method">了解我們怎麼判定</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="台產履歷示範">
+          <div class="card-kicker">台產履歷・示範</div>
+          <h2>不只看品牌名稱，<br>更看每一個生產環節。</h2>
+          <div class="track">
+            <div class="track-row"><span class="dot"></span><strong>品牌與研發</strong><small>台灣</small></div>
+            <div class="track-row"><span class="dot warn"></span><strong>主要原料</strong><small>台灣＋進口</small></div>
+            <div class="track-row"><span class="dot"></span><strong>製造與組裝</strong><small>彰化</small></div>
+            <div class="track-row"><span class="dot"></span><strong>檢驗與包裝</strong><small>台中</small></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="wrap stats" aria-label="網站示範統計">
+      <div class="stat"><b id="brandCount">3</b><span>示範台灣品牌</span></div>
+      <div class="stat"><b id="productCount">6</b><span>示範產品履歷</span></div>
+      <div class="stat"><b>100%</b><span>產品逐項標示產地</span></div>
+    </div>
+
+    <section id="products">
+      <div class="wrap">
+        <div class="section-head">
+          <div><span class="eyebrow">產品探索</span><h2>先從值得認識的台灣品牌開始</h2></div>
+          <p>目前內容為網站介面示範資料，正式上線前，每項產品都必須附上公開來源與最後查證日期。</p>
+        </div>
+
+        <div class="searchbox">
+          <div class="searchrow">
+            <input id="searchInput" type="search" placeholder="搜尋產品、品牌或分類，例如：保溫瓶" aria-label="搜尋產品" />
+            <button class="btn primary" id="clearBtn">清除搜尋</button>
+          </div>
+          <div class="chips" id="chips" aria-label="產品篩選">
+            <button class="chip active" data-filter="all">全部</button>
+            <button class="chip" data-filter="made">台灣製造</button>
+            <button class="chip" data-filter="brand">台灣品牌</button>
+            <button class="chip" data-filter="food">食品</button>
+            <button class="chip" data-filter="home">生活用品</button>
+            <button class="chip" data-filter="clean">清潔用品</button>
+          </div>
+        </div>
+
+        <div class="products" id="productGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="method">
+      <div class="wrap">
+        <div class="section-head">
+          <div><span class="eyebrow">公開原則</span><h2>我們推薦，也誠實說明</h2></div>
+          <p>台灣品牌與台灣製造是兩件不同的事。台產報同時呈現品牌支持價值與實際生產資訊。</p>
+        </div>
+        <div class="principles">
+          <article class="principle"><span class="num">01</span><b>以單一產品為單位</b><p>同一品牌不同型號可能來自不同產地，不用品牌印象代替產品事實。</p></article>
+          <article class="principle"><span class="num">02</span><b>拆開每個製程環節</b><p>分別呈現研發、原料、加工、組裝、檢驗與包裝所在地。</p></article>
+          <article class="principle"><span class="num">03</span><b>保留來源與變更紀錄</b><p>標示查證時間；產地改變時保留歷史，不無聲覆蓋舊資料。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap cta">
+        <div><h2>讓更多好的台灣品牌被看見</h2><p>第一版將先從少量產品開始，建立可查證、可維護、可持續擴充的公開資料庫。</p></div>
+        <a class="btn" href="mailto:?subject=%E6%8E%A8%E8%96%A6%E5%8F%B0%E7%81%A3%E5%93%81%E7%89%8C%E7%B5%A6%E5%8F%B0%E7%94%A2%E5%A0%B1">推薦品牌</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row"><span>© 2026 台產報・V0.1 概念原型</span><span>示範資料不代表正式查證結果</span></div>
+  </footer>
+
+  <script>
+    const products = [
+      { name:'山線真空保溫瓶', brand:'島作工房', icon:'🫗', category:'生活用品', tags:['home','made','brand'], level:'B', levelText:'B 核心台灣製造', desc:'台灣設計與金屬加工，部分原料仍需進口。', participation:82, support:'值得優先支持', badges:['台灣品牌','台灣設計','台灣製造'] },
+      { name:'海風手工皂', brand:'南方日常', icon:'🧼', category:'清潔用品', tags:['clean','made','brand'], level:'A', levelText:'A 全流程台產', desc:'從配方研發、製作、熟成到包裝皆在台灣完成。', participation:96, support:'高度推薦', badges:['台灣品牌','在地原料','台灣製造'] },
+      { name:'日曬鳳梨果乾', brand:'田邊食研', icon:'🍍', category:'食品', tags:['food','made','brand'], level:'A', levelText:'A 全流程台產', desc:'台灣契作水果，在地加工與包裝的示範產品。', participation:100, support:'高度推薦', badges:['台灣農產','台灣加工','產地可追溯'] },
+      { name:'循環材質日用袋', brand:'島作工房', icon:'👜', category:'生活用品', tags:['home','brand'], level:'C', levelText:'C 台灣研發', desc:'台灣設計與品管，主要縫製製程位於海外。', participation:48, support:'支持品牌研發', badges:['台灣品牌','台灣設計','海外製造'] },
+      { name:'茶籽洗碗精', brand:'南方日常', icon:'🧴', category:'清潔用品', tags:['clean','made','brand'], level:'B', levelText:'B 核心台灣製造', desc:'台灣配方、生產與品管，部分原料來自海外。', participation:79, support:'值得優先支持', badges:['台灣品牌','台灣配方','台灣製造'] },
+      { name:'焙香烏龍茶包', brand:'田邊食研', icon:'🍵', category:'食品', tags:['food','made','brand'], level:'A', levelText:'A 全流程台產', desc:'台灣茶葉、台灣焙製及台灣包裝的示範品項。', participation:98, support:'高度推薦', badges:['台灣茶葉','台灣製造','在地包裝'] }
+    ];
+
+    let activeFilter = 'all';
+    const grid = document.querySelector('#productGrid');
+    const input = document.querySelector('#searchInput');
+
+    function render() {
+      const q = input.value.trim().toLowerCase();
+      const list = products.filter(p => {
+        const matchesFilter = activeFilter === 'all' || p.tags.includes(activeFilter);
+        const haystack = [p.name,p.brand,p.category,p.desc,...p.badges].join(' ').toLowerCase();
+        return matchesFilter && haystack.includes(q);
+      });
+      grid.innerHTML = list.length ? list.map(p => `
+        <article class="product">
+          <div class="product-top"><span class="product-icon">${p.icon}</span><span class="level ${p.level === 'C' ? 'c' : ''}">${p.levelText}</span></div>
+          <div class="product-body">
+            <div class="badges">${p.badges.map((b,i)=>`<span class="badge ${i===0?'brand-badge':''}">${b}</span>`).join('')}</div>
+            <h3>${p.name}</h3><div class="maker">${p.brand}・${p.category}</div>
+            <p class="product-desc">${p.desc}</p>
+            <div class="meter" aria-label="台灣參與程度 ${p.participation}%"><span style="width:${p.participation}%"></span></div>
+            <div class="meter-label"><span>台灣參與程度</span><b>${p.participation}%</b></div>
+            <div class="product-foot"><span class="recommend">${p.support}</span><span class="detail">示範履歷 →</span></div>
+          </div>
+        </article>`).join('') : '<div class="empty">目前沒有符合條件的示範產品。</div>';
+    }
+
+    document.querySelector('#chips').addEventListener('click', e => {
+      const btn = e.target.closest('.chip');
+      if (!btn) return;
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      render();
+    });
+    input.addEventListener('input', render);
+    document.querySelector('#clearBtn').addEventListener('click', () => { input.value=''; activeFilter='all'; document.querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('active',i===0)); render(); });
+    document.querySelector('#productCount').textContent = products.length;
+    document.querySelector('#brandCount').textContent = new Set(products.map(p=>p.brand)).size;
+    render();
+  </script>
+</body>
+</html>
