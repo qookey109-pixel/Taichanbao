@@ -1,0 +1,8 @@
+[
+  {"id":"demo-001","brand":"山嶼果作","name":"金鑽鳳梨果乾","category":"食品飲品","scene":"送禮","taiwan_brand":true,"verification_status":"demo_only","publication_status":"unpublished","origin_summary":"示範：台灣農產／台灣加工","score":92,"emoji":"🍍","tags":["台灣農產","台灣加工","產地可追溯"]},
+  {"id":"demo-002","brand":"日常製所","name":"植萃洗碗精","category":"清潔用品","scene":"居家","taiwan_brand":true,"verification_status":"demo_only","publication_status":"unpublished","origin_summary":"示範：配方與製造資訊待查證","score":84,"emoji":"🧼","tags":["生活清潔","資料待查證"]},
+  {"id":"demo-003","brand":"島嶼織品","name":"純棉擦拭巾","category":"生活用品","scene":"居家","taiwan_brand":true,"verification_status":"demo_only","publication_status":"unpublished","origin_summary":"示範：設計在台灣，原料與織造待查證","score":80,"emoji":"🧺","tags":["台灣設計","製程待查證"]},
+  {"id":"demo-004","brand":"暖日茶房","name":"高山烏龍茶包","category":"食品飲品","scene":"辦公","taiwan_brand":true,"verification_status":"demo_only","publication_status":"unpublished","origin_summary":"示範：茶葉來源與包裝待查證","score":88,"emoji":"🍵","tags":["茶飲","來源待查證"]},
+  {"id":"demo-005","brand":"木日生活","name":"桌上收納盒","category":"生活用品","scene":"辦公","taiwan_brand":true,"verification_status":"demo_only","publication_status":"unpublished","origin_summary":"示範：台灣設計，材料與加工待查證","score":77,"emoji":"🗃️","tags":["台灣設計","材料待查證"]},
+  {"id":"demo-006","brand":"海風點心","name":"鹽花米香","category":"食品飲品","scene":"送禮","taiwan_brand":true,"verification_status":"demo_only","publication_status":"unpublished","origin_summary":"示範：原料、加工與包裝待查證","score":86,"emoji":"🍘","tags":["伴手禮","資料待查證"]}
+]
