@@ -1,58 +1,83 @@
-# 台產報（Taichanbao）
+# 台產報（Taichanbao）V2.5 Recovery Baseline
 
-目前專案包含可直接開啟的 V0.3 示範首頁，以及可攜式 SQLite 本機資料庫。首頁中的產品資料仍是介面示範，**不是正式查證或發布資料**。
+台產報同時推動兩件事：推薦值得支持的台灣品牌，以及逐項揭露產品實際產地、製程與資料缺口。
 
-## 快速開啟
+## 線上位置
 
-- 首頁：直接以瀏覽器開啟 `index.html`。
-- 本機資料庫：`db/taiwan_industry_report.sqlite`。
-- 歷史版本與匯出紀錄：見 `versions_review/` 與 `docs/`。
+- Repository：`qookey109-pixel/Taichanbao`
+- Pages：`https://qookey109-pixel.github.io/Taichanbao/`
+- Default branch：`main`
+
+## 目前狀態
+
+- 網站版本：`V2.5 Recovery Baseline`
+- 正式發布：`0`
+- 展示資料：`6` 筆，全部為 `demo_only`、`unpublished`
+- 本機資料庫：`db/taiwan_industry_report.sqlite`
+- CSV／TSV／XLSX 匯入工具：`scripts/import_data.py`
+
+## 已恢復與整合
+
+- V1.2 雜誌型三欄與跑馬燈概念
+- V2.3 研究預覽／正式發布雙檢視
+- V2.3 Formal Publication Gate
+- V2.4 四種場景、收藏、五種排序與三種 intake 說明
+- 響應式桌機與手機介面
+- JSON 示範資料
+- SQLite 與既有資料匯入流程
+- 資料與網站驗證器
+- GitHub Actions 驗證流程
 
 ## 專案結構
 
 ```text
-index.html                         V0.3 示範首頁（目前可預覽版本）
-db/                                SQLite schema 與資料庫
+index.html                         V2.5 網站入口
+assets/styles.css                  網站樣式
+assets/app.js                      搜尋、篩選、收藏、Gate 與 Discovery
+data/products.demo.json            6 筆明確標示的示範資料
+db/                                SQLite schema 與可攜式資料庫
 incoming/                          待匯入 CSV／TSV／XLSX
-scripts/                           資料匯入工具
-docs/review/                       比對、建議更新與衝突報告
-docs/imports/chatgpt-export-2026-07-29/
-                                   Web GPT 匯出決策與來源紀錄
-versions_review/v0.1/              V0.1 原型保存
+scripts/import_data.py              既有資料匯入工具
+scripts/validate_data.py            示範資料驗證
+scripts/validate_site.py            網站結構驗證
+docs/review/                       本機與匯出比對報告
+docs/imports/                      ChatGPT 匯出歷史參考
+docs/handoffs/                     專案接續文件
+versions_review/                   歷史原型保存
 ```
 
-## 資料庫
+## 驗證
 
-## 匯入資料
+```bash
+python scripts/validate_data.py
+python scripts/validate_site.py
+node --check assets/app.js
+```
 
-1. 將 `.csv`、`.tsv` 或 `.xlsx` 檔案放入 `incoming/`。
-2. 在終端機執行：
+## 匯入外部資料
 
-   ```bash
-   cd /Users/qoo/Desktop/台產報
-   python3 scripts/import_data.py
-   ```
+將 `.csv`、`.tsv` 或 `.xlsx` 放入 `incoming/`，再執行：
 
-資料會各自匯入對應資料表；原始檔案名稱、工作表名稱、匯入時間與筆數會記錄在 `import_log`。重複匯入相同檔案版本會略過，若要強制重新匯入可執行：
+```bash
+python3 scripts/import_data.py
+```
+
+重複匯入相同檔案版本會略過；需要強制匯入時使用：
 
 ```bash
 python3 scripts/import_data.py --force
 ```
 
-## 檢視資料
+## 尚未恢復
 
-macOS 可用內建指令列工具：
+舊 Project 文件曾記錄 20 筆候選與研究資料，但目前仍未取得原始 JSON、來源證據與完整研究文件。因此 V2.5 沒有重建或猜測這些正式候選內容。
 
-```bash
-sqlite3 db/taiwan_industry_report.sqlite ".tables"
-sqlite3 db/taiwan_industry_report.sqlite "SELECT * FROM import_log;"
-```
+## 資料治理
 
-`.xlsx` 匯入需要 `openpyxl`。若尚未安裝，工具會提示安裝方式；CSV 和 TSV 不需要額外套件。
-
-## 版本與資料治理
-
-- `index.html` 為 V0.3 介面示範。它保留「示範資料」標示，不能當作正式產品資料來源。
-- V0.1 保存在 `versions_review/`；根目錄 `index.html` 即為目前採用的 V0.3 示範首頁。不要以歷史檔覆蓋未來正式版本。
-- `docs/imports/` 是外部匯出參考資料，不是完整 Repository，也不包含 V2.3／V2.4 的完整程式、資料或驗證器。
-- 未來要導入正式候選資料前，應先依 `docs/review/` 的衝突與更新計畫完成來源、狀態與驗證確認。
+- 台灣品牌不等於台灣製造。
+- 以單一產品／型號為查證單位。
+- `demo_only` 不得進入正式發布。
+- `ready_for_editorial_review` 不等於 `published`。
+- 前台、排序、收藏或 metadata 不得自行升級產品狀態。
+- 未知維持待確認，衝突不得隱藏。
+- 未取回證據前，不得補造正式候選。
