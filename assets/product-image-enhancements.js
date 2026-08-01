@@ -56,7 +56,8 @@
     if (!drawerContent || !productsByName.size) return;
     const titleElement = drawerContent.querySelector("#drawerTitle");
     const title = titleElement?.textContent?.trim();
-    if (!title || drawerContent.dataset.mediaProduct === title) return;
+    if (!title) return;
+    if (drawerContent.dataset.mediaProduct === title && drawerContent.querySelector(".media-gallery")) return;
 
     const product = productsByName.get(title);
     if (!product) return;
