@@ -1,0 +1,50 @@
+[
+  {
+    "asset_id": "pilot-oright-bio-caffeine:gallery:0",
+    "product_id": "pilot-oright-bio-caffeine",
+    "product_name": "Bio 咖啡因強健洗髮精",
+    "media_role": "gallery",
+    "media_index": 0,
+    "asset_url": "https://shop.oright.com.tw/storage/i01.oright.com.tw/a/25/337/253370934253279540e8b5.png",
+    "source_url": "https://www.oright.com.tw/product/716",
+    "source_name": "O'right 歐萊德官方購物網",
+    "source_type": "official_related_series_page",
+    "rights_status": "permission_pending",
+    "checked_at": "2026-08-01",
+    "relation_scope": "related_current_series_not_exact_model",
+    "action_required": "確認 O'right 官方媒體使用條款或取得書面授權",
+    "notes": "同系列現售版本瓶身圖，不是型號 4712782261130 的精確產品圖。"
+  },
+  {
+    "asset_id": "pilot-oright-bio-caffeine:gallery:1",
+    "product_id": "pilot-oright-bio-caffeine",
+    "product_name": "Bio 咖啡因強健洗髮精",
+    "media_role": "gallery",
+    "media_index": 1,
+    "asset_url": "https://shop.oright.com.tw/storage/i01.oright.com.tw/content_image/243021527173789555d793.png",
+    "source_url": "https://www.oright.com.tw/product/716",
+    "source_name": "O'right 歐萊德官方購物網",
+    "source_type": "official_related_series_page",
+    "rights_status": "permission_pending",
+    "checked_at": "2026-08-01",
+    "relation_scope": "related_series_certification_visual",
+    "action_required": "確認 O'right 官方媒體使用條款或取得書面授權",
+    "notes": "USDA Biobased 視覺來自同系列頁，需另查認證適用範圍。"
+  },
+  {
+    "asset_id": "pilot-oright-bio-caffeine:gallery:2",
+    "product_id": "pilot-oright-bio-caffeine",
+    "product_name": "Bio 咖啡因強健洗髮精",
+    "media_role": "gallery",
+    "media_index": 2,
+    "asset_url": "https://shop.oright.com.tw/storage/i01.oright.com.tw/content_image/Ingredients_caffine-01.png",
+    "source_url": "https://www.oright.com.tw/product/716",
+    "source_name": "O'right 歐萊德官方購物網",
+    "source_type": "official_related_series_page",
+    "rights_status": "permission_pending",
+    "checked_at": "2026-08-01",
+    "relation_scope": "related_series_ingredient_visual",
+    "action_required": "確認 O'right 官方媒體使用條款或取得書面授權",
+    "notes": "天然咖啡因原料示意圖，不構成成品製造地證據。"
+  }
+]
