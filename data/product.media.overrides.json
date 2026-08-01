@@ -206,5 +206,100 @@
         "scope_note": "可交叉確認型號、公司與材質；此頁未直接提供製造地。"
       }
     ]
+  },
+  {
+    "id": "pilot-oright-bio-caffeine",
+    "tags": [
+      "台灣精品精確型號",
+      "台灣在地咖啡",
+      "同系列官方補充圖",
+      "精確型號現售待確認",
+      "製造地待確認",
+      "圖片權利待確認",
+      "完整圖片集"
+    ],
+    "origin_summary": "台灣精品官方頁確認 Bio 咖啡因強健洗髮精型號 4712782261130，並記載採用台灣在地來源咖啡。O'right 現售咖啡因洗髮精頁可支持同系列仍在銷售、台灣原生咖啡與 USDA Biobased 宣稱，但未證明與得獎型號完全相同，也未提供製造地，因此維持未發布。",
+    "current_sale_confirmed": false,
+    "related_series_current_sale_confirmed": true,
+    "origin_evidence_status": "partial_official_record",
+    "media": {
+      "gallery": [
+        {
+          "kind": "image",
+          "url": "https://shop.oright.com.tw/storage/i01.oright.com.tw/a/25/337/253370934253279540e8b5.png",
+          "alt": "O'right 現售咖啡因洗髮精同系列官方瓶身圖",
+          "caption": "同系列現售版本官方瓶身圖；不視為型號 4712782261130 的精確產品圖",
+          "source_url": "https://www.oright.com.tw/product/716",
+          "source_name": "O'right 歐萊德官方購物網",
+          "source_type": "official_related_series_page",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01",
+          "relation_scope": "related_current_series_not_exact_model"
+        },
+        {
+          "kind": "image",
+          "url": "https://shop.oright.com.tw/storage/i01.oright.com.tw/content_image/243021527173789555d793.png",
+          "alt": "O'right 咖啡因洗髮精官方頁 USDA Biobased 認證標誌圖",
+          "caption": "同系列官方頁的 USDA Biobased 認證視覺；需另查認證適用產品範圍",
+          "source_url": "https://www.oright.com.tw/product/716",
+          "source_name": "O'right 歐萊德官方購物網",
+          "source_type": "official_related_series_page",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01",
+          "relation_scope": "related_series_certification_visual"
+        },
+        {
+          "kind": "image",
+          "url": "https://shop.oright.com.tw/storage/i01.oright.com.tw/content_image/Ingredients_caffine-01.png",
+          "alt": "O'right 咖啡因洗髮精官方頁天然咖啡因原料示意圖",
+          "caption": "同系列官方頁的天然咖啡因原料示意圖；不構成製造地證據",
+          "source_url": "https://www.oright.com.tw/product/716",
+          "source_name": "O'right 歐萊德官方購物網",
+          "source_type": "official_related_series_page",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01",
+          "relation_scope": "related_series_ingredient_visual"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "placeholder",
+          "emoji": "🏷️",
+          "alt": "待補 O'right Bio 咖啡因強健洗髮精 4712782261130 實體條碼、製造商與製造地照片",
+          "rights_status": "not_applicable"
+        }
+      ]
+    },
+    "external_evidence": [
+      {
+        "title": "台灣精品 Bio 咖啡因強健洗髮精紀錄",
+        "source_url": "https://www.taiwanexcellence.org/tw/award/product/1150619",
+        "source_name": "台灣精品官方網站",
+        "source_type": "official_award_registry",
+        "checked_at": "2026-08-01",
+        "findings": [
+          "產品名稱 Bio 咖啡因強健洗髮精",
+          "產品型號 4712782261130",
+          "歐萊德國際股份有限公司",
+          "採用台灣在地來源咖啡",
+          "記載全家 Let's Café 咖啡渣循環再生設計"
+        ],
+        "scope_note": "可確認得獎產品名稱、精確型號、公司及台灣咖啡原料敘述；未提供成品製造地。"
+      },
+      {
+        "title": "O'right 現售咖啡因洗髮精官方頁",
+        "source_url": "https://www.oright.com.tw/product/716",
+        "source_name": "O'right 歐萊德官方購物網",
+        "source_type": "official_related_series_page",
+        "checked_at": "2026-08-01",
+        "findings": [
+          "咖啡因洗髮精 250mL 目前列有售價",
+          "適用問題頭皮與一般髮質",
+          "官方宣稱採用台灣原生咖啡",
+          "官方頁展示 USDA Biobased 天然永續認證"
+        ],
+        "scope_note": "支持同系列現售狀態、原料與品牌宣稱；頁面未顯示 4712782261130，不能視為得獎型號的現售或製造地證據。"
+      }
+    ]
   }
 ]
