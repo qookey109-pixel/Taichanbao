@@ -1,0 +1,30 @@
+{
+  "id": "product-id",
+  "brand": "品牌名稱",
+  "name": "產品名稱",
+  "category": "生活用品",
+  "scene": "居家",
+  "taiwan_brand": true,
+  "verification_status": "official_source_found",
+  "publication_status": "unpublished",
+  "origin_summary": "資料摘要",
+  "score": 0,
+  "emoji": "📦",
+  "tags": [],
+  "model": "型號",
+  "media": {
+    "main": {
+      "kind": "image",
+      "url": "assets/images/products/product-id-main.webp",
+      "alt": "產品主圖替代文字",
+      "caption": "產品主圖",
+      "source_url": "https://example.com/product",
+      "source_name": "品牌官方產品頁",
+      "source_type": "official_product_page",
+      "rights_status": "permission_pending",
+      "checked_at": "2026-08-01"
+    },
+    "gallery": [],
+    "evidence": []
+  }
+}
