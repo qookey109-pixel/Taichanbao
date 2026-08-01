@@ -11,7 +11,11 @@
     "origin_summary": "示範：台灣農產／台灣加工",
     "score": 92,
     "emoji": "🍍",
-    "tags": ["台灣農產", "台灣加工", "產地可追溯"]
+    "tags": [
+      "台灣農產",
+      "台灣加工",
+      "產地可追溯"
+    ]
   },
   {
     "id": "demo-002",
@@ -25,7 +29,10 @@
     "origin_summary": "示範：配方與製造資訊待查證",
     "score": 84,
     "emoji": "🧼",
-    "tags": ["生活清潔", "資料待查證"]
+    "tags": [
+      "生活清潔",
+      "資料待查證"
+    ]
   },
   {
     "id": "demo-003",
@@ -39,7 +46,10 @@
     "origin_summary": "示範：設計在台灣，原料與織造待查證",
     "score": 80,
     "emoji": "🧺",
-    "tags": ["台灣設計", "製程待查證"]
+    "tags": [
+      "台灣設計",
+      "製程待查證"
+    ]
   },
   {
     "id": "demo-004",
@@ -53,7 +63,10 @@
     "origin_summary": "示範：茶葉來源與包裝待查證",
     "score": 88,
     "emoji": "🍵",
-    "tags": ["茶飲", "來源待查證"]
+    "tags": [
+      "茶飲",
+      "來源待查證"
+    ]
   },
   {
     "id": "demo-005",
@@ -67,7 +80,10 @@
     "origin_summary": "示範：台灣設計，材料與加工待查證",
     "score": 77,
     "emoji": "🗃️",
-    "tags": ["台灣設計", "材料待查證"]
+    "tags": [
+      "台灣設計",
+      "材料待查證"
+    ]
   },
   {
     "id": "demo-006",
@@ -81,7 +97,10 @@
     "origin_summary": "示範：原料、加工與包裝待查證",
     "score": 86,
     "emoji": "🍘",
-    "tags": ["伴手禮", "資料待查證"]
+    "tags": [
+      "伴手禮",
+      "資料待查證"
+    ]
   },
   {
     "id": "pilot-tendays-tdt01",
@@ -95,12 +114,71 @@
     "origin_summary": "官方資料試作：型號 TDT01-T017A；官方產品頁稱通過 MIT 微笑標章、在地製造。圖片取自官方產品頁，權利與外部證據仍待確認。",
     "score": 60,
     "emoji": "<img src=\"https://www.tendays.com.tw/storage/system/products/pillow/adult/TDT01/TDT01-11.jpg\" alt=\"TENDAYS 健康隨身枕官方產品主圖\" loading=\"lazy\" referrerpolicy=\"no-referrer\" style=\"width:100%;height:100%;object-fit:cover;display:block\" onerror=\"this.outerHTML='🛏️'\">",
-    "tags": ["官方產品頁", "官方主圖", "MIT官方宣稱", "圖片權利待確認"],
+    "tags": [
+      "官方產品頁",
+      "官方主圖",
+      "MIT官方宣稱",
+      "圖片權利待確認"
+    ],
     "model": "TDT01-T017A",
     "image_url": "https://www.tendays.com.tw/storage/system/products/pillow/adult/TDT01/TDT01-11.jpg",
     "image_source_url": "https://www.tendays.com.tw/product-109-118-124-product182",
     "image_source_name": "TENDAYS 官方產品頁",
     "image_source_type": "official_product_page",
+    "image_rights_status": "permission_pending",
+    "source_checked_at": "2026-08-01"
+  },
+  {
+    "id": "pilot-tatung-tac11hnm",
+    "brand": "大同 TATUNG",
+    "name": "大同晶鋼電鍋 11人份",
+    "category": "生活用品",
+    "scene": "居家",
+    "taiwan_brand": true,
+    "verification_status": "official_source_found",
+    "publication_status": "unpublished",
+    "origin_summary": "官方資料試作：型號 TAC-11HN-M；大同官方產品頁標示台灣製造、產地台灣。主圖取自台灣精品官方產品頁，圖片權利仍待確認。",
+    "score": 68,
+    "emoji": "<img src=\"https://www.taiwanexcellence.org/upload/product/old/107003AA-T031_L.jpg\" alt=\"大同晶鋼電鍋官方產品圖\" loading=\"lazy\" referrerpolicy=\"no-referrer\" style=\"width:100%;height:100%;object-fit:contain;display:block;background:white\" onerror=\"this.outerHTML='🍚'\">",
+    "tags": [
+      "品牌官方產品頁",
+      "台灣製造",
+      "官方獎項圖片",
+      "圖片權利待確認"
+    ],
+    "model": "TAC-11HN-M",
+    "image_url": "https://www.taiwanexcellence.org/upload/product/old/107003AA-T031_L.jpg",
+    "image_source_url": "https://www.taiwanexcellence.org/tw/award/product/38778",
+    "image_source_name": "台灣精品官方產品頁",
+    "image_source_type": "official_award_page",
+    "brand_product_url": "https://www.tatung.com/Product/Consumer/1301",
+    "image_rights_status": "permission_pending",
+    "source_checked_at": "2026-08-01"
+  },
+  {
+    "id": "pilot-oright-bio-caffeine",
+    "brand": "O'right 歐萊德",
+    "name": "Bio 咖啡因強健洗髮精",
+    "category": "清潔用品",
+    "scene": "居家",
+    "taiwan_brand": true,
+    "verification_status": "official_source_found",
+    "publication_status": "unpublished",
+    "origin_summary": "官方資料試作：台灣精品官方頁確認產品型號 4712782261130，並記載採用台灣在地來源咖啡；產品製造地仍待另行核對。主圖權利待確認。",
+    "score": 64,
+    "emoji": "<img src=\"https://www.taiwanexcellence.org/upload/product/old/old2025/115210FA-H055_L.jpg\" alt=\"歐萊德 Bio 咖啡因強健洗髮精官方產品圖\" loading=\"lazy\" referrerpolicy=\"no-referrer\" style=\"width:100%;height:100%;object-fit:contain;display:block;background:white\" onerror=\"this.outerHTML='🧴'\">",
+    "tags": [
+      "台灣精品官方頁",
+      "台灣在地咖啡官方記載",
+      "製造地待確認",
+      "圖片權利待確認"
+    ],
+    "model": "4712782261130",
+    "image_url": "https://www.taiwanexcellence.org/upload/product/old/old2025/115210FA-H055_L.jpg",
+    "image_source_url": "https://www.taiwanexcellence.org/tw/award/product/1150619",
+    "image_source_name": "台灣精品官方產品頁",
+    "image_source_type": "official_award_page",
+    "brand_product_url": "https://www.oright.inc/",
     "image_rights_status": "permission_pending",
     "source_checked_at": "2026-08-01"
   }
