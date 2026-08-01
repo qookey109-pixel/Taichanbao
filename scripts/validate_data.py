@@ -34,7 +34,8 @@ for row in rows:
         assert item.get("kind") in {"image", "placeholder"}, f"{row['id']}: invalid media kind"
         assert item.get("alt"), f"{row['id']}: media alt required"
         if item["kind"] == "image":
-            assert str(item.get("url", "")).startswith("https://") or str(item.get("url", "")).startswith("assets/"), f"{row['id']}: invalid media URL"
+            url = str(item.get("url", ""))
+            assert url.startswith("https://") or url.startswith("assets/"), f"{row['id']}: invalid media URL"
             assert item.get("source_name"), f"{row['id']}: image source_name required"
             assert item.get("rights_status"), f"{row['id']}: image rights_status required"
             assert item.get("checked_at"), f"{row['id']}: image checked_at required"
@@ -56,7 +57,16 @@ for row in rows:
     else:
         raise AssertionError(f"{row['id']}: unsupported verification_status")
 
+tendays = next(row for row in rows if row["id"] == "pilot-tendays-tdt01")
+assert len(tendays["media"]["gallery"]) == 3, "TENDAYS multi-image pilot requires three gallery images"
+assert len(tendays["media"]["evidence"]) == 1, "TENDAYS multi-image pilot requires one evidence slot"
+assert tendays["media"]["evidence"][0]["kind"] == "placeholder"
+assert tendays["origin_evidence_status"] == "official_claim_only"
+
 assert demo_count == 6
 assert pilot_count == 4
 assert published_count == 0
-print(f"OK: demo={demo_count}; official-source pilots={pilot_count}; published={published_count}; complete media model enabled")
+print(
+    f"OK: demo={demo_count}; official-source pilots={pilot_count}; "
+    f"published={published_count}; TENDAYS gallery=3 evidence=1"
+)
