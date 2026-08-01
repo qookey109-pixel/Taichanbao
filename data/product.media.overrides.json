@@ -86,5 +86,125 @@
         "scope_note": "政府資料使用基礎型號 SR-C58DV；官方產品頁另含色碼 Y7。此證據支持能效與容量，不支持製造地。"
       }
     ]
+  },
+  {
+    "id": "pilot-tatung-tac11hnm",
+    "tags": [
+      "品牌官方產品頁",
+      "官方商城現售",
+      "台灣精品",
+      "台灣製造官方標示",
+      "SUS316L",
+      "圖片權利待確認",
+      "完整圖片集"
+    ],
+    "origin_summary": "大同官方產品頁確認型號 TAC-11HN-M、SUS316L、11 人份，並直接標示台灣製造與產地台灣；大同官方商城確認目前仍有銷售，台灣精品頁可交叉確認同一型號與產品材質。圖片使用權仍待確認，產品維持未發布。",
+    "current_sale_confirmed": true,
+    "origin_evidence_status": "official_sources_consistent",
+    "media": {
+      "gallery": [
+        {
+          "kind": "image",
+          "url": "https://www.etungo.com.tw/userfiles/image/89-1%281%29.jpg",
+          "alt": "大同 TAC-11HN-M 官方商城產品介紹圖一",
+          "caption": "大同官方商城產品介紹圖一",
+          "source_url": "https://www.etungo.com.tw/inside/992/993/994/46604.html",
+          "source_name": "大同 e同購官方商城",
+          "source_type": "official_brand_store",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01"
+        },
+        {
+          "kind": "image",
+          "url": "https://www.etungo.com.tw/userfiles/image/316%E9%9B%BB%E9%8D%8BDM%20o%282025-12-22%29-01.jpg",
+          "alt": "大同 TAC-11HN-M 316L 與台灣製造官方說明圖",
+          "caption": "官方商城 316L 材質與台灣製造說明",
+          "source_url": "https://www.etungo.com.tw/inside/992/993/994/46604.html",
+          "source_name": "大同 e同購官方商城",
+          "source_type": "official_brand_store",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01"
+        },
+        {
+          "kind": "image",
+          "url": "https://www.etungo.com.tw/userfiles/image/Skill-1000%284%29.jpg",
+          "alt": "大同 TAC-11HN-M 使用功能官方說明圖",
+          "caption": "官方商城使用功能說明",
+          "source_url": "https://www.etungo.com.tw/inside/992/993/994/46604.html",
+          "source_name": "大同 e同購官方商城",
+          "source_type": "official_brand_store",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01"
+        },
+        {
+          "kind": "image",
+          "url": "https://www.etungo.com.tw/userfiles/image/QA-1000%283%29.jpg",
+          "alt": "大同 TAC-11HN-M 官方產品問答說明圖",
+          "caption": "官方商城產品問答與注意事項",
+          "source_url": "https://www.etungo.com.tw/inside/992/993/994/46604.html",
+          "source_name": "大同 e同購官方商城",
+          "source_type": "official_brand_store",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "placeholder",
+          "emoji": "🏷️",
+          "alt": "待補大同 TAC-11HN-M 實體銘牌、型號、製造地與序號照片",
+          "rights_status": "not_applicable"
+        }
+      ]
+    },
+    "external_evidence": [
+      {
+        "title": "大同官方產品規格與產地",
+        "source_url": "https://www.tatung.com/Product/Consumer/1301",
+        "source_name": "大同官方產品頁",
+        "source_type": "official_product_page",
+        "checked_at": "2026-08-01",
+        "findings": [
+          "型號 TAC-11HN-M",
+          "11 人份",
+          "SUS316L 不鏽鋼",
+          "電功率 700W",
+          "保溫電功率 40W",
+          "標示台灣製造",
+          "產地標示台灣"
+        ],
+        "scope_note": "品牌官方頁直接標示產品規格與產地；尚待實體銘牌或其他獨立證據核對。"
+      },
+      {
+        "title": "大同 e同購官方商城現售頁",
+        "source_url": "https://www.etungo.com.tw/inside/992/993/994/46604.html",
+        "source_name": "大同 e同購官方商城",
+        "source_type": "official_brand_store",
+        "checked_at": "2026-08-01",
+        "findings": [
+          "型號 TAC-11HN-M",
+          "目前可購買",
+          "11 人份",
+          "SUS316L 不鏽鋼",
+          "消耗功率 700W",
+          "保溫功率 40W"
+        ],
+        "scope_note": "可支持現售狀態、型號與規格；商城圖片著作權仍待確認。"
+      },
+      {
+        "title": "台灣精品獎產品紀錄",
+        "source_url": "https://www.taiwanexcellence.org/tw/award/product/38778",
+        "source_name": "台灣精品官方網站",
+        "source_type": "official_award_registry",
+        "checked_at": "2026-08-01",
+        "findings": [
+          "產品型號 TAC-11HN-M",
+          "產品名稱晶鋼電鍋",
+          "大同股份有限公司",
+          "全鍋採用 SUS316L 不鏽鋼"
+        ],
+        "scope_note": "可交叉確認型號、公司與材質；此頁未直接提供製造地。"
+      }
+    ]
   }
 ]
