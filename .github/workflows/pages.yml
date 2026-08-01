@@ -30,6 +30,9 @@ jobs:
       - name: Validate SAMPO media overrides
         run: python scripts/validate_sampo_media.py
 
+      - name: Validate Tatung media overrides
+        run: python scripts/validate_tatung_media.py
+
       - name: Validate site
         run: python scripts/validate_site.py
 
