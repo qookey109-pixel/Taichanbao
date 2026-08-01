@@ -26,10 +26,11 @@ for token in [
     assert token in magazine_js, token
 
 for token in [
-    "V2.10 SAMPO MULTI-IMAGE + EXTERNAL EVIDENCE",
+    "V2.11 TATUNG MULTI-IMAGE + TAIWAN ORIGIN EVIDENCE",
     "product.media.overrides.json", "mergeProduct", "external_evidence",
     "renderExternalEvidence", "renderGallery", "renderInventory",
     "data-media-product", "rightsLabel", "safeUrl", "cleanEmoji",
+    "三個多圖案例：TENDAYS／SAMPO／大同",
 ]:
     assert token in media_js, token
 
