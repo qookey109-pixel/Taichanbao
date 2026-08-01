@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "V2.8 COMPLETE MEDIA ARCHITECTURE";
+  const VERSION = "V2.10 SAMPO MULTI-IMAGE + EXTERNAL EVIDENCE";
   const productsById = new Map();
   const productsByName = new Map();
   const activeMedia = new Map();
@@ -13,13 +13,21 @@
 
   async function loadProducts() {
     try {
-      const response = await fetch("data/products.demo.json", { cache: "no-store" });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const products = await response.json();
-      if (!Array.isArray(products)) throw new Error("Product data is not an array");
+      const [baseResponse, overrideResponse] = await Promise.all([
+        fetch("data/products.demo.json", { cache: "no-store" }),
+        fetch("data/product.media.overrides.json", { cache: "no-store" })
+      ]);
+      if (!baseResponse.ok) throw new Error(`products HTTP ${baseResponse.status}`);
+      const products = await baseResponse.json();
+      const overrides = overrideResponse.ok ? await overrideResponse.json() : [];
+      const overrideMap = new Map(
+        (Array.isArray(overrides) ? overrides : []).map(item => [item.id, item])
+      );
+
       products.forEach(product => {
-        productsById.set(product.id, product);
-        productsByName.set(product.name, product);
+        const merged = mergeProduct(product, overrideMap.get(product.id));
+        productsById.set(merged.id, merged);
+        productsByName.set(merged.name, merged);
       });
       enhanceCards();
       enhanceDrawer();
@@ -28,12 +36,35 @@
     }
   }
 
+  function mergeProduct(base, override) {
+    if (!override || typeof override !== "object") return base;
+    const baseMedia = base.media && typeof base.media === "object" ? base.media : {};
+    const overrideMedia = override.media && typeof override.media === "object" ? override.media : {};
+    return {
+      ...base,
+      ...override,
+      media: {
+        ...baseMedia,
+        ...overrideMedia,
+        main: overrideMedia.main || baseMedia.main,
+        gallery: Array.isArray(overrideMedia.gallery) ? overrideMedia.gallery : (baseMedia.gallery || []),
+        evidence: Array.isArray(overrideMedia.evidence) ? overrideMedia.evidence : (baseMedia.evidence || [])
+      },
+      external_evidence: Array.isArray(override.external_evidence)
+        ? override.external_evidence
+        : (base.external_evidence || [])
+    };
+  }
+
   function updateVersionLabels() {
     const version = document.querySelector(".side-note strong");
     if (version) version.textContent = VERSION;
     document.querySelectorAll(".ticker-track span").forEach(note => {
-      if (note.textContent.includes("6 筆示範＋4 筆官方圖片候選")) {
-        note.textContent = "完整圖片架構：主圖／圖片集／查證照片";
+      if (
+        note.textContent.includes("完整圖片架構") ||
+        note.textContent.includes("6 筆示範＋4 筆官方圖片候選")
+      ) {
+        note.textContent = "兩個多圖案例：TENDAYS／SAMPO";
       }
     });
   }
@@ -43,10 +74,11 @@
     storyList.querySelectorAll("[data-product]").forEach(card => {
       const product = productsById.get(card.dataset.product);
       const art = card.querySelector(".story-art");
-      if (!product || !art || art.dataset.mediaEnhanced === "true") return;
-      art.dataset.mediaEnhanced = "true";
+      if (!product || !art) return;
       const main = normalizeMedia(product).main;
       if (!main || main.kind !== "image") return;
+      const existing = art.querySelector("img");
+      if (existing?.src === main.url) return;
       art.classList.add("has-image");
       art.replaceChildren(createImage(main, cleanEmoji(product.emoji) || "📦", "product-image"));
     });
@@ -54,17 +86,20 @@
 
   function enhanceDrawer() {
     if (!drawerContent || !productsByName.size) return;
-    const titleElement = drawerContent.querySelector("#drawerTitle");
-    const title = titleElement?.textContent?.trim();
+    const title = drawerContent.querySelector("#drawerTitle")?.textContent?.trim();
     if (!title) return;
-    if (drawerContent.dataset.mediaProduct === title && drawerContent.querySelector(".media-gallery")) return;
 
     const product = productsByName.get(title);
     if (!product) return;
-    drawerContent.dataset.mediaProduct = title;
-    drawerContent.querySelectorAll(".media-gallery,.media-inventory,.drawer-source.media-architecture-source").forEach(node => node.remove());
 
     const media = allMedia(product);
+    const signature = `${product.id}:${media.length}:${(product.external_evidence || []).length}`;
+    if (drawerContent.dataset.mediaSignature === signature && drawerContent.querySelector(".media-gallery")) return;
+    drawerContent.dataset.mediaSignature = signature;
+    drawerContent.querySelectorAll(
+      ".media-gallery,.media-inventory,.media-external-evidence,.drawer-source.media-architecture-source"
+    ).forEach(node => node.remove());
+
     const intro = drawerContent.querySelector("h2 + p");
     if (intro && media.length) {
       const currentIndex = Math.min(activeMedia.get(product.id) || 0, media.length - 1);
@@ -74,14 +109,18 @@
     }
 
     const journey = drawerContent.querySelector(".journey");
-    if (journey) journey.insertAdjacentHTML("afterend", renderInventory(product));
+    if (journey) {
+      journey.insertAdjacentHTML("afterend", renderInventory(product));
+      const inventory = drawerContent.querySelector(".media-inventory");
+      if (inventory) inventory.insertAdjacentHTML("afterend", renderExternalEvidence(product));
+    }
 
     const paragraphs = drawerContent.querySelectorAll("p");
     const last = paragraphs[paragraphs.length - 1];
     if (last) {
       last.innerHTML = product.verification_status === "demo_only"
         ? "<strong>重要：</strong>目前為介面示範資料，不能視為正式產品、產地或圖片來源結論。"
-        : "<strong>重要：</strong>這是官方來源圖片候選。官方頁可協助辨識產品或型號，但不等於產地已完成獨立查證；權利待確認的圖片不會通過正式發布 Gate。";
+        : "<strong>重要：</strong>官方圖片、官方規格與政府能效資料只支援各自的事實範圍；它們不等於製造地已完成查證。權利待確認的圖片不會通過正式發布 Gate。";
     }
   }
 
@@ -138,7 +177,29 @@
         <span><b>${media.gallery.length}</b>圖片集</span>
         <span><b>${media.evidence.length}</b>查證照片</span>
       </div>
-      <p>主圖用於卡片；圖片集保存其他角度、包裝與情境；查證照片專門保存型號、產地、製造商與標章。</p>
+      <p>主圖用於卡片；圖片集保存其他角度與功能；查證照片專門保存型號、產地、製造商與標章。</p>
+    </section>`;
+  }
+
+  function renderExternalEvidence(product) {
+    const records = Array.isArray(product.external_evidence) ? product.external_evidence : [];
+    if (!records.length) return "";
+    return `<section class="drawer-source media-external-evidence">
+      <strong>外部查證紀錄</strong>
+      ${records.map(record => {
+        const source = safeUrl(record.source_url)
+          ? `<a href="${escapeAttribute(record.source_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(record.source_name || record.title || "開啟來源")}</a>`
+          : escapeHtml(record.source_name || record.title || "來源未記錄");
+        const facts = Array.isArray(record.findings) && record.findings.length
+          ? `<ul>${record.findings.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+          : "";
+        return `<article>
+          <p><b>${escapeHtml(record.title || "查證紀錄")}</b><br>${source}</p>
+          ${facts}
+          <p>證據範圍：${escapeHtml(record.scope_note || "未記錄")}<br>
+          查閱日期：${escapeHtml(record.checked_at || "未記錄")}</p>
+        </article>`;
+      }).join("")}
     </section>`;
   }
 
@@ -241,7 +302,7 @@
     const items = product ? allMedia(product) : [];
     if (!product || !Number.isInteger(index) || index < 0 || index >= items.length) return;
     activeMedia.set(productId, index);
-    drawerContent.dataset.mediaProduct = "";
+    drawerContent.dataset.mediaSignature = "";
     enhanceDrawer();
   }
 
