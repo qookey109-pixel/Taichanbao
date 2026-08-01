@@ -4,7 +4,7 @@
 
 ## Version
 
-`V2.10 SAMPO Multi-Image + External Evidence`
+`V2.11 Tatung Multi-Image + Taiwan Origin Evidence`
 
 ## 正式網站方向
 
@@ -12,60 +12,63 @@
 
 ## 本次完成
 
-- 保留 V2.8 Complete Media Architecture 與 V2.9 TENDAYS 多圖案例。
-- 建立 `data/product.media.overrides.json`，可在不覆蓋主產品 JSON 的情況下擴充媒體與證據。
-- 選定 SAMPO 聲寶 `SR-C58DV(Y7)` 作為第二個完整多圖案例。
-- 新增 3 張聲寶官方產品頁圖片。
-- 新增 1 個實體銘牌、製造地與序號照片待補位置。
-- 新增官方規格與經濟部能源署節能標章外部證據區。
-- 建立 `data/image_rights.sampo.json` 與 `scripts/validate_sampo_media.py`。
-- CI 與 GitHub Pages 會驗證 SAMPO override、外部證據與圖片權利追蹤。
+- 保留 V2.8 Complete Media Architecture、V2.9 TENDAYS 與 V2.10 SAMPO 多圖案例。
+- 選定大同晶鋼電鍋 `TAC-11HN-M` 作為第三個完整多圖案例。
+- 新增大同 e同購官方商城 4 張圖片。
+- 新增 1 個實體銘牌、型號、製造地與序號照片待補位置。
+- 新增大同官方產品頁、官方商城與台灣精品三組外部證據。
+- 大同官方產品頁直接標示台灣製造與產地台灣。
+- 官方商城確認目前仍有銷售。
+- 建立 `data/image_rights.tatung.json` 與 `scripts/validate_tatung_media.py`。
+- 修正 SAMPO 驗證器，使多筆 override 可並存。
+- CI 與 GitHub Pages 會同時驗證 SAMPO 與大同多圖資料。
 - 正式發布維持 0。
 
-## SAMPO 查核判斷
+## 大同查核判斷
 
-聲寶官方頁可確認：
+大同官方產品頁可確認：
 
-- 完整型號 `SR-C58DV(Y7)`
-- 容積 580L
-- 變頻鋼板三門
-- 能源效率 1 級
-- 國際條碼 `4718060318855`
+- 型號 `TAC-11HN-M`
+- 11 人份
+- SUS316L 不鏽鋼
+- 電功率 700W
+- 保溫電功率 40W
+- 台灣製造
+- 產地台灣
 
-經濟部能源署節能標章資料可確認：
+大同 e同購官方商城可確認同一型號仍在銷售；台灣精品官方頁可交叉確認型號、公司與 SUS316L 材質。
 
-- 聲寶獲證型號清單包含基礎型號 `SR-C58DV`
-- 電冰箱比較資料列出 580L
-- 能源因數標示值 26.2
-
-政府資料不提供製造地，因此維持：
+目前維持：
 
 ```text
 verification_status: official_source_found
+origin_evidence_status: official_sources_consistent
 publication_status: unpublished
-製造地: 待確認
 ```
+
+原因是仍缺實體銘牌照片、圖片使用權確認與完整編輯審核。
 
 ## 資料狀態
 
 ```text
 示範資料：6
 官方圖片候選：4
-多圖案例：2
+多圖案例：3
 TENDAYS 圖片：4
-SAMPO 圖片：4（主圖 1＋圖片集 3）
-SAMPO 查證照片位置：1
-SAMPO 外部證據：2
+SAMPO 圖片：4
+大同圖片：5（主圖 1＋圖片集 4）
+大同查證照片位置：1
+大同外部證據：3
 正式發布：0
 所有官方圖片權利：permission_pending
 ```
 
 ## 未完成
 
-- 取得 TENDAYS 與 SAMPO 實體型號、製造地與標章照片。
-- 取得或確認官方圖片使用授權。
+- 取得 TENDAYS、SAMPO 與大同的實體型號、製造地或標章照片。
+- 取得或確認所有官方圖片使用授權。
 - 將具授權圖片下載為 Repository 本地資產。
-- 為大同與 O'right 建立多圖與查證照片。
+- 為 O'right 建立第四個完整多圖案例。
 - 取回原先 20 筆候選與完整研究證據。
 - 建立 SQLite 到公開 JSON 的受控發布流程。
 
@@ -75,14 +78,14 @@ SAMPO 外部證據：2
 - V2.3 Formal Publication Gate。
 - V2.5 Recovery Baseline 預覽。
 - V2.8 Complete Media Architecture。
-- V2.9 TENDAYS 多圖案例與圖片權利追蹤。
+- V2.9 TENDAYS、V2.10 SAMPO 與 V2.11 大同多圖案例。
 - 既有 SQLite 與資料匯入治理成果。
 - 圖片顯示不得改變查證或發布狀態。
-- 官方規格或政府能效資料不得冒充製造地證據。
+- 官方產地標示不得在缺乏編輯審核時直接升級為正式發布。
 
 ## 下一步
 
-1. 取得 SAMPO 實體銘牌與製造地照片。
-2. 確認 SAMPO 圖片使用授權。
-3. 為大同建立第三個完整多圖案例。
-4. 完成一筆獨立證據與圖片權利皆清楚的正式發布候選。
+1. 取得大同 TAC-11HN-M 實體銘牌與製造地照片。
+2. 確認大同商城與台灣精品圖片使用授權。
+3. 為 O'right 建立第四個完整多圖案例。
+4. 選一筆圖片權利與實體證據皆清楚的產品，測試第一筆正式發布。
