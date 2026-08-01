@@ -24,13 +24,16 @@ jobs:
       - name: Validate data
         run: python scripts/validate_data.py
 
+      - name: Validate image rights
+        run: python scripts/validate_media_rights.py
+
       - name: Validate site
         run: python scripts/validate_site.py
 
       - name: Check magazine JavaScript
         run: node --check assets/magazine.js
 
-      - name: Check official image enhancements
+      - name: Check image enhancements
         run: node --check assets/product-image-enhancements.js
 
       - name: Check V2.5 preview JavaScript
