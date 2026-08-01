@@ -1,0 +1,90 @@
+[
+  {
+    "id": "pilot-sampo-sr-c58dv",
+    "tags": [
+      "官方產品頁",
+      "型號已確認",
+      "政府能效資料",
+      "一級能效",
+      "製造地待查證",
+      "圖片權利待確認",
+      "完整圖片集"
+    ],
+    "origin_summary": "官方頁確認型號 SR-C58DV(Y7)、580L、一級能效與產品圖片；經濟部能源署節能標章查詢可找到基礎型號 SR-C58DV 與 580L、能源因數 26.2 的紀錄。製造地仍待查證。",
+    "media": {
+      "gallery": [
+        {
+          "kind": "image",
+          "url": "https://www.sampo.com.tw/upload/product/54_6392075787690369041.jpg",
+          "alt": "SAMPO 聲寶 SR-C58DV(Y7) 官方產品功能圖一",
+          "caption": "官方產品頁功能與特色圖一",
+          "source_url": "https://www.sampo.com.tw/pdetail.aspx?pd=1512",
+          "source_name": "SAMPO 聲寶官方產品頁",
+          "source_type": "official_product_page",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01"
+        },
+        {
+          "kind": "image",
+          "url": "https://www.sampo.com.tw/upload/product/54_6384817975520440812.jpg",
+          "alt": "SAMPO 聲寶 SR-C58DV(Y7) 官方產品功能圖二",
+          "caption": "官方產品頁功能與特色圖二",
+          "source_url": "https://www.sampo.com.tw/pdetail.aspx?pd=1512",
+          "source_name": "SAMPO 聲寶官方產品頁",
+          "source_type": "official_product_page",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01"
+        },
+        {
+          "kind": "image",
+          "url": "https://www.sampo.com.tw/upload/product/54_6384817975564182493.jpg",
+          "alt": "SAMPO 聲寶 SR-C58DV(Y7) 官方產品功能圖三",
+          "caption": "官方產品頁功能與特色圖三",
+          "source_url": "https://www.sampo.com.tw/pdetail.aspx?pd=1512",
+          "source_name": "SAMPO 聲寶官方產品頁",
+          "source_type": "official_product_page",
+          "rights_status": "permission_pending",
+          "checked_at": "2026-08-01"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "placeholder",
+          "emoji": "🏷️",
+          "alt": "待補 SAMPO SR-C58DV(Y7) 實體銘牌、製造地與序號照片",
+          "rights_status": "not_applicable"
+        }
+      ]
+    },
+    "external_evidence": [
+      {
+        "title": "聲寶官方產品規格",
+        "source_url": "https://www.sampo.com.tw/spec.aspx?pd=1512",
+        "source_name": "SAMPO 聲寶官方規格頁",
+        "source_type": "official_product_spec",
+        "checked_at": "2026-08-01",
+        "findings": [
+          "型號 SR-C58DV(Y7)",
+          "有效容積 580L",
+          "變頻鋼板三門",
+          "能源效率 1 級",
+          "國際條碼 4718060318855"
+        ],
+        "scope_note": "可確認型號與產品規格，不提供製造地。"
+      },
+      {
+        "title": "經濟部能源署節能標章產品查詢",
+        "source_url": "https://www.energylabel.org.tw/purchasing/product/upt.aspx?p0=4",
+        "source_name": "節能標章全球資訊網",
+        "source_type": "government_energy_label_registry",
+        "checked_at": "2026-08-01",
+        "findings": [
+          "聲寶獲證型號清單包含 SR-C58DV",
+          "電冰箱比較資料列出 SR-C58DV 為 580L",
+          "能源因數標示值 26.2"
+        ],
+        "scope_note": "政府資料使用基礎型號 SR-C58DV；官方產品頁另含色碼 Y7。此證據支持能效與容量，不支持製造地。"
+      }
+    ]
+  }
+]
