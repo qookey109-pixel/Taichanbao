@@ -1,438 +1,95 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>台產報｜台灣品牌選品誌</title>
-  <meta name="description" content="發現值得支持的台灣品牌，理解產品從設計、製造到包裝的台灣參與程度。" />
-  <style>
-    :root{
-      --linen:#f4efe7;
-      --paper:#fffdf8;
-      --ink:#11110f;
-      --muted:#6f6b64;
-      --line:#cdc6ba;
-      --orange:#f19a2a;
-      --green:#147a50;
-      --red:#c64736;
-      --yellow:#f4d86d;
-      --side:224px;
-      --rail:300px;
-      --r:18px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      color:var(--ink);
-      background:var(--linen);
-      font-family:"Noto Serif TC","Songti TC","PingFang TC","Microsoft JhengHei",serif;
-    }
-    button,input{font:inherit}
-    button{cursor:pointer}
-    a{color:inherit;text-decoration:none}
-    .sans{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
-
-    .ticker{
-      min-height:34px;
-      display:flex;
-      align-items:center;
-      overflow:hidden;
-      border-bottom:1px solid var(--ink);
-      background:var(--orange);
-      font:800 12px/1.2 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;
-      letter-spacing:.08em;
-      white-space:nowrap;
-    }
-    .ticker-track{display:flex;gap:54px;min-width:max-content;animation:marquee 24s linear infinite;padding-left:30px}
-    @keyframes marquee{to{transform:translateX(-50%)}}
-
-    .app{display:grid;grid-template-columns:var(--side) minmax(0,1fr);min-height:calc(100vh - 34px)}
-    .sidebar{
-      position:sticky;top:0;height:calc(100vh - 34px);
-      border-right:1px solid var(--ink);
-      padding:22px 18px 18px;
-      display:flex;flex-direction:column;
-      background:var(--linen);
-      z-index:10;
-    }
-    .wordmark{display:flex;align-items:center;gap:10px;margin-bottom:34px;font:900 22px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .logo-grid{width:30px;height:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
-    .logo-grid i{background:var(--ink);display:block}
-    .logo-grid i:nth-child(5){background:transparent}
-    .sidebar-nav{display:grid;gap:6px}
-    .nav-btn{
-      border:1px solid transparent;background:transparent;text-align:left;padding:11px 12px;border-radius:10px;
-      font:700 14px/1.2 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;
-      display:flex;justify-content:space-between;align-items:center;
-    }
-    .nav-btn:hover,.nav-btn.active{border-color:var(--ink);background:var(--paper)}
-    .nav-btn span:last-child{font-size:11px;color:var(--muted)}
-    .side-note{margin-top:auto;border-top:1px solid var(--ink);padding-top:16px;color:var(--muted);font:500 12px/1.55 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .side-note strong{display:block;color:var(--ink);margin-bottom:4px}
-
-    .workspace{min-width:0}
-    .top-tools{
-      min-height:68px;border-bottom:1px solid var(--ink);display:flex;align-items:center;justify-content:space-between;gap:20px;
-      padding:12px 24px;background:rgba(244,239,231,.95);position:sticky;top:0;z-index:9;
-    }
-    .edition{font:700 12px/1.2 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;letter-spacing:.09em;color:var(--muted)}
-    .search-wrap{width:min(480px,55vw);position:relative}
-    .search-wrap input{width:100%;height:42px;border:1px solid var(--ink);border-radius:999px;background:var(--paper);padding:0 42px 0 17px;outline:none;font:500 14px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .search-wrap button{position:absolute;right:5px;top:5px;width:32px;height:32px;border:0;border-radius:50%;background:var(--ink);color:white}
-    .top-action{border:1px solid var(--ink);background:var(--green);color:white;border-radius:10px;padding:11px 15px;font:800 13px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.45)}
-
-    .layout{display:grid;grid-template-columns:minmax(0,1fr) var(--rail);min-height:calc(100vh - 102px)}
-    .main{min-width:0;border-right:1px solid var(--ink);padding:26px 26px 72px}
-    .rail{padding:24px 20px 70px;background:rgba(255,253,248,.45)}
-
-    .issue-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:18px}
-    .issue-head h1{margin:0;font-weight:500;font-size:clamp(44px,6vw,82px);line-height:.9;letter-spacing:-.065em}
-    .issue-head p{width:260px;margin:0;color:var(--muted);font:500 13px/1.55 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-
-    .cover-grid{display:grid;grid-template-columns:1.45fr .7fr;gap:14px;margin-bottom:26px}
-    .feature{
-      min-height:470px;border:1px solid var(--ink);border-radius:var(--r);overflow:hidden;position:relative;
-      background:
-        linear-gradient(135deg,transparent 0 62%,rgba(255,255,255,.35) 62% 64%,transparent 64%),
-        var(--yellow);
-      display:flex;flex-direction:column;justify-content:space-between;padding:22px;
-    }
-    .feature::before{
-      content:"";position:absolute;right:-42px;top:-30px;width:330px;height:330px;border-radius:50%;
-      background:repeating-conic-gradient(var(--ink) 0 25%,var(--paper) 0 50%) 50%/44px 44px;
-      border:1px solid var(--ink);transform:rotate(13deg);
-    }
-    .feature-top,.feature-bottom{position:relative;z-index:1}
-    .stamp{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ink);background:var(--paper);padding:7px 10px;border-radius:999px;font:800 11px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .feature h2{max-width:620px;margin:0;font-size:clamp(40px,5.4vw,70px);line-height:.94;letter-spacing:-.055em;font-weight:500}
-    .feature-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-    .tag{border:1px solid var(--ink);background:var(--paper);padding:6px 9px;border-radius:999px;font:700 11px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .read-btn{margin-top:17px;border:1px solid var(--ink);background:var(--ink);color:white;border-radius:10px;padding:12px 16px;font:800 13px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-
-    .cover-stack{display:grid;grid-template-rows:1fr 1fr;gap:14px}
-    .mini-cover{border:1px solid var(--ink);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;justify-content:space-between;min-height:228px;overflow:hidden;position:relative}
-    .mini-cover.orange{background:var(--orange)}
-    .mini-cover.green{background:var(--green);color:white}
-    .mini-cover .icon{font-size:48px;position:absolute;right:14px;top:12px}
-    .mini-cover small{font:800 11px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;letter-spacing:.08em}
-    .mini-cover h3{margin:44px 0 0;font-size:27px;line-height:1.02;font-weight:500;letter-spacing:-.035em}
-    .mini-cover a{font:800 12px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;text-decoration:underline;text-underline-offset:4px}
-
-    .category-strip{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--ink);border-radius:14px;overflow:hidden;margin-bottom:34px;background:var(--paper)}
-    .category-strip button{border:0;border-right:1px solid var(--ink);background:transparent;padding:15px 10px;font:800 12px/1.2 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .category-strip button:last-child{border-right:0}
-    .category-strip button.active,.category-strip button:hover{background:var(--ink);color:white}
-
-    .section-title{display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-bottom:1px solid var(--ink);padding-bottom:10px;margin:0 0 14px}
-    .section-title h2{margin:0;font-size:30px;font-weight:500;letter-spacing:-.04em}
-    .section-title span{font:700 11px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:var(--muted);letter-spacing:.08em}
-
-    .story-list{display:grid}
-    .story{
-      display:grid;grid-template-columns:118px minmax(0,1fr) auto;gap:16px;align-items:center;
-      padding:15px 0;border-bottom:1px solid var(--line);cursor:pointer;
-    }
-    .story:hover .story-title{text-decoration:underline;text-underline-offset:5px}
-    .story-art{height:92px;border:1px solid var(--ink);border-radius:12px;display:grid;place-items:center;font-size:40px;background:var(--paper);position:relative;overflow:hidden}
-    .story-art::after{content:"";position:absolute;inset:auto 0 0;height:18px;background:repeating-linear-gradient(90deg,var(--ink) 0 12px,var(--paper) 12px 24px);border-top:1px solid var(--ink)}
-    .story-kicker{font:800 11px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:var(--green);letter-spacing:.07em;margin-bottom:7px}
-    .story-title{font-size:23px;line-height:1.1;font-weight:500;letter-spacing:-.025em}
-    .story-copy{margin-top:7px;color:var(--muted);font:500 13px/1.5 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .score{text-align:center;min-width:68px}
-    .score b{display:block;font:900 28px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .score small{font:700 10px/1.2 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:var(--muted)}
-
-    .brand-index{margin-top:36px}
-    .brand-table{border:1px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper)}
-    .brand-row{display:grid;grid-template-columns:1.1fr .8fr .65fr 80px;gap:10px;align-items:center;padding:13px 14px;border-bottom:1px solid var(--line);font:600 13px/1.3 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .brand-row:last-child{border-bottom:0}
-    .brand-row.head{background:var(--ink);color:white;font-size:11px;letter-spacing:.08em}
-    .brand-name{font-weight:900}
-    .status{display:inline-flex;width:max-content;border:1px solid var(--ink);border-radius:999px;padding:5px 8px;font-size:10px;background:white;color:var(--ink)}
-    .status.verified{background:#d8efe3}
-
-    .rail-card{border-top:4px solid var(--ink);padding-top:10px;margin-bottom:30px}
-    .rail-card h2{font:900 13px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;letter-spacing:.1em;margin:0 0 14px}
-    .rank{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:start;padding:12px 0;border-bottom:1px solid var(--line)}
-    .rank-num{font:900 24px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .rank-name{font-size:17px;line-height:1.15;font-weight:600}
-    .rank-meta{margin-top:4px;color:var(--muted);font:500 11px/1.4 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .rank-score{font:900 15px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:var(--green)}
-    .brief{padding:12px;border:1px solid var(--ink);background:var(--paper);margin-bottom:10px;border-radius:10px}
-    .brief time{font:700 10px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:var(--muted)}
-    .brief p{margin:7px 0 0;font-size:15px;line-height:1.3;font-weight:600}
-    .verify-box{border:1px solid var(--ink);background:var(--orange);padding:16px;border-radius:14px}
-    .verify-box h3{margin:0 0 9px;font-size:21px;font-weight:600}
-    .verify-box p{margin:0 0 14px;font:600 12px/1.55 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .verify-box button{border:1px solid var(--ink);background:var(--paper);border-radius:8px;padding:10px 12px;font:900 12px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-
-    .empty{padding:28px;border:1px dashed var(--ink);border-radius:14px;text-align:center;color:var(--muted);font:600 13px/1.5 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-
-    .drawer-backdrop{position:fixed;inset:0;background:rgba(17,17,15,.45);z-index:40;opacity:0;pointer-events:none;transition:.2s}
-    .drawer{position:fixed;right:0;top:0;height:100vh;width:min(520px,100%);background:var(--paper);border-left:1px solid var(--ink);z-index:41;transform:translateX(100%);transition:.25s ease;padding:24px;overflow:auto}
-    .drawer.open{transform:translateX(0)}
-    .drawer-backdrop.open{opacity:1;pointer-events:auto}
-    .drawer-close{float:right;border:1px solid var(--ink);width:38px;height:38px;background:transparent;border-radius:50%;font-size:20px}
-    .drawer-label{font:900 11px/1 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;letter-spacing:.1em;color:var(--green);margin-top:56px}
-    .drawer h2{font-size:42px;line-height:1;letter-spacing:-.04em;font-weight:500;margin:12px 0}
-    .drawer p{color:var(--muted);font:500 14px/1.7 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .journey{margin-top:24px;border-top:1px solid var(--ink)}
-    .journey-row{display:grid;grid-template-columns:98px 1fr auto;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);font:600 13px/1.4 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-    .journey-row span:first-child{color:var(--muted)}
-    .journey-row b{color:var(--green)}
-
-    .mobile-nav{display:none}
-
-    @media(max-width:1080px){
-      :root{--side:190px;--rail:260px}
-      .issue-head p{display:none}
-      .cover-grid{grid-template-columns:1fr}
-      .cover-stack{grid-template-columns:1fr 1fr;grid-template-rows:auto}
-      .feature{min-height:420px}
-    }
-    @media(max-width:860px){
-      .app{display:block}
-      .sidebar{display:none}
-      .layout{display:block}
-      .main{border-right:0;padding:18px 16px 92px}
-      .rail{padding:20px 16px 96px;border-top:1px solid var(--ink)}
-      .top-tools{padding:10px 14px;top:0}
-      .edition,.top-action{display:none}
-      .search-wrap{width:100%}
-      .mobile-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--ink);z-index:30;padding-bottom:env(safe-area-inset-bottom)}
-      .mobile-nav button{border:0;border-right:1px solid var(--line);background:transparent;padding:11px 4px;font:800 10px/1.2 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
-      .mobile-nav button:last-child{border-right:0}
-      .issue-head h1{font-size:58px}
-      .category-strip{grid-template-columns:repeat(5,minmax(96px,1fr));overflow-x:auto}
-      .story{grid-template-columns:92px 1fr}
-      .story-art{height:78px}
-      .score{display:none}
-      .brand-row{grid-template-columns:1fr .8fr 70px}
-      .brand-row>*:nth-child(3){display:none}
-    }
-    @media(max-width:560px){
-      .ticker{min-height:30px}
-      .top-tools{min-height:58px}
-      .issue-head{margin-top:4px}
-      .issue-head h1{font-size:48px}
-      .cover-stack{grid-template-columns:1fr}
-      .feature{min-height:390px;padding:18px}
-      .feature::before{width:230px;height:230px;background-size:34px 34px}
-      .feature h2{font-size:43px}
-      .mini-cover{min-height:180px}
-      .story{grid-template-columns:76px 1fr;gap:12px}
-      .story-art{height:68px;font-size:30px}
-      .story-title{font-size:19px}
-      .story-copy{display:none}
-      .brand-row{grid-template-columns:1fr 68px}
-      .brand-row>*:nth-child(2),.brand-row>*:nth-child(3){display:none}
-      .section-title h2{font-size:25px}
-    }
-  </style>
+  <meta name="description" content="用雜誌選品的方式認識台灣品牌，並透明揭露單一產品的產地、製程與資料缺口。">
+  <link rel="stylesheet" href="assets/magazine.css">
 </head>
 <body>
   <div class="ticker sans" aria-label="網站公告">
-    <div class="ticker-track">
-      <span>買台灣品牌，也買得明白</span><span>所有產品逐項標示實際產地</span><span>台灣品牌 ≠ 全流程台灣製</span><span>目前為介面示範資料</span>
-      <span>買台灣品牌，也買得明白</span><span>所有產品逐項標示實際產地</span><span>台灣品牌 ≠ 全流程台灣製</span><span>目前為介面示範資料</span>
-    </div>
+    <button id="tickerToggle" class="ticker-toggle" type="button" aria-pressed="false">暫停</button>
+    <div class="ticker-window"><div class="ticker-track" id="tickerTrack">
+      <span>買台灣品牌，也買得明白</span><span>台灣品牌 ≠ 全流程台灣製</span><span>目前 6 筆皆為介面示範資料</span><span>正式發布 Gate：0 筆</span>
+      <span>買台灣品牌，也買得明白</span><span>台灣品牌 ≠ 全流程台灣製</span><span>目前 6 筆皆為介面示範資料</span><span>正式發布 Gate：0 筆</span>
+    </div></div>
   </div>
 
   <div class="app">
     <aside class="sidebar">
-      <a class="wordmark" href="#top" aria-label="台產報首頁">
-        <span class="logo-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-        <span>台產報</span>
-      </a>
+      <a class="wordmark" href="#top" aria-label="台產報首頁"><span class="logo-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span>台產報</span></a>
       <nav class="sidebar-nav sans" aria-label="主要導覽">
         <button class="nav-btn active" data-scroll="top"><span>今日選品</span><span>01</span></button>
         <button class="nav-btn" data-scroll="stories"><span>產品專題</span><span>02</span></button>
         <button class="nav-btn" data-scroll="brands"><span>品牌索引</span><span>03</span></button>
-        <button class="nav-btn" data-scroll="verify"><span>查證方法</span><span>04</span></button>
+        <button class="nav-btn" data-scroll="method"><span>查證方法</span><span>04</span></button>
       </nav>
-      <div class="side-note sans"><strong>TAICHAN REPORT</strong>台灣品牌推薦與產品產地透明平台。不是商城，而是一份持續更新的台產選品誌。</div>
+      <div class="side-note sans"><strong>V2.6 MAGAZINE DISCOVERY</strong>保留雜誌選品風格，加入搜尋、收藏、場景與正式發布 Gate。</div>
     </aside>
 
     <div class="workspace" id="top">
       <header class="top-tools">
-        <div class="edition sans">VOL. 001 · 2026 JULY</div>
-        <div class="search-wrap">
-          <input id="globalSearch" type="search" placeholder="搜尋品牌、產品或分類" aria-label="搜尋品牌、產品或分類" />
-          <button id="searchBtn" aria-label="執行搜尋">⌕</button>
-        </div>
-        <button class="top-action" data-scroll="brands">推薦台灣品牌</button>
+        <div class="edition sans">VOL. 002 · 2026 AUGUST</div>
+        <div class="search-wrap"><input id="globalSearch" type="search" placeholder="搜尋品牌、產品、分類或標籤" aria-label="搜尋品牌、產品、分類或標籤"><button id="searchBtn" type="button" aria-label="前往搜尋結果">⌕</button></div>
+        <button class="top-action" id="openIntake" type="button">提供產品線索</button>
       </header>
+
+      <div class="view-strip sans" aria-label="資料檢視">
+        <button class="view-tab active" data-view="research" type="button">研究預覽 <b id="researchCount">0</b></button>
+        <button class="view-tab" data-view="published" type="button">正式發布 <b id="publishedCount">0</b></button>
+        <span class="view-note">示範資料不會被收藏、排序或前台操作升級為正式發布。</span>
+      </div>
 
       <div class="layout">
         <main class="main">
-          <div class="issue-head">
-            <h1>今日台產</h1>
-            <p class="sans">以編輯選品方式介紹台灣品牌，同時公開每項產品的設計、原料、製造、組裝與包裝資訊。</p>
-          </div>
+          <div class="issue-head"><h1>今日台產</h1><p class="sans">以編輯選品方式介紹台灣品牌，同時公開產品的品牌身分、產地線索、製程狀態與資料缺口。</p></div>
 
           <section class="cover-grid" aria-label="本期主題">
             <article class="feature">
-              <div class="feature-top"><span class="stamp sans">本期封面 · 全流程台產</span></div>
-              <div class="feature-bottom">
-                <h2>一顆鳳梨，<br>從田間一路留在台灣。</h2>
-                <div class="feature-meta"><span class="tag">台灣農產</span><span class="tag">台灣加工</span><span class="tag">產地可追溯</span></div>
-                <button class="read-btn" data-product="pineapple">閱讀台產履歷 →</button>
-              </div>
+              <div class="feature-top"><span class="stamp sans">本期封面 · 台灣品牌透明化</span></div>
+              <div class="feature-bottom"><h2>支持台灣品牌，<br>也先把製造地說清楚。</h2><div class="feature-meta"><span class="tag">單一產品查證</span><span class="tag">資料缺口公開</span><span class="tag">不把品牌等同產地</span></div><button class="read-btn" type="button" data-scroll="stories">開始看本期選品 →</button></div>
             </article>
             <div class="cover-stack">
-              <article class="mini-cover orange"><span class="icon">🧼</span><small>清潔用品</small><h3>不是掛上台灣品牌，<br>就等於台灣製。</h3><a href="#stories">看我們怎麼拆解</a></article>
-              <article class="mini-cover green"><span class="icon">🫗</span><small>編輯推薦</small><h3>本月值得認識的<br>六件台灣產品。</h3><a href="#stories">開始瀏覽</a></article>
+              <article class="mini-cover orange"><span class="icon">🔎</span><small>查證方法</small><h3>未知就標待確認，<br>衝突不隱藏。</h3><button type="button" data-scroll="method">查看發布規則</button></article>
+              <article class="mini-cover green"><span class="icon">★</span><small>MY EDITION</small><h3>收藏想研究的<br>台灣品牌選品。</h3><button id="showFavorites" type="button">查看我的收藏</button></article>
             </div>
           </section>
 
-          <div class="category-strip sans" id="categories" aria-label="分類篩選">
-            <button class="active" data-category="all">全部選品</button>
-            <button data-category="food">食品飲品</button>
-            <button data-category="home">生活用品</button>
-            <button data-category="clean">清潔用品</button>
-            <button data-category="made">台灣製造</button>
-          </div>
-
-          <section id="stories">
-            <div class="section-title"><h2>產品專題</h2><span>EDITOR'S PICKS</span></div>
-            <div class="story-list" id="storyList"></div>
+          <section class="discovery-panel sans" aria-label="探索與排序">
+            <div class="discovery-row"><strong>使用場景</strong><div class="chip-group" id="sceneFilters"><button class="active" data-scene="全部" type="button">全部場景</button><button data-scene="居家" type="button">居家</button><button data-scene="辦公" type="button">辦公</button><button data-scene="送禮" type="button">送禮</button><button data-scene="外出" type="button">外出</button></div></div>
+            <div class="discovery-row"><strong>排序方式</strong><select id="sortSelect" aria-label="排序方式"><option value="score">台灣參與分數</option><option value="name">產品名稱</option><option value="brand">品牌名稱</option><option value="category">產品分類</option><option value="favorites">收藏優先</option></select><label class="favorite-switch"><input id="favoritesOnly" type="checkbox">只看收藏</label></div>
           </section>
 
-          <section class="brand-index" id="brands">
-            <div class="section-title"><h2>品牌索引</h2><span>BRAND DIRECTORY</span></div>
-            <div class="brand-table" id="brandTable"></div>
+          <div class="category-strip sans" id="categoryFilters" aria-label="分類篩選"><button class="active" data-category="全部" type="button">全部選品</button><button data-category="食品飲品" type="button">食品飲品</button><button data-category="生活用品" type="button">生活用品</button><button data-category="清潔用品" type="button">清潔用品</button><button data-category="台灣品牌" type="button">台灣品牌</button></div>
+
+          <section id="stories"><div class="section-title"><h2 id="storyHeading">產品專題</h2><span><b id="visibleCount">0</b> STORIES · <span id="currentViewLabel">研究預覽</span></span></div><div class="story-list" id="storyList" aria-live="polite"></div></section>
+          <section class="brand-index" id="brands"><div class="section-title"><h2>品牌索引</h2><span>BRAND DIRECTORY</span></div><div class="brand-table" id="brandTable"></div></section>
+
+          <section class="method-section" id="method">
+            <div class="section-title"><h2>正式發布 Gate</h2><span>PUBLICATION RULES</span></div>
+            <div class="method-grid sans">
+              <article><b>01</b><h3>狀態必須明確</h3><p><code>publication_status</code> 必須為 <code>published</code>，且查證狀態必須完成編輯審核。</p></article>
+              <article><b>02</b><h3>產品與型號可識別</h3><p>品牌、產品名稱、型號、現售狀態與證據範圍都必須足以辨識。</p></article>
+              <article><b>03</b><h3>產地證據可發布</h3><p>產地、製程或主要原料至少要有可公開的來源；重要衝突不得被隱藏。</p></article>
+              <article><b>04</b><h3>前台不能升級資料</h3><p>搜尋、排序、收藏與 metadata 只能改變呈現，不能變更查證或發布狀態。</p></article>
+            </div>
           </section>
         </main>
 
         <aside class="rail">
-          <section class="rail-card">
-            <h2>本月台產榜</h2>
-            <div id="ranking"></div>
-          </section>
-          <section class="rail-card">
-            <h2>資料快訊</h2>
-            <article class="brief"><time>2026.07.27</time><p>示範資料庫新增「台灣參與程度」欄位。</p></article>
-            <article class="brief"><time>2026.07.26</time><p>品牌身分與產品製造地正式分開呈現。</p></article>
-            <article class="brief"><time>2026.07.25</time><p>確立不以品牌印象代替單一產品事實。</p></article>
-          </section>
-          <section class="verify-box" id="verify">
-            <h3>我們如何查證？</h3>
-            <p>每一筆資料都拆成研發、原料、製造、組裝、檢驗與包裝，並保留來源與最後查證日期。</p>
-            <button data-product="method">查看查證規則</button>
-          </section>
+          <section class="rail-card"><h2>本月台產榜</h2><div id="ranking"></div></section>
+          <section class="rail-card"><h2>我的收藏</h2><div class="favorite-summary sans"><strong id="favoriteCount">0</strong><span>件已收藏選品</span><button id="openFavorites" type="button">查看收藏</button></div></section>
+          <section class="rail-card"><h2>資料快訊</h2><article class="brief"><time>2026.08.01</time><p>正式首頁升級為 V2.6 Magazine Discovery。</p></article><article class="brief"><time>2026.07.31</time><p>V2.5 Recovery Baseline 保留在歷史預覽路徑。</p></article><article class="brief"><time>2026.07.27</time><p>確立台灣品牌與實際製造地分開呈現。</p></article></section>
+          <section class="verify-box"><h3>目前是示範資料</h3><p>六筆產品用來展示介面與資料治理，不能視為正式產地查證結果。正式發布目前為 0。</p><button type="button" data-scroll="method">查看查證規則</button></section>
         </aside>
       </div>
     </div>
   </div>
 
-  <nav class="mobile-nav" aria-label="手機導覽">
-    <button data-scroll="top">今日</button><button data-scroll="stories">專題</button><button data-scroll="brands">品牌</button><button data-scroll="verify">查證</button>
-  </nav>
-
+  <nav class="mobile-nav sans" aria-label="手機導覽"><button data-scroll="top" type="button">今日</button><button data-scroll="stories" type="button">專題</button><button id="mobileFavorites" type="button">收藏</button><button data-scroll="method" type="button">查證</button></nav>
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <aside class="drawer" id="drawer" aria-modal="true" role="dialog" aria-label="產品台產履歷">
-    <button class="drawer-close" id="drawerClose" aria-label="關閉">×</button>
-    <div id="drawerContent"></div>
-  </aside>
-
-  <script>
-    const products = [
-      {id:'pineapple',name:'日曬鳳梨果乾',brand:'田邊食研',icon:'🍍',category:'食品',tags:['food','made'],level:'A',score:100,summary:'台灣契作水果，在地加工、烘乾與包裝。',status:'全流程台產',journey:[['品牌／研發','台灣','已確認'],['主要原料','嘉義鳳梨','已確認'],['加工製造','嘉義','已確認'],['包裝出貨','台灣','已確認']]},
-      {id:'soap',name:'海風手工皂',brand:'南方日常',icon:'🧼',category:'清潔用品',tags:['clean','made'],level:'A',score:96,summary:'配方研發、製作、熟成到包裝都在台灣完成。',status:'全流程台產',journey:[['品牌／研發','台南','已確認'],['主要原料','台灣＋進口','部分確認'],['加工製造','台南','已確認'],['包裝出貨','台灣','已確認']]},
-      {id:'tea',name:'焙香烏龍茶包',brand:'田邊食研',icon:'🍵',category:'食品',tags:['food','made'],level:'A',score:98,summary:'台灣茶葉、台灣焙製與台灣包裝。',status:'全流程台產',journey:[['品牌／研發','台灣','已確認'],['茶葉來源','南投','已確認'],['焙製加工','南投','已確認'],['包裝出貨','台灣','已確認']]},
-      {id:'bottle',name:'山線真空保溫瓶',brand:'島作工房',icon:'🫗',category:'生活用品',tags:['home','made'],level:'B',score:82,summary:'台灣設計與金屬加工，部分原料仍需進口。',status:'核心台灣製造',journey:[['品牌／研發','台中','已確認'],['主要原料','台灣＋進口','部分確認'],['加工製造','彰化','已確認'],['包裝出貨','台中','已確認']]},
-      {id:'detergent',name:'茶籽洗碗精',brand:'南方日常',icon:'🧴',category:'清潔用品',tags:['clean','made'],level:'B',score:79,summary:'台灣配方、生產與品管，部分原料來自海外。',status:'核心台灣製造',journey:[['品牌／研發','台灣','已確認'],['主要原料','台灣＋進口','部分確認'],['加工製造','台灣','已確認'],['包裝出貨','台灣','已確認']]},
-      {id:'bag',name:'循環材質日用袋',brand:'島作工房',icon:'👜',category:'生活用品',tags:['home'],level:'C',score:48,summary:'台灣設計與品管，主要縫製製程位於海外。',status:'台灣研發',journey:[['品牌／研發','台灣','已確認'],['主要材料','進口','已確認'],['縫製製造','海外','已確認'],['品管設計','台灣','已確認']]}
-    ];
-
-    const methodData = {name:'台產報查證規則',brand:'公開方法',summary:'推薦台灣品牌與揭露實際產地並行，不把兩者混為一談。',status:'V0.1 方法草案',journey:[['查證單位','單一產品型號','必要'],['資料拆分','六個製程環節','必要'],['來源保存','官方／包裝／文件','必要'],['歷史變更','保留舊紀錄','必要']]};
-
-    const storyList = document.querySelector('#storyList');
-    const brandTable = document.querySelector('#brandTable');
-    const ranking = document.querySelector('#ranking');
-    const search = document.querySelector('#globalSearch');
-    const drawer = document.querySelector('#drawer');
-    const backdrop = document.querySelector('#drawerBackdrop');
-    const drawerContent = document.querySelector('#drawerContent');
-    let activeCategory = 'all';
-
-    function filteredProducts(){
-      const q = search.value.trim().toLowerCase();
-      return products.filter(p => {
-        const hitCategory = activeCategory === 'all' || p.tags.includes(activeCategory);
-        const haystack = `${p.name} ${p.brand} ${p.category} ${p.status}`.toLowerCase();
-        return hitCategory && (!q || haystack.includes(q));
-      });
-    }
-
-    function renderStories(){
-      const list = filteredProducts();
-      storyList.innerHTML = list.length ? list.map(p => `
-        <article class="story" data-product="${p.id}" tabindex="0">
-          <div class="story-art">${p.icon}</div>
-          <div>
-            <div class="story-kicker">${p.brand} · ${p.category}</div>
-            <div class="story-title">${p.name}</div>
-            <div class="story-copy">${p.summary}</div>
-          </div>
-          <div class="score"><b>${p.score}</b><small>台灣參與度</small></div>
-        </article>`).join('') : '<div class="empty">找不到符合條件的產品。請改用品牌、品名或其他分類搜尋。</div>';
-    }
-
-    function renderBrands(){
-      const source = filteredProducts();
-      const grouped = [...new Map(source.map(p => [p.brand,p])).values()];
-      brandTable.innerHTML = `
-        <div class="brand-row head"><span>品牌</span><span>代表分類</span><span>最高等級</span><span>狀態</span></div>
-        ${grouped.map(p => `<div class="brand-row"><span class="brand-name">${p.brand}</span><span>${p.category}</span><span>${p.level} 級</span><span class="status verified">已收錄</span></div>`).join('') || '<div class="empty">沒有符合搜尋的品牌。</div>'}`;
-    }
-
-    function renderRanking(){
-      ranking.innerHTML = [...products].sort((a,b)=>b.score-a.score).slice(0,4).map((p,i)=>`
-        <div class="rank" data-product="${p.id}">
-          <span class="rank-num">${String(i+1).padStart(2,'0')}</span>
-          <div><div class="rank-name">${p.name}</div><div class="rank-meta">${p.brand} · ${p.status}</div></div>
-          <span class="rank-score">${p.score}</span>
-        </div>`).join('');
-    }
-
-    function openDrawer(id){
-      const p = id === 'method' ? methodData : products.find(item => item.id === id);
-      if(!p) return;
-      drawerContent.innerHTML = `
-        <div class="drawer-label">TAICHAN TRACE</div>
-        <h2>${p.name}</h2>
-        <p><strong>${p.brand}</strong><br>${p.summary}</p>
-        <div class="feature-meta"><span class="tag">${p.status}</span>${p.level ? `<span class="tag">${p.level} 級</span>`:''}</div>
-        <div class="journey">${p.journey.map(row=>`<div class="journey-row"><span>${row[0]}</span><strong>${row[1]}</strong><b>${row[2]}</b></div>`).join('')}</div>
-        <p>目前為介面示範資料，正式上線前仍需為每個環節補上來源網址、證據摘要與最後查證日期。</p>`;
-      drawer.classList.add('open');backdrop.classList.add('open');document.body.style.overflow='hidden';
-    }
-    function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');document.body.style.overflow=''}
-
-    document.addEventListener('click',e=>{
-      const product = e.target.closest('[data-product]');
-      if(product) openDrawer(product.dataset.product);
-      const scroll = e.target.closest('[data-scroll]');
-      if(scroll) document.getElementById(scroll.dataset.scroll)?.scrollIntoView({behavior:'smooth'});
-      const cat = e.target.closest('[data-category]');
-      if(cat){
-        activeCategory = cat.dataset.category;
-        document.querySelectorAll('[data-category]').forEach(b=>b.classList.toggle('active',b===cat));
-        renderStories();renderBrands();
-      }
-    });
-    document.addEventListener('keydown',e=>{
-      if(e.key==='Escape') closeDrawer();
-      if(e.key==='Enter' && e.target.matches('.story')) openDrawer(e.target.dataset.product);
-    });
-    search.addEventListener('input',()=>{renderStories();renderBrands()});
-    document.querySelector('#searchBtn').addEventListener('click',()=>document.querySelector('#stories').scrollIntoView({behavior:'smooth'}));
-    document.querySelector('#drawerClose').addEventListener('click',closeDrawer);
-    backdrop.addEventListener('click',closeDrawer);
-
-    renderStories();renderBrands();renderRanking();
-  </script>
+  <aside class="drawer" id="drawer" aria-modal="true" role="dialog" aria-labelledby="drawerTitle"><button class="drawer-close" id="drawerClose" type="button" aria-label="關閉">×</button><div id="drawerContent"></div></aside>
+  <script src="assets/magazine.js"></script>
 </body>
 </html>
