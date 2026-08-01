@@ -17,6 +17,7 @@ jobs:
       - run: python scripts/validate_media_rights.py
       - run: python scripts/validate_sampo_media.py
       - run: python scripts/validate_tatung_media.py
+      - run: python scripts/validate_oright_media.py
       - run: python scripts/validate_site.py
       - run: node --check assets/magazine.js
       - run: node --check assets/product-image-enhancements.js
