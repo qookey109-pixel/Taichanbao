@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "V2.10 SAMPO MULTI-IMAGE + EXTERNAL EVIDENCE";
+  const VERSION = "V2.11 TATUNG MULTI-IMAGE + TAIWAN ORIGIN EVIDENCE";
   const productsById = new Map();
   const productsByName = new Map();
   const activeMedia = new Map();
@@ -62,9 +62,10 @@
     document.querySelectorAll(".ticker-track span").forEach(note => {
       if (
         note.textContent.includes("完整圖片架構") ||
-        note.textContent.includes("6 筆示範＋4 筆官方圖片候選")
+        note.textContent.includes("6 筆示範＋4 筆官方圖片候選") ||
+        note.textContent.includes("兩個多圖案例")
       ) {
-        note.textContent = "兩個多圖案例：TENDAYS／SAMPO";
+        note.textContent = "三個多圖案例：TENDAYS／SAMPO／大同";
       }
     });
   }
@@ -120,7 +121,7 @@
     if (last) {
       last.innerHTML = product.verification_status === "demo_only"
         ? "<strong>重要：</strong>目前為介面示範資料，不能視為正式產品、產地或圖片來源結論。"
-        : "<strong>重要：</strong>官方圖片、官方規格與政府能效資料只支援各自的事實範圍；它們不等於製造地已完成查證。權利待確認的圖片不會通過正式發布 Gate。";
+        : "<strong>重要：</strong>官方圖片、品牌官方頁、官方商城、獎項與政府資料只支援各自的事實範圍；是否可正式發布仍需依實體證據、圖片權利與編輯審核判斷。";
     }
   }
 
