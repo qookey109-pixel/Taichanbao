@@ -27,6 +27,9 @@ jobs:
       - name: Validate image rights
         run: python scripts/validate_media_rights.py
 
+      - name: Validate SAMPO media overrides
+        run: python scripts/validate_sampo_media.py
+
       - name: Validate site
         run: python scripts/validate_site.py
 
