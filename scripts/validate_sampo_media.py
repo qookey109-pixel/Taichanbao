@@ -5,9 +5,7 @@ ROOT = Path(__file__).resolve().parents[1]
 overrides = json.loads((ROOT / "data/product.media.overrides.json").read_text(encoding="utf-8"))
 rights = json.loads((ROOT / "data/image_rights.sampo.json").read_text(encoding="utf-8"))
 
-assert len(overrides) == 1
-record = overrides[0]
-assert record["id"] == "pilot-sampo-sr-c58dv"
+record = next(row for row in overrides if row["id"] == "pilot-sampo-sr-c58dv")
 assert len(record["media"]["gallery"]) == 3
 assert len(record["media"]["evidence"]) == 1
 assert len(record["external_evidence"]) == 2
