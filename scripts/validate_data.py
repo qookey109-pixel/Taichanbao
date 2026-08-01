@@ -4,7 +4,7 @@ import json
 ROOT = Path(__file__).resolve().parents[1]
 rows = json.loads((ROOT / "data/products.demo.json").read_text(encoding="utf-8"))
 
-assert len(rows) == 7, "expected six demo records and one official-source pilot"
+assert len(rows) == 9, "expected six demo records and three official-source pilots"
 required = {
     "id", "brand", "name", "category", "scene", "taiwan_brand",
     "verification_status", "publication_status", "origin_summary",
@@ -31,5 +31,5 @@ for row in rows:
         raise AssertionError(f"{row['id']}: unsupported verification_status")
 
 assert demo_count == 6
-assert pilot_count == 1
-print(f"OK: demo={demo_count}; official-source pilot={pilot_count}; published=0")
+assert pilot_count == 3
+print(f"OK: demo={demo_count}; official-source pilots={pilot_count}; published=0")
