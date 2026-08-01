@@ -27,7 +27,10 @@ jobs:
       - name: Validate site
         run: python scripts/validate_site.py
 
-      - name: Check JavaScript
+      - name: Check V2.6 JavaScript
+        run: node --check assets/magazine.js
+
+      - name: Check V2.5 preview JavaScript
         run: node --check assets/app.js
 
       - name: Configure Pages
