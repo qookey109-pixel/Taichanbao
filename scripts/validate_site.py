@@ -36,6 +36,8 @@ for token in [
 for token in [
     "pilot-sampo-sr-c58dv", "government_energy_label_registry",
     "SR-C58DV", "不支持製造地", "permission_pending",
+    "pilot-tatung-tac11hnm", "official_brand_store",
+    "TAC-11HN-M", "產地標示台灣", "official_sources_consistent",
 ]:
     assert token in overrides, token
 
@@ -61,4 +63,4 @@ assert ".ticker" in preview_css
 assert ".layout" in preview_css
 assert ".mobile-nav" in preview_css
 
-print("OK: V2.10 SAMPO multi-image and external evidence enabled; V2.5 preview retained")
+print("OK: V2.11 Tatung third multi-image case enabled; V2.5 preview retained")
