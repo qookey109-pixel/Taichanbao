@@ -4,85 +4,52 @@
 
 ## Version
 
-`V2.7 Official Image Pilot`
+`V2.8 Complete Media Architecture`
 
 ## 正式網站方向
 
-使用者明確選擇雜誌型版本作為正式首頁。後續功能必須融入雜誌選品介面，不應改回一般資料庫 Dashboard。
+雜誌型介面是正式產品基準。新資料治理與圖片功能必須融入雜誌版，不改回一般資料庫 Dashboard。
 
 ## 已完成
 
-- 保留三欄雜誌首頁、橘色跑馬燈、封面專題、產品專題、品牌索引、本月台產榜與手機版。
-- 保留搜尋、場景、收藏、五種排序與正式發布 Gate。
-- 正式首頁讀取 `data/products.demo.json`。
-- 建立研究預覽／正式發布雙檢視與 `?view=published` 網址狀態。
-- 加入官方圖片與來源顯示支援。
-- 產品卡片可顯示官方主圖，載入失敗時退回 emoji。
-- 產品 Drawer 顯示官方大圖、來源連結、查閱日期與圖片權利狀態。
-- 保留 TENDAYS、大同、O'right 三筆既有官方來源候選。
-- 新增 SAMPO 聲寶 `SR-C58DV(Y7)` 官方來源圖片候選。
-- 保留 V2.5 Recovery Baseline 於 `versions_review/v2.5/`。
-- 保留既有 SQLite schema、資料庫與 `scripts/import_data.py` 匯入流程。
-- 更新資料驗證、網站驗證與 GitHub Pages 部署流程。
+- 保留 V2.7 雜誌首頁、搜尋、分類、場景、排序、收藏與 Formal Publication Gate。
+- 建立 `media.main / media.gallery / media.evidence` 完整圖片架構。
+- 卡片使用主圖；Drawer 可切換主圖、圖片集與查證照片。
+- 顯示圖片來源、來源類型、權利狀態與查閱日期。
+- 圖片失敗時提供 emoji fallback。
+- 移除以 `emoji` 欄位執行 `<img>` HTML 的資料方式。
+- 建立 `docs/MEDIA_MODEL.md` 與 `data/product.media.template.json`。
+- 更新資料與網站驗證器。
+- 保留 V2.5 Recovery 預覽、SQLite 與既有匯入流程。
 
-## 正式資料狀態
+## 資料狀態
 
 ```text
-介面示範資料：6
-官方來源圖片候選：4
+示範資料：6
+官方圖片候選：4
 正式發布：0
-demo_only：6
-official_source_found：4
-unpublished：10
-圖片權利 permission_pending：4
+圖片權利待確認：4
 ```
-
-## 官方來源圖片候選
-
-- TENDAYS 健康隨身枕 `TDT01-T017A`
-- 大同晶鋼電鍋 `TAC-11HN-M`
-- O'right Bio 咖啡因強健洗髮精 `4712782261130`
-- SAMPO 聲寶冰箱 `SR-C58DV(Y7)`
-
-這四筆只能出現在研究預覽。官方頁面可作為名稱、型號、圖片或品牌宣稱的來源，但不等於產地已完成獨立查證，亦不代表圖片已取得使用授權。
 
 ## 未完成
 
-- 取回原先 20 筆候選 JSON、來源、研究文件與完整查證紀錄。
-- 取得或確認官方產品圖片的使用授權。
-- 以實體標示、政府資料或其他獨立來源核對官方產地宣稱。
-- 重新核對 AREX 09、TENDAYS、花伴小方巾、HITACHI NTB、聲寶 SR-C58DV。
-- 建立正式 intake 表單或後端。
-- 把 SQLite 正式資料與前台公開 JSON 建立受控發布流程。
-- 將介面示範產品替換成具完整證據與圖片權利資料的正式產品。
+- 為產品補充第二張以上的官方圖片。
+- 收集包裝、型號、產地與製造商查證照片。
+- 取得或確認官方圖片使用授權。
+- 將可授權圖片下載為 Repository 本地資產，避免外站擋圖或網址失效。
+- 取回原先 20 筆候選與完整研究證據。
+- 建立 SQLite 到公開 JSON 的受控發布流程。
 
-## 不可重做或覆蓋
+## 不可覆蓋
 
 - 使用者選定的雜誌型正式首頁方向。
-- 候選 01–05 既有查證成果；原檔取回前不得重新猜測。
-- V0.3／V1.2 雜誌介面基準。
-- V0.4 候選資料基礎。
-- V0.5 研究預覽。
 - V2.3 Formal Publication Gate。
 - V2.5 Recovery Baseline 預覽。
-- TENDAYS、大同與 O'right 既有官方來源候選。
 - 既有 SQLite 與資料匯入治理成果。
-
-## 重要決策
-
-- 台灣品牌不等於台灣製造。
-- 以單一產品／型號為查證單位。
-- `demo_only` 與 `official_source_found` 均不得進入正式發布。
-- `ready_for_editorial_review` 不等於 `published`。
-- 正式資料不得由前台、排序、收藏或 metadata 自動升級。
-- 官方來源、獨立證據與圖片權利狀態必須分開記錄。
-- 圖片權利未確認時保持 `permission_pending`。
-- 未知維持待確認，衝突不得隱藏。
-- 雜誌視覺是正式產品基準；新功能應以漸進方式整合。
+- 圖片顯示不得改變查證或發布狀態。
 
 ## 下一步
 
-1. 驗證四個官方圖片網址在 GitHub Pages 是否可正常外連顯示。
-2. 逐一補充圖片使用條款或取得品牌授權。
-3. 先選一筆產品完成外部證據、實體標示與圖片權利的全流程查證。
-4. 通過 Gate 後再建立第一筆正式發布資料。
+1. 選一筆產品補齊 `gallery` 與 `evidence`，驗證完整多圖流程。
+2. 建立圖片授權追蹤清單。
+3. 取得一筆完整可發布的真實產品資料，測試 Formal Publication Gate。
