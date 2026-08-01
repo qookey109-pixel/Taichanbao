@@ -6,32 +6,41 @@
   <title>台產報｜台灣品牌選品誌</title>
   <meta name="description" content="用雜誌選品的方式認識台灣品牌，並透明揭露單一產品的產地、製程與資料缺口。">
   <link rel="stylesheet" href="assets/magazine.css">
+  <link rel="stylesheet" href="assets/product-images.css">
 </head>
 <body>
   <div class="ticker sans" aria-label="網站公告">
     <button id="tickerToggle" class="ticker-toggle" type="button" aria-pressed="false">暫停</button>
-    <div class="ticker-window"><div class="ticker-track" id="tickerTrack">
-      <span>買台灣品牌，也買得明白</span><span>台灣品牌 ≠ 全流程台灣製</span><span>目前 6 筆皆為介面示範資料</span><span>正式發布 Gate：0 筆</span>
-      <span>買台灣品牌，也買得明白</span><span>台灣品牌 ≠ 全流程台灣製</span><span>目前 6 筆皆為介面示範資料</span><span>正式發布 Gate：0 筆</span>
-    </div></div>
+    <div class="ticker-window">
+      <div class="ticker-track" id="tickerTrack">
+        <span>買台灣品牌，也買得明白</span><span>台灣品牌 ≠ 全流程台灣製</span><span>6 筆示範＋4 筆官方圖片候選</span><span>正式發布 Gate：0 筆</span>
+        <span>買台灣品牌，也買得明白</span><span>台灣品牌 ≠ 全流程台灣製</span><span>6 筆示範＋4 筆官方圖片候選</span><span>正式發布 Gate：0 筆</span>
+      </div>
+    </div>
   </div>
 
   <div class="app">
     <aside class="sidebar">
-      <a class="wordmark" href="#top" aria-label="台產報首頁"><span class="logo-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span>台產報</span></a>
+      <a class="wordmark" href="#top" aria-label="台產報首頁">
+        <span class="logo-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span>台產報</span>
+      </a>
       <nav class="sidebar-nav sans" aria-label="主要導覽">
         <button class="nav-btn active" data-scroll="top"><span>今日選品</span><span>01</span></button>
         <button class="nav-btn" data-scroll="stories"><span>產品專題</span><span>02</span></button>
         <button class="nav-btn" data-scroll="brands"><span>品牌索引</span><span>03</span></button>
         <button class="nav-btn" data-scroll="method"><span>查證方法</span><span>04</span></button>
       </nav>
-      <div class="side-note sans"><strong>V2.6 MAGAZINE DISCOVERY</strong>保留雜誌選品風格，加入搜尋、收藏、場景與正式發布 Gate。</div>
+      <div class="side-note sans"><strong>V2.7 OFFICIAL IMAGE PILOT</strong>保留雜誌選品風格，加入搜尋、收藏、場景與正式發布 Gate。</div>
     </aside>
 
     <div class="workspace" id="top">
       <header class="top-tools">
         <div class="edition sans">VOL. 002 · 2026 AUGUST</div>
-        <div class="search-wrap"><input id="globalSearch" type="search" placeholder="搜尋品牌、產品、分類或標籤" aria-label="搜尋品牌、產品、分類或標籤"><button id="searchBtn" type="button" aria-label="前往搜尋結果">⌕</button></div>
+        <div class="search-wrap">
+          <input id="globalSearch" type="search" placeholder="搜尋品牌、產品、分類或標籤" aria-label="搜尋品牌、產品、分類或標籤">
+          <button id="searchBtn" type="button" aria-label="前往搜尋結果">⌕</button>
+        </div>
         <button class="top-action" id="openIntake" type="button">提供產品線索</button>
       </header>
 
@@ -43,12 +52,19 @@
 
       <div class="layout">
         <main class="main">
-          <div class="issue-head"><h1>今日台產</h1><p class="sans">以編輯選品方式介紹台灣品牌，同時公開產品的品牌身分、產地線索、製程狀態與資料缺口。</p></div>
+          <div class="issue-head">
+            <h1>今日台產</h1>
+            <p class="sans">以編輯選品方式介紹台灣品牌，同時公開產品的品牌身分、產地線索、製程狀態與資料缺口。</p>
+          </div>
 
           <section class="cover-grid" aria-label="本期主題">
             <article class="feature">
               <div class="feature-top"><span class="stamp sans">本期封面 · 台灣品牌透明化</span></div>
-              <div class="feature-bottom"><h2>支持台灣品牌，<br>也先把製造地說清楚。</h2><div class="feature-meta"><span class="tag">單一產品查證</span><span class="tag">資料缺口公開</span><span class="tag">不把品牌等同產地</span></div><button class="read-btn" type="button" data-scroll="stories">開始看本期選品 →</button></div>
+              <div class="feature-bottom">
+                <h2>支持台灣品牌，<br>也先把製造地說清楚。</h2>
+                <div class="feature-meta"><span class="tag">單一產品查證</span><span class="tag">資料缺口公開</span><span class="tag">不把品牌等同產地</span></div>
+                <button class="read-btn" type="button" data-scroll="stories">開始看本期選品 →</button>
+              </div>
             </article>
             <div class="cover-stack">
               <article class="mini-cover orange"><span class="icon">🔎</span><small>查證方法</small><h3>未知就標待確認，<br>衝突不隱藏。</h3><button type="button" data-scroll="method">查看發布規則</button></article>
@@ -57,14 +73,28 @@
           </section>
 
           <section class="discovery-panel sans" aria-label="探索與排序">
-            <div class="discovery-row"><strong>使用場景</strong><div class="chip-group" id="sceneFilters"><button class="active" data-scene="全部" type="button">全部場景</button><button data-scene="居家" type="button">居家</button><button data-scene="辦公" type="button">辦公</button><button data-scene="送禮" type="button">送禮</button><button data-scene="外出" type="button">外出</button></div></div>
-            <div class="discovery-row"><strong>排序方式</strong><select id="sortSelect" aria-label="排序方式"><option value="score">台灣參與分數</option><option value="name">產品名稱</option><option value="brand">品牌名稱</option><option value="category">產品分類</option><option value="favorites">收藏優先</option></select><label class="favorite-switch"><input id="favoritesOnly" type="checkbox">只看收藏</label></div>
+            <div class="discovery-row"><strong>使用場景</strong><div class="chip-group" id="sceneFilters">
+              <button class="active" data-scene="全部" type="button">全部場景</button><button data-scene="居家" type="button">居家</button><button data-scene="辦公" type="button">辦公</button><button data-scene="送禮" type="button">送禮</button><button data-scene="外出" type="button">外出</button>
+            </div></div>
+            <div class="discovery-row"><strong>排序方式</strong>
+              <select id="sortSelect" aria-label="排序方式"><option value="score">台灣參與分數</option><option value="name">產品名稱</option><option value="brand">品牌名稱</option><option value="category">產品分類</option><option value="favorites">收藏優先</option></select>
+              <label class="favorite-switch"><input id="favoritesOnly" type="checkbox">只看收藏</label>
+            </div>
           </section>
 
-          <div class="category-strip sans" id="categoryFilters" aria-label="分類篩選"><button class="active" data-category="全部" type="button">全部選品</button><button data-category="食品飲品" type="button">食品飲品</button><button data-category="生活用品" type="button">生活用品</button><button data-category="清潔用品" type="button">清潔用品</button><button data-category="台灣品牌" type="button">台灣品牌</button></div>
+          <div class="category-strip sans" id="categoryFilters" aria-label="分類篩選">
+            <button class="active" data-category="全部" type="button">全部選品</button><button data-category="食品飲品" type="button">食品飲品</button><button data-category="生活用品" type="button">生活用品</button><button data-category="清潔用品" type="button">清潔用品</button><button data-category="台灣品牌" type="button">台灣品牌</button>
+          </div>
 
-          <section id="stories"><div class="section-title"><h2 id="storyHeading">產品專題</h2><span><b id="visibleCount">0</b> STORIES · <span id="currentViewLabel">研究預覽</span></span></div><div class="story-list" id="storyList" aria-live="polite"></div></section>
-          <section class="brand-index" id="brands"><div class="section-title"><h2>品牌索引</h2><span>BRAND DIRECTORY</span></div><div class="brand-table" id="brandTable"></div></section>
+          <section id="stories">
+            <div class="section-title"><h2 id="storyHeading">產品專題</h2><span><b id="visibleCount">0</b> STORIES · <span id="currentViewLabel">研究預覽</span></span></div>
+            <div class="story-list" id="storyList" aria-live="polite"></div>
+          </section>
+
+          <section class="brand-index" id="brands">
+            <div class="section-title"><h2>品牌索引</h2><span>BRAND DIRECTORY</span></div>
+            <div class="brand-table" id="brandTable"></div>
+          </section>
 
           <section class="method-section" id="method">
             <div class="section-title"><h2>正式發布 Gate</h2><span>PUBLICATION RULES</span></div>
@@ -80,8 +110,12 @@
         <aside class="rail">
           <section class="rail-card"><h2>本月台產榜</h2><div id="ranking"></div></section>
           <section class="rail-card"><h2>我的收藏</h2><div class="favorite-summary sans"><strong id="favoriteCount">0</strong><span>件已收藏選品</span><button id="openFavorites" type="button">查看收藏</button></div></section>
-          <section class="rail-card"><h2>資料快訊</h2><article class="brief"><time>2026.08.01</time><p>正式首頁升級為 V2.6 Magazine Discovery。</p></article><article class="brief"><time>2026.07.31</time><p>V2.5 Recovery Baseline 保留在歷史預覽路徑。</p></article><article class="brief"><time>2026.07.27</time><p>確立台灣品牌與實際製造地分開呈現。</p></article></section>
-          <section class="verify-box"><h3>目前是示範資料</h3><p>六筆產品用來展示介面與資料治理，不能視為正式產地查證結果。正式發布目前為 0。</p><button type="button" data-scroll="method">查看查證規則</button></section>
+          <section class="rail-card"><h2>資料快訊</h2>
+            <article class="brief"><time>2026.08.01</time><p>整合 TENDAYS、大同、O'right 與 SAMPO 四筆官方圖片候選。</p></article><article class="brief"><time>2026.08.01</time><p>正式首頁升級為 V2.6 Magazine Discovery。</p></article>
+            <article class="brief"><time>2026.07.31</time><p>V2.5 Recovery Baseline 保留在歷史預覽路徑。</p></article>
+            <article class="brief"><time>2026.07.27</time><p>確立台灣品牌與實際製造地分開呈現。</p></article>
+          </section>
+          <section class="verify-box"><h3>目前是示範資料</h3><p>目前有六筆介面示範資料，以及 TENDAYS、大同、O'right、SAMPO 四筆官方圖片候選；圖片仍未取得授權確認，也未通過正式發布 Gate。正式發布目前為 0。</p><button type="button" data-scroll="method">查看查證規則</button></section>
         </aside>
       </div>
     </div>
@@ -91,5 +125,6 @@
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="drawer" id="drawer" aria-modal="true" role="dialog" aria-labelledby="drawerTitle"><button class="drawer-close" id="drawerClose" type="button" aria-label="關閉">×</button><div id="drawerContent"></div></aside>
   <script src="assets/magazine.js"></script>
+  <script src="assets/product-image-enhancements.js"></script>
 </body>
 </html>
