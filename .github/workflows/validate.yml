@@ -15,4 +15,5 @@ jobs:
           python-version: "3.12"
       - run: python scripts/validate_data.py
       - run: python scripts/validate_site.py
+      - run: node --check assets/magazine.js
       - run: node --check assets/app.js
