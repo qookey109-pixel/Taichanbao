@@ -51,6 +51,9 @@ appliance = json.loads((ROOT / "data/products.registry.appliances.json").read_te
 assert len(appliance) == 35
 assert all(row["category"] == "家電" for row in appliance)
 assert len({row["brand"] for row in appliance}) >= 6
-assert {"p=2", "p=4", "p=5"} <= {fragment for row in appliance for fragment in [next((p for p in ["p=2", "p=4", "p=5"] if p in row["source_url"]), "")]}
+source_urls = {row["source_url"] for row in appliance}
+assert any("p=2" in url for url in source_urls), "appliance shard must retain page-2 provenance"
+assert any("p=4" in url for url in source_urls), "appliance shard must retain page-4 provenance"
+assert any("p=5" in url for url in source_urls), "appliance shard must retain page-5 provenance"
 
 print(f"OK: registry scale={len(rows)} across {len(manifest['shards'])} shards; certificates unique=50; appliance expansion=35; published=0")
