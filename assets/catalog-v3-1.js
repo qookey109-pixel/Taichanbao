@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "V3.1 REGISTRY SCALE 50";
+  const VERSION = "V3.3 REGISTRY SCALE 100";
   const state = { records: [], query: "", category: "all", evidence: "all", brand: "all", source: "all", sort: "evidence", loadMode: "fallback" };
   const $ = selector => document.querySelector(selector);
   const els = {
@@ -33,18 +33,19 @@
       }
       await bootFromResearchSources();
     } catch (error) {
-      console.warn("V3.1 evidence catalog unavailable:", error);
+      console.warn("V3.3 evidence catalog unavailable:", error);
       if (els.grid) els.grid.innerHTML = '<div class="catalog-empty">證據資料庫載入失敗；編輯專題仍可使用。</div>';
     }
   }
 
   function validPublicCatalog(catalog) {
     return catalog
-      && catalog.catalog_version === "V3.1 Registry Scale 50"
+      && catalog.catalog_version === "V3.3 Registry Scale 100"
       && Array.isArray(catalog.records)
-      && catalog.records.length === 54
-      && catalog.counts?.mit_active_exact_models === 50
+      && catalog.records.length === 104
+      && catalog.counts?.mit_active_exact_models === 100
       && catalog.counts?.deep_editorial_cases === 4
+      && catalog.counts?.registry_shards === 3
       && catalog.counts?.formal_published === 0;
   }
 
@@ -166,11 +167,11 @@
   function updateVersion(demoCount, shardCount) {
     document.querySelectorAll(".side-note strong").forEach(node => node.textContent = VERSION);
     const edition = $(".edition");
-    if (edition) edition.textContent = "VOL. 003 · 2026 AUGUST · REGISTRY SCALE 50";
+    if (edition) edition.textContent = "VOL. 004 · 2026 AUGUST · REGISTRY SCALE 100";
     const mitCount = state.records.filter(row => row.catalog_source === "mit_registry").length;
     const sourceText = state.loadMode === "public_catalog" ? "Public catalog · deploy build" : `Registry shards ${shardCount} · fallback`;
     const sequence = [
-      "V3.1：Registry Scale 50",
+      "V3.3：Registry Scale 100",
       `真實研究候選 ${state.records.length} 筆`,
       `MIT 有效精確型號 ${mitCount} 筆`,
       sourceText
