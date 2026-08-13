@@ -44,7 +44,7 @@ def classify(result, registry_row, registered_candidates):
             return {
                 "bucket": "deep_candidate_assets_blocked" if rights == "blocked" else "deep_candidate_review",
                 "promotion_state": "registered_deep_candidate" if registered else "eligible_for_deep_candidate_review",
-                "reason": "台灣品牌、現售／供應與 exact-model 官方頁皆已驗證；仍須處理圖片權利與人工編輯 Gate。",
+                "reason": "台灣品牌、現售／供應與 exact-model 官方頁皆已驗證；候選層仍須保留圖片權利與正式發布 Gate。",
             }
         return {
             "bucket": "taiwan_brand_research_only",
@@ -101,20 +101,20 @@ def build():
         "non_taiwan_brand_taiwan_made": 3,
         "brand_origin_unverified_research_only": 9,
     }
-    assert sum(item["promotion_state"] == "registered_deep_candidate" for item in items) == 1
-    assert sum(item["promotion_state"] == "eligible_for_deep_candidate_review" for item in items) == 1
+    assert sum(item["promotion_state"] == "registered_deep_candidate" for item in items) == 2
+    assert sum(item["promotion_state"] == "eligible_for_deep_candidate_review" for item in items) == 0
     assert all(item["publication_status"] == "unpublished" for item in items)
 
     return {
-        "version": "V3.7 Promotion Audit",
+        "version": "V3.8 Candidate Promotion Review",
         "generated_at": date.today().isoformat(),
         "researched_records": len(items),
         "formal_published": 0,
-        "registered_deep_candidates": 1,
-        "eligible_unregistered_deep_candidates": 1,
+        "registered_deep_candidates": 2,
+        "eligible_unregistered_deep_candidates": 0,
         "buckets": buckets,
         "items": items,
-        "policy": "Promotion Audit classifies research outcomes only. It never changes Registry, Deep Candidate or formal publication state automatically.",
+        "policy": "Promotion Audit classifies research outcomes only. V3.8 registers both qualifying CHIMEI records as blocked Deep Candidates; it never changes formal publication state automatically.",
     }
 
 
