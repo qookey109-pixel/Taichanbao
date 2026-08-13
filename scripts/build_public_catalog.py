@@ -55,12 +55,39 @@ def merge_deep(base, override):
     return merged
 
 
-def normalize_registry(row):
-    return {
+def apply_enrichment(row, result):
+    if not result:
+        return row, None
+    findings = result.get("findings") or {}
+    brand_status = row.get("brand_origin_status", "unverified")
+    brand_finding = findings.get("brand_identity") or {}
+    if brand_finding.get("status") == "verified" and brand_finding.get("result") == "taiwan_brand_confirmed":
+        brand_status = "taiwan_brand_confirmed"
+
+    current_sale = None
+    sale_finding = findings.get("current_sale") or {}
+    if sale_finding.get("status") == "verified":
+        current_sale = True
+
+    enriched = {
         **row,
+        "brand_origin_status": brand_status,
+        "current_sale_confirmed": current_sale,
+        "enrichment": {
+            "checked_at": result.get("checked_at"),
+            "findings": findings,
+        },
+    }
+    return enriched, current_sale
+
+
+def normalize_registry(row, enrichment_result=None):
+    enriched, current_sale = apply_enrichment(row, enrichment_result)
+    return {
+        **enriched,
         "catalog_source": "mit_registry",
-        "taiwan_brand": row.get("brand_origin_status") == "taiwan_brand_confirmed",
-        "current_sale_confirmed": None,
+        "taiwan_brand": enriched.get("brand_origin_status") == "taiwan_brand_confirmed",
+        "current_sale_confirmed": current_sale,
         "external_evidence": [],
     }
 
@@ -69,13 +96,15 @@ def build():
     base = load("data/products.demo.json")
     overrides = load("data/product.media.overrides.json")
     manifest = load("data/registry.manifest.json")
+    enrichment_results = load("data/enrichment.results.v1.json")
     override_map = {row["id"]: row for row in overrides}
+    enrichment_map = {row["record_id"]: row for row in enrichment_results.get("records", [])}
 
     deep = [merge_deep(row, override_map.get(row["id"])) for row in base if row["verification_status"] != "demo_only"]
     demos = [row for row in base if row["verification_status"] == "demo_only"]
     registry = []
     for shard in manifest["shards"]:
-        registry.extend(normalize_registry(row) for row in load(shard["path"]))
+        registry.extend(normalize_registry(row, enrichment_map.get(row["id"])) for row in load(shard["path"]))
 
     expected_registry = int(manifest["total_records"])
     records = deep + registry
@@ -88,6 +117,10 @@ def build():
     assert all(row.get("source_url") for row in records), "every public record needs a primary source URL"
     assert all(row.get("source_name") for row in records), "every public record needs a primary source name"
 
+    enriched_registry = [row for row in registry if row.get("enrichment")]
+    confirmed_brands = [row for row in enriched_registry if row.get("brand_origin_status") == "taiwan_brand_confirmed"]
+    confirmed_sales = [row for row in enriched_registry if row.get("current_sale_confirmed") is True]
+
     return {
         "schema_version": 1,
         "catalog_version": manifest["version"],
@@ -99,6 +132,9 @@ def build():
             "isolated_demo_records": len(demos),
             "formal_published": sum(row.get("publication_status") == "published" for row in records),
             "registry_shards": len(manifest["shards"]),
+            "enrichment_researched_records": len(enriched_registry),
+            "enrichment_taiwan_brand_confirmed": len(confirmed_brands),
+            "enrichment_current_sale_confirmed": len(confirmed_sales),
         },
         "records": records,
     }
