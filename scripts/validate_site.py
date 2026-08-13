@@ -10,7 +10,10 @@ media_css = (ROOT / "assets/product-images.css").read_text(encoding="utf-8")
 catalog_loader = (ROOT / "assets/catalog-v3.js").read_text(encoding="utf-8")
 catalog_js = (ROOT / "assets/catalog-v3-1.js").read_text(encoding="utf-8")
 catalog_css = (ROOT / "assets/catalog-v3.css").read_text(encoding="utf-8")
+lifecycle_js = (ROOT / "assets/lifecycle-v3-2.js").read_text(encoding="utf-8")
+lifecycle_css = (ROOT / "assets/lifecycle-v3-2.css").read_text(encoding="utf-8")
 public_builder = (ROOT / "scripts/build_public_catalog.py").read_text(encoding="utf-8")
+expiry_builder = (ROOT / "scripts/report_registry_expiry.py").read_text(encoding="utf-8")
 registry_seed = (ROOT / "data/products.registry.json").read_text(encoding="utf-8")
 registry_appliances = (ROOT / "data/products.registry.appliances.json").read_text(encoding="utf-8")
 manifest = json.loads((ROOT / "data/registry.manifest.json").read_text(encoding="utf-8"))
@@ -33,7 +36,7 @@ for token in ["publicationGate", "localStorage", "taichanbao-favorites", "produc
 for token in ["product.media.overrides.json", "mergeProduct", "external_evidence", "renderExternalEvidence", "renderGallery", "rightsLabel", "safeUrl"]:
     assert token in media_js, token
 
-for token in ["catalog-v3-1.js", "V3.1 Registry Scale 50"]:
+for token in ["catalog-v3-1.js", "lifecycle-v3-2.js", "lifecycle-v3-2.css", "V3.2 Registry Lifecycle", "V3.1 Registry Scale 50"]:
     assert token in catalog_loader, token
 
 for token in [
@@ -45,10 +48,23 @@ for token in [
     assert token in catalog_js, token
 
 for token in [
+    "V3.2 REGISTRY LIFECYCLE", "registry-expiry.json", "catalog.public.json",
+    "lifecycle-section", "lifecycleNext", "data-life-window", "lifecycle-pill",
+    "expiredCount", "decorateCatalogCards"
+]:
+    assert token in lifecycle_js, token
+
+for token in [".lifecycle-section", ".lifecycle-metrics", ".lifecycle-row", ".lifecycle-pill", ".lifecycle-pill.soon", ".lifecycle-pill.urgent"]:
+    assert token in lifecycle_css, token
+
+for token in [
     "data/catalog.public.json", "catalog_version", "V3.1 Registry Scale 50",
     "registry.manifest.json", "real_research_candidates", "every public record needs a primary source URL"
 ]:
     assert token in public_builder, token
+
+for token in ["expiring_within_30_days", "expiring_within_90_days", "expiring_within_180_days", "expiring_within_365_days", "expired_count", "--output"]:
+    assert token in expiry_builder, token
 
 for token in [".catalog-hero", ".catalog-metrics", ".catalog-grid", ".catalog-card", ".evidence-badge", ".catalog-controls", ".media-scope-pill"]:
     assert token in catalog_css, token
@@ -66,7 +82,7 @@ assert len(manifest["shards"]) == 2
 for token in ["pilot-sampo-sr-c58dv", "pilot-tatung-tac11hnm", "pilot-oright-bio-caffeine", "permission_pending"]:
     assert token in overrides, token
 
-assert build_info["version"] == "V3.1 Registry Scale 50"
+assert build_info["version"] == "V3.2 Registry Lifecycle"
 assert build_info["data_snapshot"] == "2026-08-13"
 assert build_info["real_research_candidates"] == 54
 assert build_info["deep_editorial_cases"] == 4
@@ -74,6 +90,10 @@ assert build_info["mit_active_exact_models"] == 50
 assert build_info["registry_shards"] == 2
 assert build_info["isolated_demo_records"] == 6
 assert build_info["formal_published"] == 0
+assert build_info["registry_lifecycle_dashboard"] is True
+assert build_info["registry_expired"] == 0
+assert build_info["registry_expiring_within_90_days"] >= 1
+assert build_info["lifecycle_report"] == "data/registry-expiry.json"
 assert build_info["deployment_source"] == "GitHub Actions"
 
 for token in [".media-gallery", ".media-thumbnails", ".media-thumb", ".media-inventory", ".drawer-media-frame", ".media-rights"]:
@@ -92,4 +112,4 @@ assert ".ticker" in preview_css
 assert ".layout" in preview_css
 assert ".mobile-nav" in preview_css
 
-print("OK: V3.1 public-catalog-first evidence catalog enabled; real=54 MIT=50 deep=4 demos=6 published=0; V2.5 preview retained")
+print("OK: V3.2 lifecycle dashboard enabled; real=54 MIT=50 deep=4 demos=6 published=0; expiry dashboard and V2.5 preview retained")
