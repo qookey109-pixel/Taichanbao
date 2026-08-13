@@ -27,6 +27,9 @@ jobs:
       - name: Validate V3 evidence registry
         run: python scripts/validate_registry.py
 
+      - name: Validate V3 cross-dataset catalog
+        run: python scripts/validate_v3_catalog.py
+
       - name: Validate image rights
         run: python scripts/validate_media_rights.py
 
