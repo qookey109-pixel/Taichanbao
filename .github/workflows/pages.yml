@@ -38,9 +38,9 @@ jobs:
         run: python scripts/validate_category_balance.py
       - name: Validate V3.7 enrichment completion
         run: python scripts/validate_enrichment_v3_4.py
-      - name: Validate V3.5 deep candidate Gate
+      - name: Validate V3.8 dual blocked Deep Candidates
         run: python scripts/validate_deep_candidates_v3_5.py
-      - name: Validate V3.7 promotion audit
+      - name: Validate V3.8 promotion audit
         run: python scripts/validate_promotion_audit_v3_7.py
       - name: Build public catalog
         run: python scripts/build_public_catalog.py --output data/catalog.public.json
@@ -60,7 +60,7 @@ jobs:
         run: python scripts/validate_tatung_media.py
       - name: Validate O'right media scope
         run: python scripts/validate_oright_media.py
-      - name: Validate V3.7 site
+      - name: Validate V3.8 site
         run: python scripts/validate_site.py
       - name: Check magazine JavaScript
         run: node --check assets/magazine.js
@@ -76,11 +76,11 @@ jobs:
         run: node --check assets/scale-v3-3.js
       - name: Check enrichment JavaScript
         run: node --check assets/enrichment-v3-4.js
-      - name: Check V3.5 deep candidate JavaScript
+      - name: Check V3.8 deep candidate JavaScript
         run: node --check assets/deep-candidates-v3-5.js
       - name: Check V3.6 brand-origin JavaScript
         run: node --check assets/brand-origin-v3-6.js
-      - name: Check V3.7 promotion audit JavaScript
+      - name: Check V3.8 promotion audit JavaScript
         run: node --check assets/promotion-audit-v3-7.js
       - name: Check V2.5 preview JavaScript
         run: node --check assets/app.js
