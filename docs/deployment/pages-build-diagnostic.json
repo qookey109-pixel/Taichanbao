@@ -1,0 +1,127 @@
+{
+  "workflow": "Pages Build Gate Diagnostic",
+  "recorded_at": "2026-08-13T08:42:01.849611+00:00",
+  "all_passed": true,
+  "failed": [],
+  "results": [
+    {
+      "name": "validate_data",
+      "command": "python scripts/validate_data.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: demo=6; official-source pilots=4; published=0; TENDAYS gallery=3 evidence=1"
+    },
+    {
+      "name": "validate_registry_seed",
+      "command": "python scripts/validate_registry.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: registry=15; categories=6; brands=14; all records exact-model MIT active as of 2026-08-13 and unpublished"
+    },
+    {
+      "name": "validate_registry_scale",
+      "command": "python scripts/validate_registry_scale.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: registry scale=50 across 2 shards; certificates unique=50; appliance expansion=35; published=0"
+    },
+    {
+      "name": "validate_v3_catalog",
+      "command": "python scripts/validate_v3_catalog.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: V3 catalog real=19 (deep=4 + MIT=15); demos=6 isolated; deep evidence levels=['B', 'C', 'D', 'D']; published=0"
+    },
+    {
+      "name": "validate_v3_1_catalog",
+      "command": "python scripts/validate_v3_1_catalog.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: V3.1 catalog real=54 (deep=4 + MIT=50); demos=6 isolated; published=0"
+    },
+    {
+      "name": "build_public_catalog_check",
+      "command": "python scripts/build_public_catalog.py --check-only",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "{\"deep_editorial_cases\": 4, \"formal_published\": 0, \"isolated_demo_records\": 6, \"mit_active_exact_models\": 50, \"real_research_candidates\": 54, \"registry_shards\": 2}"
+    },
+    {
+      "name": "registry_expiry_check",
+      "command": "python scripts/report_registry_expiry.py --check",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: registry=50 expired=0; within90=1"
+    },
+    {
+      "name": "validate_media_rights",
+      "command": "python scripts/validate_media_rights.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: image rights ledger covers 7 image assets; permission_pending=7"
+    },
+    {
+      "name": "validate_sampo_media",
+      "command": "python scripts/validate_sampo_media.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: SAMPO gallery=3; evidence placeholder=1; external evidence=2; rights tracked=3"
+    },
+    {
+      "name": "validate_tatung_media",
+      "command": "python scripts/validate_tatung_media.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: Tatung gallery=4; evidence placeholder=1; external evidence=3; rights tracked=4"
+    },
+    {
+      "name": "validate_oright_media",
+      "command": "python scripts/validate_oright_media.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: O'right gallery=3; evidence placeholder=1; exact-model evidence=1; related-series evidence=1; rights tracked=3"
+    },
+    {
+      "name": "validate_site",
+      "command": "python scripts/validate_site.py",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": "OK: V3.1 public-catalog-first evidence catalog enabled; real=54 MIT=50 deep=4 demos=6 published=0; V2.5 preview retained"
+    },
+    {
+      "name": "node_magazine",
+      "command": "node --check assets/magazine.js",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": ""
+    },
+    {
+      "name": "node_image_enhancements",
+      "command": "node --check assets/product-image-enhancements.js",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": ""
+    },
+    {
+      "name": "node_catalog_loader",
+      "command": "node --check assets/catalog-v3.js",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": ""
+    },
+    {
+      "name": "node_catalog_v3_1",
+      "command": "node --check assets/catalog-v3-1.js",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": ""
+    },
+    {
+      "name": "node_v2_5_preview",
+      "command": "node --check assets/app.js",
+      "exit_code": 0,
+      "ok": true,
+      "log_tail": ""
+    }
+  ]
+}
