@@ -14,10 +14,17 @@
   "category_concentration_gate": true,
   "max_category_share": 0.4,
   "enrichment_queue": 20,
-  "enrichment_verified_tasks": 0,
+  "enrichment_researched_records": 5,
+  "enrichment_verified_tasks": 5,
+  "enrichment_not_found_tasks": 12,
+  "enrichment_blocked_tasks": 3,
+  "enrichment_pending_tasks": 60,
+  "enrichment_taiwan_brand_confirmed": 3,
+  "enrichment_current_sale_confirmed": 2,
   "enrichment_task_types": 4,
   "lifecycle_report": "data/registry-expiry.json",
   "enrichment_queue_source": "data/enrichment.queue.json",
+  "enrichment_results_source": "data/enrichment.results.v1.json",
   "deployment_source": "GitHub Actions",
-  "note": "V3.4 adds a 20-record enrichment workbench for brand identity, current-sale, official product page and image-rights research. Queue progress never changes verification or publication status automatically."
+  "note": "V3.4 first enrichment batch researched five P1 records. Verified findings are merged only into deploy-time public catalog fields; Registry manufacturing evidence and formal publication status remain unchanged."
 }
