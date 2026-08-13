@@ -1,0 +1,59 @@
+{
+  "version": "V3.5 Deep Candidate Gate",
+  "updated_at": "2026-08-13",
+  "policy": "Deep editorial candidate status is not publication. Any blocking gate keeps the product unpublished and outside the formal deep editorial cases.",
+  "items": [
+    {
+      "candidate_id": "deep-candidate-chimei-kd884hp0",
+      "source_record_id": "mit-appliance-0200003802030-kd-884hp0",
+      "brand": "CHIMEI 奇美",
+      "name": "紫外線烘碗機",
+      "model": "KD-884HP0",
+      "candidate_stage": "deep_editorial_candidate",
+      "candidate_status": "blocked_assets",
+      "publication_status": "unpublished",
+      "why_selected": "目前 Enrichment Queue 中唯一同時具備台灣品牌身分、精確型號官方產品頁、官方現行產品線證據、有效 MIT 精確型號紀錄，且品牌官方規格明列製造產地台灣的候選。",
+      "gate": {
+        "brand_identity": "pass",
+        "exact_model_identity": "pass",
+        "mit_manufacturing_evidence": "pass",
+        "current_sale_or_supply": "pass",
+        "exact_official_product_page": "pass",
+        "key_conflict_review": "pass_no_conflict_found",
+        "image_rights": "blocked",
+        "editorial_review": "pending",
+        "formal_publication": "blocked"
+      },
+      "blocking_reasons": [
+        "官方產品圖片尚未取得第三方重用授權。",
+        "尚未完成台產報 deep editorial review 與正式發布審核。"
+      ],
+      "evidence": [
+        {
+          "type": "brand_identity",
+          "source_name": "奇美家電官方－品牌故事",
+          "source_url": "https://www.chimei.com.tw/brand-story",
+          "scope": "CHIMEI 奇美品牌身分"
+        },
+        {
+          "type": "exact_official_product_page",
+          "source_name": "奇美家電－KD-884HP0",
+          "source_url": "https://www.chimei.com.tw/dish-dryer/ultraviolet%20%20rays/kd-884hp0",
+          "scope": "精確型號、88L 規格、製造產地台灣與產品功能"
+        },
+        {
+          "type": "government_mit_registry",
+          "source_name": "MIT 微笑標章－KD-884HP0(白)",
+          "source_url": "https://keid.nat.gov.tw/mittw/products/prod_more?id=287272",
+          "scope": "精確型號、標章編號 02000038-02030、有效至 2029-06-01、銷售通路"
+        }
+      ],
+      "media": {
+        "status": "blocked_permission_required",
+        "source_page": "https://www.chimei.com.tw/dish-dryer/ultraviolet%20%20rays/kd-884hp0",
+        "rights_note": "官方頁可見產品圖片，但網站標示 All rights reserved；未取得授權前不下載、不重製至 repository。"
+      },
+      "checked_at": "2026-08-13"
+    }
+  ]
+}
