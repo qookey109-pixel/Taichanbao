@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>台產報｜台灣品牌選品誌</title>
-  <meta name="description" content="用雜誌選品的方式認識台灣品牌，並透明揭露單一產品的產地、製程與資料缺口。">
+  <title>台產報｜台灣製證據資料誌</title>
+  <meta name="description" content="台產報以雜誌選品結合產品證據資料庫，分開查證台灣品牌、精確型號、製造地與公開來源。">
   <link rel="stylesheet" href="assets/magazine.css">
   <link rel="stylesheet" href="assets/product-images.css">
+  <link rel="stylesheet" href="assets/catalog-v3.css">
 </head>
 <body>
   <div class="ticker sans" aria-label="網站公告">
     <button id="tickerToggle" class="ticker-toggle" type="button" aria-pressed="false">暫停</button>
     <div class="ticker-window">
       <div class="ticker-track" id="tickerTrack">
-        <span>買台灣品牌，也買得明白</span><span>台灣品牌 ≠ 全流程台灣製</span><span>6 筆示範＋4 筆官方圖片候選</span><span>正式發布 Gate：0 筆</span>
-        <span>買台灣品牌，也買得明白</span><span>台灣品牌 ≠ 全流程台灣製</span><span>6 筆示範＋4 筆官方圖片候選</span><span>正式發布 Gate：0 筆</span>
+        <span>V3.0：台灣製證據資料庫上線</span><span>真實研究候選 19 筆</span><span>MIT 有效精確型號 15 筆</span><span>台灣品牌 ≠ 台灣製造 · 必須分開查</span>
+        <span>V3.0：台灣製證據資料庫上線</span><span>真實研究候選 19 筆</span><span>MIT 有效精確型號 15 筆</span><span>台灣品牌 ≠ 台灣製造 · 必須分開查</span>
       </div>
     </div>
   </div>
@@ -26,105 +27,133 @@
         <span>台產報</span>
       </a>
       <nav class="sidebar-nav sans" aria-label="主要導覽">
-        <button class="nav-btn active" data-scroll="top"><span>今日選品</span><span>01</span></button>
-        <button class="nav-btn" data-scroll="stories"><span>產品專題</span><span>02</span></button>
-        <button class="nav-btn" data-scroll="brands"><span>品牌索引</span><span>03</span></button>
-        <button class="nav-btn" data-scroll="method"><span>查證方法</span><span>04</span></button>
+        <button class="nav-btn active" data-scroll="top"><span>本期首頁</span><span>01</span></button>
+        <button class="nav-btn" data-scroll="database"><span>證據資料庫</span><span>02</span></button>
+        <button class="nav-btn" data-scroll="stories"><span>編輯專題</span><span>03</span></button>
+        <button class="nav-btn" data-scroll="brands"><span>品牌索引</span><span>04</span></button>
+        <button class="nav-btn" data-scroll="method"><span>查證方法</span><span>05</span></button>
       </nav>
-      <div class="side-note sans"><strong>V2.7 OFFICIAL IMAGE PILOT</strong>保留雜誌選品風格，加入搜尋、收藏、場景與正式發布 Gate。</div>
+      <div class="side-note sans"><strong>V3.0 EVIDENCE CATALOG</strong>雜誌型首頁不變，新增精確型號證據資料庫；品牌身分、製造地、圖片權利與發布狀態分開管理。</div>
     </aside>
 
     <div class="workspace" id="top">
       <header class="top-tools">
-        <div class="edition sans">VOL. 002 · 2026 AUGUST</div>
+        <div class="edition sans">VOL. 003 · 2026 AUGUST · EVIDENCE CATALOG</div>
         <div class="search-wrap">
-          <input id="globalSearch" type="search" placeholder="搜尋品牌、產品、分類或標籤" aria-label="搜尋品牌、產品、分類或標籤">
+          <input id="globalSearch" type="search" placeholder="搜尋品牌、產品、型號、標章編號或標籤" aria-label="搜尋品牌、產品、型號、標章編號或標籤">
           <button id="searchBtn" type="button" aria-label="前往搜尋結果">⌕</button>
         </div>
         <button class="top-action" id="openIntake" type="button">提供產品線索</button>
       </header>
 
-      <div class="view-strip sans" aria-label="資料檢視">
-        <button class="view-tab active" data-view="research" type="button">研究預覽 <b id="researchCount">0</b></button>
+      <div class="view-strip sans" aria-label="編輯檢視">
+        <button class="view-tab active" data-view="research" type="button">編輯預覽 <b id="researchCount">0</b></button>
         <button class="view-tab" data-view="published" type="button">正式發布 <b id="publishedCount">0</b></button>
-        <span class="view-note">示範資料不會被收藏、排序或前台操作升級為正式發布。</span>
+        <span class="view-note">證據資料庫與編輯專題分離；搜尋、收藏、圖片與排序都不能升級查證或發布狀態。</span>
       </div>
 
       <div class="layout">
         <main class="main">
           <div class="issue-head">
-            <h1>今日台產</h1>
-            <p class="sans">以編輯選品方式介紹台灣品牌，同時公開產品的品牌身分、產地線索、製程狀態與資料缺口。</p>
+            <h1>台灣製<br>證據誌</h1>
+            <p class="sans">不是只問「是不是台灣品牌」，而是一路追到單一產品、精確型號、製造證據、來源範圍與最後查閱日期。</p>
           </div>
 
           <section class="cover-grid" aria-label="本期主題">
             <article class="feature">
-              <div class="feature-top"><span class="stamp sans">本期封面 · 台灣品牌透明化</span></div>
+              <div class="feature-top"><span class="stamp sans">V3 封面 · 從品牌推薦走到證據資料庫</span></div>
               <div class="feature-bottom">
-                <h2>支持台灣品牌，<br>也先把製造地說清楚。</h2>
-                <div class="feature-meta"><span class="tag">單一產品查證</span><span class="tag">資料缺口公開</span><span class="tag">不把品牌等同產地</span></div>
-                <button class="read-btn" type="button" data-scroll="stories">開始看本期選品 →</button>
+                <h2>先證明是哪一個產品，<br>再談是不是台灣製。</h2>
+                <div class="feature-meta"><span class="tag">精確型號</span><span class="tag">政府標章</span><span class="tag">來源範圍</span><span class="tag">資料缺口公開</span></div>
+                <button class="read-btn" type="button" data-scroll="database">進入證據資料庫 →</button>
               </div>
             </article>
             <div class="cover-stack">
-              <article class="mini-cover orange"><span class="icon">🔎</span><small>查證方法</small><h3>未知就標待確認，<br>衝突不隱藏。</h3><button type="button" data-scroll="method">查看發布規則</button></article>
-              <article class="mini-cover green"><span class="icon">★</span><small>MY EDITION</small><h3>收藏想研究的<br>台灣品牌選品。</h3><button id="showFavorites" type="button">查看我的收藏</button></article>
+              <article class="mini-cover orange"><span class="icon">🧾</span><small>EVIDENCE LEVEL</small><h3>A 到 D 分級，<br>不把宣稱當結論。</h3><button type="button" data-scroll="method">查看證據分級</button></article>
+              <article class="mini-cover green"><span class="icon">★</span><small>EDITORIAL CASES</small><h3>四個深度案例，<br>保留多圖查證履歷。</h3><button type="button" data-scroll="stories">查看編輯專題</button></article>
             </div>
           </section>
 
-          <section class="discovery-panel sans" aria-label="探索與排序">
-            <div class="discovery-row"><strong>使用場景</strong><div class="chip-group" id="sceneFilters">
-              <button class="active" data-scene="全部" type="button">全部場景</button><button data-scene="居家" type="button">居家</button><button data-scene="辦公" type="button">辦公</button><button data-scene="送禮" type="button">送禮</button><button data-scene="外出" type="button">外出</button>
-            </div></div>
-            <div class="discovery-row"><strong>排序方式</strong>
-              <select id="sortSelect" aria-label="排序方式"><option value="score">台灣參與分數</option><option value="name">產品名稱</option><option value="brand">品牌名稱</option><option value="category">產品分類</option><option value="favorites">收藏優先</option></select>
-              <label class="favorite-switch"><input id="favoritesOnly" type="checkbox">只看收藏</label>
+          <section class="catalog-hero sans" aria-label="資料庫快照">
+            <div class="catalog-hero-head">
+              <div class="catalog-hero-copy">
+                <small>TAICHAN EVIDENCE CATALOG · 2026-08-13</small>
+                <h2>把「台灣品牌」與「台灣製造」拆成兩條證據鏈。</h2>
+                <p id="catalogSummary">資料庫載入中。這一版新增經濟部 MIT 微笑標章有效產品的精確型號紀錄，同時保留 TENDAYS、SAMPO、大同、O'right 四個深度案例。</p>
+              </div>
+              <div class="catalog-hero-note">
+                <b>資料治理原則</b>
+                <div><strong>型號優先</strong><p>同一品牌不同產品可能在不同國家製造；任何標章、產地或原料證據都只套用到它真正涵蓋的型號。</p></div>
+              </div>
+            </div>
+            <div class="catalog-metrics">
+              <div class="catalog-metric"><b id="catalogTotal">0</b><span>真實研究候選</span></div>
+              <div class="catalog-metric"><b id="mitCertifiedCount">0</b><span>MIT 有效精確型號</span></div>
+              <div class="catalog-metric"><b id="deepCaseCount">0</b><span>深度多圖案例</span></div>
+              <div class="catalog-metric"><b id="catalogPublishedCount">0</b><span>正式發布</span></div>
+              <div class="catalog-metric"><b id="demoCount">0</b><span>隔離示範資料</span></div>
             </div>
           </section>
 
-          <div class="category-strip sans" id="categoryFilters" aria-label="分類篩選">
-            <button class="active" data-category="全部" type="button">全部選品</button><button data-category="食品飲品" type="button">食品飲品</button><button data-category="生活用品" type="button">生活用品</button><button data-category="清潔用品" type="button">清潔用品</button><button data-category="台灣品牌" type="button">台灣品牌</button>
-          </div>
+          <section class="catalog-section" id="database">
+            <div class="section-title"><h2>產品證據資料庫</h2><span><b id="catalogVisibleCount">0</b> RECORDS · EXACT MODEL FIRST</span></div>
+            <div class="catalog-intro sans">
+              <p>這裡列的是「研究候選」，不是購物排行榜。A 級表示目前有政府有效標章或同級證據；B～D 級代表官方來源一致程度與仍需補強的證據。即使是 A 級，也不代表品牌國籍、原料、全流程製造都已一併證明。</p>
+              <div class="catalog-legend"><span class="a">A · 政府／可發布級證據</span><span class="b">B · 精確型號官方來源一致</span><span class="c">C · 精確型號部分官方證據</span><span class="d">D · 宣稱／待補證據</span></div>
+            </div>
 
-          <section id="stories">
-            <div class="section-title"><h2 id="storyHeading">產品專題</h2><span><b id="visibleCount">0</b> STORIES · <span id="currentViewLabel">研究預覽</span></span></div>
-            <div class="story-list" id="storyList" aria-live="polite"></div>
+            <div class="catalog-controls sans" aria-label="證據資料庫篩選">
+              <label>資料來源<select id="catalogSourceFilter"><option value="all">全部來源</option><option value="mit_registry">MIT 政府資料</option><option value="deep_case">深度編輯案例</option></select></label>
+              <label>證據等級<select id="catalogEvidenceFilter"><option value="all">全部等級</option><option value="A">A 級</option><option value="B">B 級</option><option value="C">C 級</option><option value="D">D 級</option></select></label>
+              <label>產品分類<select id="catalogCategoryFilter"><option value="all">全部分類</option></select></label>
+              <label>品牌身分<select id="catalogBrandFilter"><option value="all">全部</option><option value="taiwan_brand_confirmed">台灣品牌已確認</option><option value="unverified">品牌身分待確認</option><option value="non_taiwan_brand">非台灣品牌</option></select></label>
+              <label>排序<select id="catalogSort"><option value="evidence">證據等級優先</option><option value="valid">標章有效期</option><option value="checked">最近查閱</option><option value="brand">品牌名稱</option><option value="name">產品名稱</option></select></label>
+            </div>
+
+            <div class="catalog-summary sans"><span>全站搜尋會同步篩選這個資料庫與下方編輯專題。</span><strong>未發布 ≠ 不可信；代表尚未完成台產報正式編輯 Gate。</strong></div>
+            <div class="catalog-grid" id="catalogGrid" aria-live="polite"></div>
+            <div class="catalog-source-note sans"><strong>關於 MIT 標章：</strong>本頁只以文字記錄標章名稱、編號與有效狀態，不複製標章圖樣。每一筆證據都保留原始政府查詢連結與查閱日期，且不得外推到同品牌其他型號。</div>
           </section>
 
-          <section class="brand-index" id="brands">
-            <div class="section-title"><h2>品牌索引</h2><span>BRAND DIRECTORY</span></div>
-            <div class="brand-table" id="brandTable"></div>
+          <section class="discovery-panel sans" aria-label="編輯專題探索與排序">
+            <div class="discovery-row"><strong>使用場景</strong><div class="chip-group" id="sceneFilters"><button class="active" data-scene="全部" type="button">全部場景</button><button data-scene="居家" type="button">居家</button><button data-scene="辦公" type="button">辦公</button><button data-scene="送禮" type="button">送禮</button><button data-scene="外出" type="button">外出</button></div></div>
+            <div class="discovery-row"><strong>排序方式</strong><select id="sortSelect" aria-label="排序方式"><option value="score">研究展示分數</option><option value="name">產品名稱</option><option value="brand">品牌名稱</option><option value="category">產品分類</option><option value="favorites">收藏優先</option></select><label class="favorite-switch"><input id="favoritesOnly" type="checkbox">只看收藏</label></div>
           </section>
+
+          <div class="category-strip sans" id="categoryFilters" aria-label="編輯專題分類篩選"><button class="active" data-category="全部" type="button">全部選品</button><button data-category="食品飲品" type="button">食品飲品</button><button data-category="生活用品" type="button">生活用品</button><button data-category="清潔用品" type="button">清潔用品</button><button data-category="台灣品牌" type="button">台灣品牌</button></div>
+
+          <section id="stories"><div class="section-title"><h2 id="storyHeading">編輯專題</h2><span><b id="visibleCount">0</b> STORIES · <span id="currentViewLabel">研究預覽</span></span></div><div class="story-list" id="storyList" aria-live="polite"></div></section>
+
+          <section class="brand-index" id="brands"><div class="section-title"><h2>品牌索引</h2><span>EDITORIAL BRAND DIRECTORY</span></div><div class="brand-table" id="brandTable"></div></section>
 
           <section class="method-section" id="method">
-            <div class="section-title"><h2>正式發布 Gate</h2><span>PUBLICATION RULES</span></div>
+            <div class="section-title"><h2>正式發布 Gate</h2><span>PUBLICATION & EVIDENCE RULES</span></div>
             <div class="method-grid sans">
-              <article><b>01</b><h3>狀態必須明確</h3><p><code>publication_status</code> 必須為 <code>published</code>，且查證狀態必須完成編輯審核。</p></article>
-              <article><b>02</b><h3>產品與型號可識別</h3><p>品牌、產品名稱、型號、現售狀態與證據範圍都必須足以辨識。</p></article>
-              <article><b>03</b><h3>產地證據可發布</h3><p>產地、製程或主要原料至少要有可公開的來源；重要衝突不得被隱藏。</p></article>
-              <article><b>04</b><h3>前台不能升級資料</h3><p>搜尋、排序、收藏與 metadata 只能改變呈現，不能變更查證或發布狀態。</p></article>
+              <article><b>01</b><h3>先鎖定精確型號</h3><p>品牌、系列、色碼與精確型號不能混用；同系列圖片也不能冒充精確型號證據。</p></article>
+              <article><b>02</b><h3>品牌身分與製造地分開</h3><p>台灣品牌不代表每一個產品都在台灣製造；反過來，有臺灣製造證據也不自動證明品牌是台灣品牌。</p></article>
+              <article><b>03</b><h3>證據只在其範圍內有效</h3><p>政府標章、官方商城、品牌產品頁、能效資料與實體標示各自只支持它真正寫明的事實。</p></article>
+              <article><b>04</b><h3>圖片權利獨立管理</h3><p>看得到官方圖片不等於取得再利用授權；<code>permission_pending</code> 不得被包裝成已授權。</p></article>
+              <article><b>05</b><h3>正式發布需要編輯 Gate</h3><p><code>publication_status</code> 必須為 <code>published</code>，且精確型號、現售狀態、產地證據與重大衝突都完成審核。</p></article>
+              <article><b>06</b><h3>前台永遠不能升級資料</h3><p>搜尋、排序、收藏、圖片或 metadata 只能改變呈現，不能改寫查證與發布狀態。</p></article>
             </div>
           </section>
         </main>
 
         <aside class="rail">
-          <section class="rail-card"><h2>本月台產榜</h2><div id="ranking"></div></section>
+          <section class="rail-card"><h2>編輯研究榜</h2><div id="ranking"></div></section>
           <section class="rail-card"><h2>我的收藏</h2><div class="favorite-summary sans"><strong id="favoriteCount">0</strong><span>件已收藏選品</span><button id="openFavorites" type="button">查看收藏</button></div></section>
-          <section class="rail-card"><h2>資料快訊</h2>
-            <article class="brief"><time>2026.08.01</time><p>整合 TENDAYS、大同、O'right 與 SAMPO 四筆官方圖片候選。</p></article><article class="brief"><time>2026.08.01</time><p>正式首頁升級為 V2.6 Magazine Discovery。</p></article>
-            <article class="brief"><time>2026.07.31</time><p>V2.5 Recovery Baseline 保留在歷史預覽路徑。</p></article>
-            <article class="brief"><time>2026.07.27</time><p>確立台灣品牌與實際製造地分開呈現。</p></article>
-          </section>
-          <section class="verify-box"><h3>目前是示範資料</h3><p>目前有六筆介面示範資料，以及 TENDAYS、大同、O'right、SAMPO 四筆官方圖片候選；圖片仍未取得授權確認，也未通過正式發布 Gate。正式發布目前為 0。</p><button type="button" data-scroll="method">查看查證規則</button></section>
+          <section class="rail-card"><h2>資料快訊</h2><article class="brief"><time>2026.08.13</time><p>V3.0 新增精確型號證據資料庫，第一批匯入 15 筆 MIT 有效產品。</p></article><article class="brief"><time>2026.08.13</time><p>四個深度案例保留多圖、來源範圍與圖片權利追蹤。</p></article><article class="brief"><time>2026.08.01</time><p>完成 TENDAYS、SAMPO、大同、O'right 官方圖片候選架構。</p></article><article class="brief"><time>2026.07.31</time><p>V2.5 Recovery Baseline 保留在歷史預覽路徑。</p></article></section>
+          <section class="verify-box"><h3>目前不是購物排行榜</h3><p>資料庫收錄的是研究候選與證據履歷。V3.0 有 19 筆真實研究候選、15 筆 MIT 有效精確型號、4 筆深度多圖案例；正式發布仍為 0。</p><button type="button" data-scroll="method">查看查證規則</button></section>
         </aside>
       </div>
     </div>
   </div>
 
-  <nav class="mobile-nav sans" aria-label="手機導覽"><button data-scroll="top" type="button">今日</button><button data-scroll="stories" type="button">專題</button><button id="mobileFavorites" type="button">收藏</button><button data-scroll="method" type="button">查證</button></nav>
+  <nav class="mobile-nav sans" aria-label="手機導覽"><button data-scroll="top" type="button">首頁</button><button data-scroll="database" type="button">資料庫</button><button data-scroll="stories" type="button">專題</button><button data-scroll="method" type="button">查證</button></nav>
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="drawer" id="drawer" aria-modal="true" role="dialog" aria-labelledby="drawerTitle"><button class="drawer-close" id="drawerClose" type="button" aria-label="關閉">×</button><div id="drawerContent"></div></aside>
   <script src="assets/magazine.js"></script>
   <script src="assets/product-image-enhancements.js"></script>
+  <script src="assets/catalog-v3.js"></script>
 </body>
 </html>
