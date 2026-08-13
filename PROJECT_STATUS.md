@@ -1,75 +1,123 @@
 # 台產報 PROJECT STATUS
 
-更新日期：2026-08-01
+更新日期：2026-08-13
 
 ## Version
 
-`V2.11.1 O'right Scope-Safe Multi-Image Extension`
+`V3.0 Evidence Catalog`
 
 ## 正式網站方向
 
-雜誌型介面是正式產品基準。資料治理、圖片、搜尋、收藏與發布 Gate 必須融入雜誌版，不改回一般資料庫 Dashboard。
+雜誌型介面仍是正式首頁基準，但 V3.0 從「四個品牌圖片案例」擴張成「雜誌選品＋精確型號證據資料庫」。品牌身分、產品型號、製造地、政府標章、圖片權利與正式發布狀態分開管理。
 
-## 本次完成
+## V3.0 本次大更新
 
-- 保留 V2.8 Complete Media Architecture、V2.9 TENDAYS、V2.10 SAMPO 與 V2.11 大同案例。
-- 建立 O'right Bio 咖啡因強健洗髮精 `4712782261130` 第四個多圖案例。
-- 精確型號主圖繼續使用台灣精品官方產品圖。
-- 新增 3 張 O'right 官方同系列補充圖。
-- 每張同系列圖片均加入 `relation_scope`，禁止冒充精確型號圖片。
-- 新增 1 個實體條碼、製造商與製造地照片待補位置。
-- 新增台灣精品精確型號證據與 O'right 同系列現售頁證據。
-- 建立 `data/image_rights.oright.json` 與 `scripts/validate_oright_media.py`。
-- CI 與 GitHub Pages 會驗證精確型號／同系列圖片的證據邊界。
-- 正式發布維持 0。
+- 正式首頁重構為 `V3.0 Evidence Catalog`。
+- 保留原本雜誌式封面、三欄布局、收藏、搜尋、場景、排序與 Formal Publication Gate。
+- 新增正式導覽「證據資料庫」。
+- 新增 `data/products.registry.json`，第一批收錄 15 筆經濟部 MIT 微笑標章有效精確型號。
+- 保留 4 筆深度多圖案例：TENDAYS、SAMPO、大同、O'right。
+- V3 真實研究候選共 19 筆：4 深度案例＋15 MIT Registry。
+- 6 筆 `demo_only` 仍隔離為介面測試資料，不進入 V3 證據資料庫。
+- 新增 A–D 證據等級。
+- 新增來源、證據等級、產品分類、品牌身分、排序篩選。
+- 全站搜尋可搜尋品牌、公司、產品、型號、標章編號、分類與標籤。
+- Registry 卡片可查看標章編號、有效期限、申請公司、來源、查閱日期與證據範圍。
+- 新增 O'right 前台「精確型號／同系列補充」圖片標籤。
+- MIT 標章只以文字記錄，不複製標章圖樣。
+- 新增 `scripts/validate_registry.py` 與 `scripts/validate_v3_catalog.py`。
+- CI 與 GitHub Pages deployment 都新增 V3 Registry、跨資料集與 V3 JavaScript 驗證。
+- V2.5 Recovery 預覽與既有 SQLite／匯入治理成果保留。
+- 正式發布仍維持 0。
 
-## O'right 查核判斷
-
-台灣精品官方紀錄可確認：
-
-- 產品名稱 `Bio 咖啡因強健洗髮精`
-- 產品型號 `4712782261130`
-- 歐萊德國際股份有限公司
-- 採用台灣在地來源咖啡
-- 全家 Let's Café 咖啡渣循環再生設計敘述
-
-O'right 官方購物網可確認咖啡因洗髮精同系列目前仍有販售頁，並記載台灣原生咖啡與 USDA Biobased 品牌宣稱；但該頁未顯示 `4712782261130`，因此不能用來確認精確型號仍在銷售，也不能證明成品製造地。
-
-目前維持：
+## V3.0 資料狀態
 
 ```text
-verification_status: official_source_found
-origin_evidence_status: partial_official_record
-current_sale_confirmed: false
-related_series_current_sale_confirmed: true
-publication_status: unpublished
-```
+真實研究候選：19
+├─ 深度多圖案例：4
+│  ├─ TENDAYS
+│  ├─ SAMPO
+│  ├─ 大同
+│  └─ O'right
+└─ MIT 有效精確型號：15
 
-## 資料狀態
-
-```text
-示範資料：6
-官方圖片候選：4
-多圖案例：4
-TENDAYS 圖片：4
-SAMPO 圖片：4
-大同圖片：5
-O'right 圖片：4（精確型號主圖 1＋同系列補充圖 3）
-O'right 查證照片位置：1
-O'right 外部證據：2
+隔離示範資料：6
 正式發布：0
-所有官方圖片權利：permission_pending
 ```
 
-## 未完成
+## 證據分級
 
-- 取得 O'right `4712782261130` 實體條碼、製造商與製造地照片。
-- 確認 O'right 同系列圖片與台灣精品主圖的使用授權。
-- 核對 USDA Biobased 認證實際適用的產品／型號範圍。
-- 取得 TENDAYS、SAMPO 與大同的實體標示照片。
-- 將具授權圖片下載為 Repository 本地資產。
-- 取回原先 20 筆候選與完整研究證據。
-- 建立 SQLite 到公開 JSON 的受控發布流程。
+```text
+A：政府有效標章／可發布級證據來源
+B：精確型號官方來源一致
+C：精確型號部分官方證據
+D：官方宣稱、資料不足或待交叉查證
+```
+
+分級是「證據強度」，不是品牌或產品品質排名。
+
+## 第一批 MIT Registry 範圍
+
+涵蓋服飾配件、鞋履、眼鏡、居家織品、寢具與家電。每筆都保存：
+
+- 精確型號
+- 產品名稱
+- 申請公司
+- 品牌欄位或品牌待確認
+- MIT 標章編號
+- 通過日期
+- 有效期限
+- 官方政府來源 URL
+- 最後查閱日期
+
+其中包含 TENDAYs 保潔墊、日象電鍋、尚朋堂不鏽鋼電鍋、Panasonic 冰箱等型號，但任何 MIT 記錄都只套用到其精確型號，不得外推同品牌其他產品。
+
+## 核心檔案
+
+```text
+index.html
+assets/catalog-v3.css
+assets/catalog-v3.js
+assets/magazine.css
+assets/magazine.js
+assets/product-images.css
+assets/product-image-enhancements.js
+
+data/products.demo.json
+data/products.registry.json
+data/product.media.overrides.json
+
+scripts/validate_data.py
+scripts/validate_registry.py
+scripts/validate_v3_catalog.py
+scripts/validate_media_rights.py
+scripts/validate_sampo_media.py
+scripts/validate_tatung_media.py
+scripts/validate_oright_media.py
+scripts/validate_site.py
+```
+
+## 資料治理
+
+- 台灣品牌不等於台灣製造。
+- 臺灣製造證據不等於品牌國籍證據。
+- 所有產地／製造證據以精確型號為最小單位。
+- MIT 標章不得外推到同品牌其他型號。
+- 政府 Registry 存在不代表已完成現售狀態、圖片權利與台產報編輯審核。
+- 精確型號圖片與同系列補充圖片必須區分。
+- 台灣原料不得表述成成品台灣製造。
+- `permission_pending` 不代表取得圖片使用授權。
+- 前台搜尋、排序、收藏、圖片、分級顯示都不得修改資料查證或發布狀態。
+- 未知維持待確認，衝突不得隱藏。
+
+## 已知限制與風險
+
+- 15 筆 Registry 是 V3 第一批種子資料，不是 MIT 產品完整鏡像。
+- 部分 MIT Registry 記錄的品牌名稱仍需另行核對；公司與產品獲證資訊不能自動等同品牌國籍。
+- 四個深度案例的官方圖片仍有 `permission_pending`。
+- 尚未取得 TENDAYS、SAMPO、大同、O'right 完整實體標示照片。
+- 原先遺失的 20 筆候選與完整研究證據尚未取回，不得自行重建成「原資料」。
+- SQLite 到公開 JSON 的正式受控發布 pipeline 尚未完成。
 
 ## 不可覆蓋
 
@@ -77,15 +125,14 @@ O'right 外部證據：2
 - V2.3 Formal Publication Gate。
 - V2.5 Recovery Baseline 預覽。
 - V2.8 Complete Media Architecture。
-- V2.9 TENDAYS、V2.10 SAMPO、V2.11 大同與本次 O'right 案例。
+- V2.9 TENDAYS、V2.10 SAMPO、V2.11 大同、V2.11.1 O'right 案例。
 - 既有 SQLite 與資料匯入治理成果。
-- 圖片顯示不得改變查證或發布狀態。
-- 同系列圖片不得冒充精確型號圖片。
-- 台灣原料不得被表述為成品台灣製造。
+- V3.0 的精確型號優先與品牌／製造證據分離原則。
 
 ## 下一步
 
-1. 建立前台可見的「精確型號／同系列補充」圖片標籤。
-2. 取得 O'right `4712782261130` 實體包裝與製造地照片。
-3. 確認四個品牌圖片使用授權。
-4. 選一筆圖片權利與實體證據皆清楚的產品，測試第一筆正式發布。
+1. 把 Registry 從 15 筆擴大到至少 50 筆，增加家電、食品接觸用品、居家用品等類別。
+2. 建立 Registry 的受控匯入／更新工具，不再手工維護大量 JSON。
+3. 為政府 Registry 加入 `last_verified_at` 與過期／即將到期自動檢查。
+4. 取得一筆圖片權利與實體證據完整的產品，跑第一筆 Formal Publication Gate。
+5. 完成 SQLite → 公開 Catalog JSON 的發布 pipeline。
