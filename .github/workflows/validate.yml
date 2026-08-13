@@ -23,6 +23,7 @@ jobs:
       - run: python scripts/build_public_catalog.py --check-only
       - run: python scripts/report_registry_expiry.py --check-only
       - run: python scripts/validate_lifecycle_v3_2.py
+      - run: python scripts/validate_enrichment_v3_4.py
       - run: python scripts/validate_media_rights.py
       - run: python scripts/validate_sampo_media.py
       - run: python scripts/validate_tatung_media.py
@@ -34,4 +35,5 @@ jobs:
       - run: node --check assets/catalog-v3-1.js
       - run: node --check assets/lifecycle-v3-2.js
       - run: node --check assets/scale-v3-3.js
+      - run: node --check assets/enrichment-v3-4.js
       - run: node --check assets/app.js
