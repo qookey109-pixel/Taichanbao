@@ -1,4 +1,4 @@
-# 台產報 Handoff — V3.4 Enrichment Queue 20
+# 台產報 Handoff — V3.4 Enrichment Queue 20 / Batch 1
 
 日期：2026-08-13
 
@@ -17,32 +17,78 @@ MIT active exact models: 100
 Deep editorial cases: 4
 Registry shards: 3
 Enrichment queue: 20
-Enrichment task types: 4
-Verified enrichment tasks: 0
+Researched queue records: 5
+Verified enrichment tasks: 5
+Not-found tasks: 12
+Blocked tasks: 3
+Pending tasks: 60
+Enrichment Taiwan brands confirmed: 3
+Enrichment current-sale/supply confirmed: 2
 Formal published: 0
 ```
 
-## 本次已完成
+## 本輪已完成
 
-- 確認 V3.3 已在 main 完成 Registry 50 → 100，不重做。
-- 驗收 V3.3 production build/deploy success。
-- 新增 `data/enrichment.queue.json`，20 筆優先深化查證候選。
-- 每筆四個任務：品牌身分、現售、官方產品頁、圖片權利。
-- 新增 `scripts/validate_enrichment_v3_4.py`。
-- 新增 `assets/enrichment-v3-4.js` 與 `assets/enrichment-v3-4.css`。
-- `assets/catalog-v3.js` 已載入 enrichment workbench。
-- CI / Pages workflow 已加入 V3.4 enrichment validator 與 Node syntax Gate。
-- `scripts/validate_site.py` 升級到 V3.4。
-- `build-info.json` 與 `PROJECT_STATUS.md` 升級到 V3.4。
+- 不重做 V3.3 Scale 100。
+- 實際完成第一批 5 筆 P1 enrichment：SNUG、MIFIYA、JUMP、ADHOC、格蕾絲。
+- 新增 `data/enrichment.results.v1.json`，保存 finding、摘要、來源與查核日期。
+- `data/enrichment.queue.json` 第一批 5 筆改為 completed；任務結果與 Results 檔一致。
+- 第一批任務結果：5 verified、12 not_found、3 blocked。
+- SNUG、ADHOC、格蕾絲：品牌身分 verified → `taiwan_brand_confirmed`。
+- ADHOC GENTLE 102(金)：MIT 精確型號頁列自營銷售通路，因此 current_sale verified，但不宣稱即時庫存。
+- 格蕾絲 1161-3(米)：MIT 精確型號頁列客製化供應通路，因此 current_sale verified，但不當成一般零售現貨。
+- MIFIYA MIFIYA01(白)、JUMP 168(藍)：MIT 製造證據有效，但品牌國籍／官方現售／精確型號品牌頁仍 not_found。
+- SNUG／ADHOC／格蕾絲圖片權利為 blocked；官方頁未授予重用權。
+- Workbench 現在分開顯示 verified／not_found／blocked／pending，並顯示已研究紀錄與每筆本輪摘要。
+- `scripts/validate_enrichment_v3_4.py` 鎖定 Queue／Results 一致性與第一批統計。
+- `scripts/build_public_catalog.py` 讀取 enrichment results，只把人工 verified 的品牌身分與現售資訊合併到 deploy-time public catalog。
+- 原始 MIT Registry、製造證據狀態、verification status、publication status 不被改寫。
+- `build-info.json`、`scripts/validate_site.py`、`PROJECT_STATUS.md` 已同步。
 
-## Queue 治理
+## 第一批證據重點
 
-- Queue 只安排研究工作，不改 verification/publication。
-- `brand_identity` 與 MIT 製造證據分離。
-- `current_sale` 必須是精確型號現售證據。
-- `official_product_page` 同系列頁不能冒充精確型號頁。
-- `image_rights` 未取得明確授權時保持 pending/blocked。
-- 任務 verified 不代表正式發布。
+### SNUG S9900000015(紫藕)
+- 官方品牌頁：`https://shop.snug.com.tw/about`
+- MIT 業者：`https://keid.nat.gov.tw/mittw/products/manu_more?id=1734`
+- 品牌身分 verified。
+- 精確型號現售與官方商品頁未找到。
+- 官方站 Copyright © 2026 sNug，圖片重用 blocked。
+
+### MIFIYA MIFIYA01(白)
+- MIT 業者：`https://keid.nat.gov.tw/mittw/products/manu_more?id=3122`
+- 製造證據有效；品牌國籍不得由公司所在地推定。
+- 品牌身分／現售／品牌官方精確型號頁均 not_found。
+
+### JUMP 168(藍)
+- MIT 業者同上。
+- 製造證據有效；品牌身分、現售、官方精確型號頁仍 not_found。
+
+### ADHOC GENTLE 102(金)
+- 官方品牌：`https://www.adhoceyewear.com/about_view.php?kind1=1&lang=tw&pid=1`
+- 精確型號 MIT：`https://keid.nat.gov.tw/mittw/products/prod_more?id=280668`
+- 品牌身分 verified。
+- 自營銷售通路 verified；不保證即時庫存。
+- 精確型號品牌官方商品頁 not_found。
+- 官方站 All Rights Reserved，圖片權利 blocked。
+
+### 格蕾絲 1161-3(米)
+- 官方品牌：`https://www.gracetowel.net/`
+- 官方商城：`https://www.gracetowel.com.tw/`
+- 精確型號 MIT：`https://keid.nat.gov.tw/mittw/products/prod_more?id=287833`
+- 品牌身分 verified。
+- 客製化供應通路 verified；不是零售現貨聲明。
+- 精確型號品牌官方商品頁 not_found。
+- 圖片權利 blocked。
+
+## 治理規則
+
+- Enrichment completed ≠ verified；not_found／blocked 是正式研究結果。
+- MIT 製造證據不得推定品牌國籍或現售。
+- current_sale 只能套用精確型號，且銷售通路紀錄不等於即時庫存。
+- 同系列頁不能冒充 exact-model official product page。
+- 官方圖片公開可見不等於可重用。
+- verified enrichment 可經受控 builder 反映到 public catalog，但不得自動修改 manufacturing evidence 或 publication status。
+- Formal Publication Gate 不降低；正式發布仍為 0。
 
 ## 重要檔案
 
@@ -50,38 +96,24 @@ Formal published: 0
 PROJECT_STATUS.md
 build-info.json
 data/enrichment.queue.json
+data/enrichment.results.v1.json
 assets/enrichment-v3-4.js
 assets/enrichment-v3-4.css
-assets/catalog-v3.js
 scripts/validate_enrichment_v3_4.py
+scripts/build_public_catalog.py
 scripts/validate_site.py
 .github/workflows/validate.yml
 .github/workflows/pages.yml
 ```
 
-## 已知風險
-
-- 20 筆 Queue 初始任務全部 pending，尚未開始逐筆外部查核。
-- Panasonic 等可能有台灣製精確型號，但品牌身分不應因 MIT 證據被視為台灣品牌。
-- 圖片存在不代表可合法再利用。
-- Registry 有效不代表目前現售。
-
-## 禁止執行事項
-
-- 不得把 enrichment progress 自動映射成 publication status。
-- 不得因公司名稱／MIT 標章自行判斷台灣品牌。
-- 不得把同系列產品頁當成精確型號產品頁。
-- 不得下載／重製未獲授權的官方產品圖片到 repo。
-- 不得降低 Formal Publication Gate。
-
 ## 明確下一步
 
-1. 驗收 V3.4 production build/deploy。
-2. 從 P1 Queue 開始逐筆查核。
-3. 第一批至少完成 5 筆的 `brand_identity`、`current_sale`、`official_product_page`。
-4. `image_rights` 若無授權證據維持 pending/blocked。
-5. 再決定哪些產品值得升級成新的 deep editorial case。
+1. 驗收這一批最後 production build/deploy。
+2. 再完成下一批 5 筆 P1：優先三環牌 296、奇美 KD-884HP0、奇美 KD-853HM0、YYMe 1157508／1147508 或 NINO1881 L2425。
+3. 對 SNUG／ADHOC／格蕾絲繼續追精確型號品牌商品頁與圖片授權。
+4. 不因 verified 數量目標而降低證據標準。
+5. Formal Publication Gate 維持 0 published。
 
 ## 新對話可直接使用的接續指令
 
-繼續台產報 `qookey109-pixel/Taichanbao`。以 GitHub main 最新內容、`PROJECT_STATUS.md` 與 `docs/handoffs/taichanbao_handoff_2026-08-13_v3_4_enrichment_queue_20.md` 為基準。不要重做 V3.3 Scale 100 或 V3.4 Queue。先驗收 V3.4 Pages production result，然後直接處理 P1 enrichment queue，優先完成至少 5 筆品牌身分、現售與精確型號官方產品頁查核；圖片權利無明確授權就維持 pending/blocked。Formal Publication Gate 不降低，正式發布維持 0。
+繼續台產報 `qookey109-pixel/Taichanbao`。以 GitHub main、`PROJECT_STATUS.md` 與本 Handoff 為準。V3.4 第一批 5 筆 P1 enrichment 已完成，不要重查 SNUG/MIFIYA/JUMP/ADHOC/格蕾絲，除非有新的官方證據。先驗收最新 Pages production result，再做下一批 5 筆 P1。任何 MIT、品牌、現售、官方頁、圖片權利證據都必須限制到實際涵蓋範圍；Formal Publication Gate 不降低，published 維持 0。
