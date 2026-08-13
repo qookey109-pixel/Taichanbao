@@ -21,6 +21,8 @@ Isolated demos: 6
 Formal published: 0
 Registry shards: 2
 Frontend source priority: catalog.public.json → manifest/shards fallback
+Pages production build: SUCCESS
+Pages production deploy: SUCCESS
 ```
 
 ## 本次已完成
@@ -36,11 +38,22 @@ Frontend source priority: catalog.public.json → manifest/shards fallback
 - 新增 MIT 到期報表 `scripts/report_registry_expiry.py`，CI 會檢查過期狀態。
 - 新增 deterministic public catalog builder `scripts/build_public_catalog.py`。
 - Pages build 會在上傳 artifact 前生成 `data/catalog.public.json`。
-- public catalog 會保存 4 筆 deep cases 的主要來源 URL／來源名稱，不因 build 遺失證據鏈。
-- CI 已加入 public catalog `--check-only` 與 Registry expiry `--check-only`。
-- `scripts/validate_site.py` 已鎖定 public-catalog-first 與 fallback 行為。
+- public catalog 保存 deep cases 的主要來源 URL／來源名稱。
+- CI 已加入 public catalog deterministic check、Registry expiry check 與 V3.1 frontend 驗證。
 - 更新 `build-info.json` 為 54／50／4／6／0／2 shards。
-- README、PROJECT_STATUS、研究紀錄同步。
+- 完成 GitHub Pages deployment recovery。
+
+## Pages Recovery 結論
+
+本次用三層證據確認：
+
+1. 一次性最小 Pages Recovery workflow：`deploy_result = success`。
+2. 一次性 Build Gate Diagnostic：production workflow 17 個 Python／Node 檢查全部 PASS。
+3. 正式 `.github/workflows/pages.yml`：`build_result = success`、`deploy_result = success`，page URL 為正式站。
+
+一次性 recovery／build-diagnostic workflow 已刪除，只保留結果 JSON。正式 `pages.yml` 現在會自我回報 production build/deploy 結果。
+
+因此 **Pages deployment recovery 已完成，不要再重做這一階段**。外部搜尋爬蟲可能仍顯示舊頁面快照，但不能以快照落後推翻 GitHub Actions 的 production success 證據。
 
 ## 本批資料來源
 
@@ -89,19 +102,24 @@ scripts/report_registry_expiry.py
 scripts/import_registry_batch.py
 scripts/validate_site.py
 
+.github/workflows/pages.yml
+docs/deployment/pages-recovery-result.json
+docs/deployment/pages-build-diagnostic.json
+docs/deployment/pages-production-result.json
 docs/research/2026-08-13_mit_appliance_scale_50.md
 ```
 
 ## 已知錯誤與風險
 
-- 公開 GitHub Pages 外部讀取仍顯示舊 `VOL. 001 · 2026 JULY`，因此 **V3.1 deployment 尚未驗證成功**。
-- GitHub connector 無法可靠列出 push-triggered Actions run；commit 成功不能當作 deploy PASS。
-- Pages workflow 已包含 `catalog.public.json` build；但將 expiry report JSON 一併寫進 Pages 的第二次 workflow update 被工具安全層阻擋，所以目前 expiry 先作 CI Gate。
-- Repository 既有 SQLite schema 尚未從可搜尋文字檔可靠定位；本次沒有猜測或修改未知 SQLite 表。
+- 外部搜尋／爬蟲快照可能晚於實際 Pages deployment，不得直接當作即時站況。
+- Repository 既有 SQLite schema 尚未從可搜尋文字檔可靠定位；不得猜測或修改未知 SQLite 表。
 - 家電占 Registry 比例偏高；下一批應優先非家電類。
+- 50 筆 Registry 是研究資料，不代表 50 筆都已確認現售或台灣品牌身分。
+- 四個深度案例圖片權利仍有 `permission_pending`。
 
 ## 禁止執行事項
 
+- 不得重做已結案的 Pages deployment recovery。
 - 不得把 MIT 標章外推至同品牌其他型號。
 - 不得把 `government_registry_verified` 自動改為 `published`。
 - 不得因申請公司名稱或品牌熟悉度自行判斷台灣品牌。
@@ -111,13 +129,12 @@ docs/research/2026-08-13_mit_appliance_scale_50.md
 
 ## 明確下一步
 
-1. **最高優先：Pages deployment recovery**，找出為何公開站仍是 VOL.001。
-2. 成功部署後，核對公開 `build-info.json` 應為 V3.1，並確認 `data/catalog.public.json` 可讀。
-3. 建立 Registry expiry dashboard／管理頁。
-4. Registry 50 → 100 時優先擴充餐廚、居家用品、清潔與其他生活類別。
-5. 若定位到既有 SQLite 正式 schema，再新增 adapter，不修改原始資料庫。
-6. 第一筆正式發布仍需完成現售、實體證據、圖片權利與編輯審核。
+1. 建立 Registry expiry dashboard／管理頁。
+2. Registry 50 → 100 時優先擴充餐廚、居家用品、清潔與其他生活類別。
+3. 同時替既有 50 筆補 `brand_origin_status` 與現售狀態，降低「只有 MIT、沒有品牌身分／現售」的資料缺口。
+4. 若定位到既有 SQLite 正式 schema，再新增 adapter，不修改原始資料庫。
+5. 第一筆正式發布仍需完成現售、實體證據、圖片權利與編輯審核。
 
 ## 新對話可直接使用的接續指令
 
-繼續台產報 `qookey109-pixel/Taichanbao`。以 GitHub main 最新內容及 `docs/handoffs/taichanbao_handoff_2026-08-13_v3_1_registry_scale_50.md` 為基準。不要重做 V3.1。最高優先先處理 GitHub Pages deployment recovery：公開站目前仍是 VOL.001。確認部署後核對 `build-info.json`、`data/catalog.public.json`，再做 Registry expiry dashboard 與 50→100 的非家電擴充。Formal Publication Gate 不降低，正式發布維持 0。
+繼續台產報 `qookey109-pixel/Taichanbao`。以 GitHub main 最新內容及 `docs/handoffs/taichanbao_handoff_2026-08-13_v3_1_registry_scale_50.md` 為基準。不要重做 V3.1 Registry Scale 50，也不要重做 Pages deployment recovery；production build/deploy 已成功。下一步先建立 Registry expiry dashboard，之後將 Registry 50→100，優先補餐廚、居家用品、清潔與其他非家電類，並逐步補品牌身分與現售狀態。Formal Publication Gate 不降低，正式發布維持 0，除非完整通過既有 Gate。
