@@ -22,7 +22,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-
       - name: Validate editorial data
         run: python scripts/validate_data.py
       - name: Validate V3 seed registry
@@ -37,6 +36,10 @@ jobs:
         run: python scripts/validate_v3_3_catalog.py
       - name: Validate category concentration
         run: python scripts/validate_category_balance.py
+      - name: Validate V3.5 enrichment batches
+        run: python scripts/validate_enrichment_v3_4.py
+      - name: Validate V3.5 deep candidate Gate
+        run: python scripts/validate_deep_candidates_v3_5.py
       - name: Build public catalog
         run: python scripts/build_public_catalog.py --output data/catalog.public.json
       - name: Validate registry expiry state
@@ -45,8 +48,6 @@ jobs:
         run: python scripts/report_registry_expiry.py --output data/registry-expiry.json
       - name: Validate Registry lifecycle dashboard
         run: python scripts/validate_lifecycle_v3_2.py
-      - name: Validate enrichment queue
-        run: python scripts/validate_enrichment_v3_4.py
       - name: Validate image rights
         run: python scripts/validate_media_rights.py
       - name: Validate SAMPO media overrides
@@ -55,7 +56,7 @@ jobs:
         run: python scripts/validate_tatung_media.py
       - name: Validate O'right media scope
         run: python scripts/validate_oright_media.py
-      - name: Validate site
+      - name: Validate V3.5 site
         run: python scripts/validate_site.py
       - name: Check magazine JavaScript
         run: node --check assets/magazine.js
@@ -69,8 +70,10 @@ jobs:
         run: node --check assets/lifecycle-v3-2.js
       - name: Check V3.3 scale layer JavaScript
         run: node --check assets/scale-v3-3.js
-      - name: Check V3.4 enrichment JavaScript
+      - name: Check enrichment JavaScript
         run: node --check assets/enrichment-v3-4.js
+      - name: Check V3.5 deep candidate JavaScript
+        run: node --check assets/deep-candidates-v3-5.js
       - name: Check V2.5 preview JavaScript
         run: node --check assets/app.js
       - name: Configure Pages
