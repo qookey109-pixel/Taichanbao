@@ -18,6 +18,7 @@ jobs:
       - run: python scripts/validate_registry_scale.py
       - run: python scripts/validate_v3_catalog.py
       - run: python scripts/validate_v3_1_catalog.py
+      - run: python scripts/build_public_catalog.py --check-only
       - run: python scripts/validate_media_rights.py
       - run: python scripts/validate_sampo_media.py
       - run: python scripts/validate_tatung_media.py
