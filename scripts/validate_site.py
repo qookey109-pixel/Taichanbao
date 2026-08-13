@@ -10,6 +10,7 @@ media_css = (ROOT / "assets/product-images.css").read_text(encoding="utf-8")
 catalog_loader = (ROOT / "assets/catalog-v3.js").read_text(encoding="utf-8")
 catalog_js = (ROOT / "assets/catalog-v3-1.js").read_text(encoding="utf-8")
 catalog_css = (ROOT / "assets/catalog-v3.css").read_text(encoding="utf-8")
+public_builder = (ROOT / "scripts/build_public_catalog.py").read_text(encoding="utf-8")
 registry_seed = (ROOT / "data/products.registry.json").read_text(encoding="utf-8")
 registry_appliances = (ROOT / "data/products.registry.appliances.json").read_text(encoding="utf-8")
 manifest = json.loads((ROOT / "data/registry.manifest.json").read_text(encoding="utf-8"))
@@ -36,11 +37,18 @@ for token in ["catalog-v3-1.js", "V3.1 Registry Scale 50"]:
     assert token in catalog_loader, token
 
 for token in [
-    "V3.1 REGISTRY SCALE 50", "registry.manifest.json", "products.demo.json",
-    "product.media.overrides.json", "evidenceLevel", "catalog_source", "catalogGrid",
+    "V3.1 REGISTRY SCALE 50", "data/catalog.public.json", "validPublicCatalog",
+    "registry.manifest.json", "products.demo.json", "product.media.overrides.json",
+    "public_catalog", "manifest_fallback", "evidenceLevel", "catalog_source", "catalogGrid",
     "enhanceMediaScopes", "同系列補充圖", "精確型號"
 ]:
     assert token in catalog_js, token
+
+for token in [
+    "data/catalog.public.json", "catalog_version", "V3.1 Registry Scale 50",
+    "registry.manifest.json", "real_research_candidates", "every public record needs a primary source URL"
+]:
+    assert token in public_builder, token
 
 for token in [".catalog-hero", ".catalog-metrics", ".catalog-grid", ".catalog-card", ".evidence-badge", ".catalog-controls", ".media-scope-pill"]:
     assert token in catalog_css, token
@@ -84,4 +92,4 @@ assert ".ticker" in preview_css
 assert ".layout" in preview_css
 assert ".mobile-nav" in preview_css
 
-print("OK: V3.1 sharded evidence catalog enabled; real=54 MIT=50 deep=4 demos=6 published=0; V2.5 preview retained")
+print("OK: V3.1 public-catalog-first evidence catalog enabled; real=54 MIT=50 deep=4 demos=6 published=0; V2.5 preview retained")
