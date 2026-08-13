@@ -1,17 +1,19 @@
 {
   "project": "Taichanbao",
-  "version": "V3.2 Registry Lifecycle",
+  "version": "V3.3 Registry Scale 100",
   "data_snapshot": "2026-08-13",
-  "real_research_candidates": 54,
+  "real_research_candidates": 104,
   "deep_editorial_cases": 4,
-  "mit_active_exact_models": 50,
-  "registry_shards": 2,
+  "mit_active_exact_models": 100,
+  "registry_shards": 3,
   "isolated_demo_records": 6,
   "formal_published": 0,
   "registry_lifecycle_dashboard": true,
   "registry_expired": 0,
   "registry_expiring_within_90_days": 1,
+  "category_concentration_gate": true,
+  "max_category_share": 0.4,
   "lifecycle_report": "data/registry-expiry.json",
   "deployment_source": "GitHub Actions",
-  "note": "V3.2 adds a deploy-time Registry expiry report and lifecycle dashboard. Formal publication remains gated independently."
+  "note": "V3.3 scales the MIT exact-model Registry to 100 records across three shards while retaining lifecycle monitoring and a 40% category-concentration Gate. Formal publication remains independently gated."
 }
