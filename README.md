@@ -1,6 +1,6 @@
-# 台產報（Taichanbao）V3.6 Brand-Origin Separation
+# 台產報（Taichanbao）V3.7 Enrichment Complete 20/20
 
-台產報是一個「雜誌選品＋精確型號證據資料庫」。V3.6 把專案最重要的規則真正落到資料與前台：**台灣品牌身分與台灣製造證據是兩條獨立證據鏈**。
+台產報是一個「雜誌選品＋精確型號證據資料庫」。V3.7 完成第一輪 20 筆優先產品的完整 Enrichment Research，並新增 Promotion Audit：**研究做完，不代表全部都該推薦；品牌國籍、台灣製造、現售、官方頁、圖片權利與正式發布仍各自獨立。**
 
 ## 線上位置
 
@@ -9,107 +9,119 @@
 - V2.5 Recovery：`https://qookey109-pixel.github.io/Taichanbao/versions_review/v2.5/`
 - Default branch：`main`
 
-## V3.6 快照
+## V3.7 快照
 
 ```text
 真實研究候選：104
 MIT 有效精確型號：100
 既有 deep editorial cases：4
-Deep editorial candidates：1
+已登錄 Deep Candidate：1
 Formal published：0
 
-Enrichment Queue：20
-已研究：15
-verified：21
-not_found：33
-blocked：6
-pending：20
+Enrichment Queue：20 / 20 complete
+verified：22
+not_found：51
+blocked：7
+pending：0
 
-台灣品牌已確認：7 records
+台灣品牌已確認：8 records
 非台灣品牌已確認：3 records
 現售／供應已確認：9 records
 exact official product page：2 records
 ```
 
-## V3.6 核心案例：Panasonic
+`not_found` 與 `blocked` 都是正式研究結果，不會為了提高成功率而被改成正面結論。
 
-Panasonic 官方歷史資料確認品牌／公司源自 **1918 年日本大阪**。因此：
+## Promotion Audit
 
-```text
-Panasonic brand identity       non_taiwan_brand
-```
-
-但以下三個精確冰箱型號同時有有效的經濟部 MIT 微笑標章臺灣製造證據：
+V3.7 對研究完成的 20 筆再做一次 promotion audit：
 
 ```text
-NR-C507XVS   MIT active to 2029-06-15
-NR-D507XVS   MIT active to 2029-06-15
-NR-C617XVS   MIT active to 2029-06-15
+Deep Candidate 條件已達、但資產／編輯 Gate 阻擋：2
+台灣品牌 research-only：6
+非台灣品牌，但有台灣製 exact-model：3
+品牌身分仍待確認 research-only：9
 ```
 
-所以台產報會呈現為：
+其中：
+
+- `KD-884HP0`：已登錄 Deep Candidate，但圖片權利 BLOCKED、editorial review PENDING。
+- `KD-703HP1`：符合 Deep Candidate review 條件，但**尚未自動升級成 candidate**。
+- Panasonic `NR-C507XVS`／`NR-D507XVS`／`NR-C617XVS`：已確認為非台灣品牌，但保留各自有效 MIT 台灣製造 exact-model 證據，並排除「台灣品牌推薦」。
+
+Promotion Audit 只決定下一步研究／編輯路徑，不修改 raw Registry 或 publication status。
+
+部署時產生：
+
+```text
+data/promotion-audit.json
+```
+
+來源 builder：
+
+```text
+scripts/build_promotion_audit.py
+scripts/validate_promotion_audit_v3_7.py
+```
+
+## Brand-Origin Separation
+
+台產報永久維持：
+
+> **台灣品牌 ≠ 台灣製造**
+
+Panasonic 官方歷史確認品牌源自日本大阪；但以下 exact models 同時有有效 MIT 台灣製造證據：
+
+```text
+NR-C507XVS
+NR-D507XVS
+NR-C617XVS
+```
+
+因此正確表示為：
 
 > **非台灣品牌已確認｜此精確型號 MIT 台灣製造證據有效**
 
-不能因為台灣松下是申請／製造公司，就把 Panasonic 改成台灣品牌。
-
-## 對照案例：CHIMEI KD-703HP1
-
-奇美家電官方可確認 CHIMEI 品牌的台灣發展脈絡；`KD-703HP1` 官方 exact-model 頁也明列 `製造產地：台灣`，目前官方烘碗機列表仍列該型號。
-
-因此這筆可以同時呈現：
+對照 CHIMEI `KD-703HP1`，則可表示為：
 
 > **台灣品牌已確認｜此精確型號台灣製造證據有效**
 
-仍然不能把 KD-703HP1 的產地證據外推到其他奇美型號。
+兩者都不能把單一型號證據外推至其他產品。
 
-## Brand-Origin Separation 前台
-
-新增：
-
-```text
-assets/brand-origin-v3-6.js
-assets/brand-origin-v3-6.css
-```
-
-前台會並排展示：
-- 台灣品牌＋MIT exact-model
-- 非台灣品牌＋MIT exact-model
-- 已研究但品牌身分仍待確認
-
-品牌身分只影響品牌分類，不會改寫 MIT 製造證據、圖片權利或 publication status。
-
-## Enrichment Results
+## Enrichment Results 分片
 
 ```text
 data/enrichment.results.manifest.json
 ├─ enrichment.results.v1.json  # 10
 ├─ enrichment.results.v2.json  # 1
-└─ enrichment.results.v3.json  # 4, first P2 batch
+├─ enrichment.results.v3.json  # 4
+└─ enrichment.results.v4.json  # 5
 ```
 
-目前 15 / 20 Queue records 已研究。剩餘 5 筆全部是 P2。
+目前 20 筆全數研究完成。Builder `scripts/build_public_catalog.py` 依 manifest 合併受控 enrichment findings；**raw MIT Registry、manufacturing evidence、verification status 與 publication status 不被改寫**。
 
-Builder `scripts/build_public_catalog.py` 只把人工 verified 的 enrichment 結果合併至 deploy-time `catalog.public.json`；**raw MIT Registry 不改寫**。
-
-## V3.5 Deep Candidate 保留
-
-CHIMEI `KD-884HP0` 仍是第一筆 Deep Candidate：
+## 前台層
 
 ```text
-品牌／型號／MIT／現售／官方頁／衝突初查   PASS
-圖片權利                                BLOCKED
-編輯審核                                PENDING
-正式發布                                BLOCKED
+assets/catalog-v3.js
+assets/catalog-v3-1.js
+assets/lifecycle-v3-2.js
+assets/scale-v3-3.js
+assets/enrichment-v3-4.js
+assets/deep-candidates-v3-5.js
+assets/brand-origin-v3-6.js
+assets/promotion-audit-v3-7.js
 ```
 
-Candidate ≠ deep editorial case ≠ published。
+最後一層 V3.7 Promotion Audit 讓讀者看到研究完成後真正的去向，而不是把全部 20 筆包裝成推薦清單。
 
 ## 驗證
 
 ```bash
 python scripts/validate_enrichment_v3_4.py
 python scripts/validate_deep_candidates_v3_5.py
+python scripts/build_promotion_audit.py --check-only
+python scripts/validate_promotion_audit_v3_7.py
 python scripts/build_public_catalog.py --check-only
 python scripts/validate_site.py
 
@@ -117,19 +129,20 @@ node --check assets/catalog-v3.js
 node --check assets/enrichment-v3-4.js
 node --check assets/deep-candidates-v3-5.js
 node --check assets/brand-origin-v3-6.js
+node --check assets/promotion-audit-v3-7.js
 ```
 
-CI / Pages 另外保留 Registry 100、分類集中度、Lifecycle、Media 與 V2.5 Recovery 的既有驗證。
+CI / Pages 另保留 Registry 100、分類集中度、Lifecycle、Media 與 V2.5 Recovery 的既有驗證。
 
 ## 資料治理
 
-- **台灣品牌 ≠ 台灣製造。**
+- 台灣品牌 ≠ 台灣製造。
 - 非台灣品牌也可能有特定台灣製造型號。
-- 台灣品牌也不能把一個型號的臺灣產地外推到全品牌。
-- MIT 精確型號證據不得外推到其他型號。
-- 有效 MIT ≠ 即時庫存。
-- 銷售通路紀錄 ≠ 即時庫存。
+- MIT exact-model 證據不得外推到其他型號。
+- 有效 MIT ≠ 即時庫存；銷售通路 ≠ 即時庫存。
 - 同系列頁 ≠ exact-model 官方頁。
 - 官方圖片公開可見 ≠ 已取得重用授權。
-- Deep candidate ≠ formal publication。
+- Enrichment completed ≠ verified。
+- Promotion Audit ≠ promotion。
+- Deep Candidate ≠ formal publication。
 - Formal Publication Gate 維持不變，目前正式發布 **0**。
