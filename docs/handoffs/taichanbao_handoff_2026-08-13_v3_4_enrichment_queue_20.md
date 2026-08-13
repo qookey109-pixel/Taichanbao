@@ -26,6 +26,7 @@ Enrichment Taiwan-brand confirmed records: 6
 Enrichment current-sale/supply confirmed records: 5
 Exact-model official product pages confirmed: 1
 Formal published: 0
+Batch 2 production: SUCCESS
 ```
 
 ## 本輪已完成
@@ -37,8 +38,9 @@ Formal published: 0
 - `data/enrichment.queue.json` 目前 10 筆 completed、10 筆 queued。
 - 累計任務：12 verified／23 not_found／5 blocked／40 pending。
 - `scripts/validate_enrichment_v3_4.py` 已鎖定上述 Batch 2 統計與 Queue／Results 一致性。
-- `scripts/build_public_catalog.py` 繼續只把人工 verified 的品牌身分與現售結果合併到 deploy-time catalog；raw Registry 不改寫。
+- `scripts/build_public_catalog.py` 只把人工 verified 的品牌身分與現售結果合併到 deploy-time catalog；raw Registry 不改寫。
 - `build-info.json`、`scripts/validate_site.py`、`PROJECT_STATUS.md` 已同步 Batch 2。
+- Batch 2 production trigger `81c1b7b1e878927229f1300d82b399e1080cd86a` 已回報 build=`success`、deploy=`success`。
 - published 維持 0。
 
 ## 第二批證據重點
@@ -117,12 +119,11 @@ scripts/validate_site.py
 
 ## 明確下一步
 
-1. 驗收 Batch 2 最後 production build/deploy。
-2. 評估 KD-884HP0 是否升級成新的 deep editorial candidate，但不得直接 published。
-3. 完成剩餘 P1 `YYMe 1147508(紫)`。
-4. 再研究 P2：KD-703HP1、Panasonic NR-C507XVS／NR-D507XVS／NR-C617XVS、YYMe/NINO1881 同系列、Anti Arctic、伯諾。
-5. 任何圖片仍須先解決使用權；Formal Publication Gate 維持 0 published。
+1. 評估 KD-884HP0 是否升級成新的 deep editorial candidate，但不得直接 published。
+2. 完成剩餘 P1 `YYMe 1147508(紫)`。
+3. 再研究 P2：KD-703HP1、Panasonic NR-C507XVS／NR-D507XVS／NR-C617XVS、YYMe/NINO1881 同系列、Anti Arctic、伯諾。
+4. 任何圖片仍須先解決使用權；Formal Publication Gate 維持 0 published。
 
 ## 新對話可直接使用的接續指令
 
-繼續台產報 `qookey109-pixel/Taichanbao`。以 GitHub main、`PROJECT_STATUS.md` 與本 Handoff 為準。V3.4 已完成兩批、共 10 筆 enrichment，不要重查這 10 筆，除非有新的官方證據。先驗收 Batch 2 最新 Pages production result。之後優先評估 KD-884HP0 deep-case candidate、完成 YYMe 1147508(紫)，再進 P2。台灣品牌、MIT 製造、現售、exact official page、圖片權利與正式發布必須分開；published 維持 0。
+繼續台產報 `qookey109-pixel/Taichanbao`。以 GitHub main、`PROJECT_STATUS.md` 與本 Handoff 為準。V3.4 已完成兩批、共 10 筆 enrichment，而且 Batch 2 production 已成功。不要重查這 10 筆，除非有新的官方證據。下一步先評估 KD-884HP0 deep-case candidate、完成 YYMe 1147508(紫)，再進 P2。台灣品牌、MIT 製造、現售、exact official page、圖片權利與正式發布必須分開；published 維持 0。
