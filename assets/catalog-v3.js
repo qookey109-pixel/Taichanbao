@@ -5,44 +5,44 @@
     const style = document.createElement("link");
     style.rel = "stylesheet";
     style.href = href;
-    style.dataset.taichanVersion = "V3.7 Enrichment Complete 20/20";
+    style.dataset.taichanVersion = "V3.8 Candidate Promotion Review";
     document.head.appendChild(style);
   }
 
   const catalog = document.createElement("script");
   catalog.src = "assets/catalog-v3-1.js";
   catalog.defer = true;
-  catalog.dataset.taichanVersion = "V3.7 Enrichment Complete 20/20";
+  catalog.dataset.taichanVersion = "V3.8 Candidate Promotion Review";
   catalog.addEventListener("load", () => {
     const lifecycle = document.createElement("script");
     lifecycle.src = "assets/lifecycle-v3-2.js";
     lifecycle.defer = true;
-    lifecycle.dataset.taichanVersion = "V3.7 · Lifecycle";
+    lifecycle.dataset.taichanVersion = "V3.8 · Lifecycle";
     lifecycle.addEventListener("load", () => {
       const scale = document.createElement("script");
       scale.src = "assets/scale-v3-3.js";
       scale.defer = true;
-      scale.dataset.taichanVersion = "V3.7 · Scale 100";
+      scale.dataset.taichanVersion = "V3.8 · Scale 100";
       scale.addEventListener("load", () => {
         const enrichment = document.createElement("script");
         enrichment.src = "assets/enrichment-v3-4.js";
         enrichment.defer = true;
-        enrichment.dataset.taichanVersion = "V3.7 · Enrichment 20/20";
+        enrichment.dataset.taichanVersion = "V3.8 · Enrichment 20/20";
         enrichment.addEventListener("load", () => {
           const deep = document.createElement("script");
           deep.src = "assets/deep-candidates-v3-5.js";
           deep.defer = true;
-          deep.dataset.taichanVersion = "V3.7 · Deep Candidate Gate";
+          deep.dataset.taichanVersion = "V3.8 · Candidate Promotion Review";
           deep.addEventListener("load", () => {
             const origin = document.createElement("script");
             origin.src = "assets/brand-origin-v3-6.js";
             origin.defer = true;
-            origin.dataset.taichanVersion = "V3.7 · Brand-Origin Separation";
+            origin.dataset.taichanVersion = "V3.8 · Brand-Origin Separation";
             origin.addEventListener("load", () => {
               const audit = document.createElement("script");
               audit.src = "assets/promotion-audit-v3-7.js";
               audit.defer = true;
-              audit.dataset.taichanVersion = "V3.7 Enrichment Complete 20/20";
+              audit.dataset.taichanVersion = "V3.8 Candidate Promotion Review";
               document.head.appendChild(audit);
             });
             document.head.appendChild(origin);
