@@ -6,11 +6,18 @@ import json
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def load_manifest():
+    return json.loads((ROOT / "data/registry.manifest.json").read_text(encoding="utf-8"))
+
+
 def build_report():
-    manifest = json.loads((ROOT / "data/registry.manifest.json").read_text(encoding="utf-8"))
+    manifest = load_manifest()
     rows = []
     for shard in manifest["shards"]:
         rows.extend(json.loads((ROOT / shard["path"]).read_text(encoding="utf-8")))
+
+    expected = int(manifest["total_records"])
+    assert len(rows) == expected, f"expiry report registry count mismatch {len(rows)}/{expected}"
 
     today = date.today()
     windows = {30: [], 90: [], 180: [], 365: []}
@@ -21,7 +28,9 @@ def build_report():
         item = {
             "id": row["id"],
             "brand": row["brand"],
+            "name": row.get("name", ""),
             "model": row["model"],
+            "category": row.get("category", ""),
             "certificate_no": row["certification"]["certificate_no"],
             "valid_until": valid.isoformat(),
             "days_remaining": days,
@@ -38,6 +47,7 @@ def build_report():
 
     return {
         "generated_at": today.isoformat(),
+        "registry_version": manifest["version"],
         "registry_records": len(rows),
         "expired_count": len(expired),
         "expired": expired,
@@ -54,7 +64,8 @@ def main():
     parser.add_argument("--check-only", action="store_true")
     args = parser.parse_args()
     report = build_report()
-    assert report["registry_records"] == 50, "V3.1 expiry report must cover all 50 Registry records"
+    expected = int(load_manifest()["total_records"])
+    assert report["registry_records"] == expected
     assert report["expired_count"] == 0, "expired MIT Registry record detected"
     payload = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     if args.check_only:
