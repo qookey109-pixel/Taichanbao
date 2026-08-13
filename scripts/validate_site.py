@@ -38,6 +38,7 @@ registry_manifest = data("data/registry.manifest.json")
 enrichment_queue = data("data/enrichment.queue.json")
 enrichment_results_manifest = data("data/enrichment.results.manifest.json")
 deep_candidates = data("data/deep_case.candidates.json")
+media_rights_requests = data("data/media-rights.requests.json")
 overrides = text("data/product.media.overrides.json")
 build_info = data("build-info.json")
 preview = text("versions_review/v2.5/index.html")
@@ -52,12 +53,12 @@ for token in ["publicationGate", "localStorage", "taichanbao-favorites", "produc
 for token in ["product.media.overrides.json", "mergeProduct", "external_evidence", "renderExternalEvidence", "renderGallery", "rightsLabel", "safeUrl"]:
     assert token in media_js, token
 
-# Progressive frontend layers are loaded in order; V3.7 is final marker.
+# Progressive frontend layers are loaded in order; V3.8 is final marker.
 for token in [
     "catalog-v3-1.js", "lifecycle-v3-2.js", "lifecycle-v3-2.css", "scale-v3-3.js",
     "enrichment-v3-4.js", "enrichment-v3-4.css", "deep-candidates-v3-5.js", "deep-candidates-v3-5.css",
     "brand-origin-v3-6.js", "brand-origin-v3-6.css", "promotion-audit-v3-7.js", "promotion-audit-v3-7.css",
-    "V3.7 Enrichment Complete 20/20"
+    "V3.8 Candidate Promotion Review"
 ]:
     assert token in catalog_loader, token
 for token in ["V3.3 REGISTRY SCALE 100", "V3.3 Registry Scale 100", "data/catalog.public.json", "validPublicCatalog", "registry.manifest.json", "products.demo.json", "product.media.overrides.json", "public_catalog", "manifest_fallback", "evidenceLevel", "catalog_source", "catalogGrid", "enhanceMediaScopes", "同系列補充圖", "精確型號", "records.length === 104", "mit_active_exact_models === 100", "registry_shards === 3"]:
@@ -67,7 +68,7 @@ for token in ["registry-expiry.json", "catalog.public.json", "lifecycle-section"
 for token in ["V3.3 REGISTRY SCALE 100", "v33BalanceNote", "最大分類", "上限 40%", "registry.manifest.json"]:
     assert token in scale_js, token
 
-# Enrichment is complete and manifest-driven.
+# Enrichment remains complete and manifest-driven.
 for token in ["enrichment.queue.json", "enrichment.results.manifest.json", "loadResults", "V3.7 · ENRICHMENT 20 / 20 COMPLETE", "brand_identity", "current_sale", "official_product_page", "image_rights", "已研究紀錄", "state-not_found", "state-blocked", "data-catalog-id"]:
     assert token in enrichment_js, token
 for token in [".enrichment-section", ".enrichment-metrics", ".enrichment-row", ".enrichment-task", ".enrichment-row.researched", ".state-not_found", ".state-blocked"]:
@@ -81,20 +82,38 @@ assert enrichment_results_manifest["total_researched_records"] == 20
 assert len(enrichment_results_manifest["batches"]) == 4
 assert sum(batch["records"] for batch in enrichment_results_manifest["batches"]) == 20
 
-# Deep candidate Gate remains explicit and blocked from publication.
-for token in ["data/deep_case.candidates.json", "V3.5 · DEEP CANDIDATE GATE", "證據夠強", "formal_publication", "image_rights", "candidate_status", "data-catalog-id"]:
+# V3.8 registers both CHIMEI products as blocked Deep Candidates.
+for token in ["data/deep_case.candidates.json", "V3.8 · CANDIDATE PROMOTION REVIEW", "candidate_editorial_review", "publication_editorial_review", "image_rights", "formal_publication", "data-catalog-id"]:
     assert token in deep_js, token
 for token in [".deep-candidate-section", ".deep-gates", ".deep-gate.pass", ".deep-gate.blocked", ".deep-gate.pending", ".deep-blockers"]:
     assert token in deep_css, token
-assert deep_candidates["version"] == "V3.5 Deep Candidate Gate"
-assert len(deep_candidates["items"]) == 1
-candidate = deep_candidates["items"][0]
-assert candidate["source_record_id"] == "mit-appliance-0200003802030-kd-884hp0"
-assert candidate["candidate_status"] == "blocked_assets"
-assert candidate["gate"]["image_rights"] == "blocked"
-assert candidate["gate"]["editorial_review"] == "pending"
-assert candidate["gate"]["formal_publication"] == "blocked"
-assert candidate["publication_status"] == "unpublished"
+assert deep_candidates["version"] == "V3.8 Candidate Promotion Review"
+assert len(deep_candidates["items"]) == 2
+candidate_ids = {item["source_record_id"] for item in deep_candidates["items"]}
+assert candidate_ids == {
+    "mit-appliance-0200003802030-kd-884hp0",
+    "mit-appliance-0200003802031-kd-703hp1",
+}
+for candidate in deep_candidates["items"]:
+    assert candidate["candidate_status"] == "blocked_assets"
+    assert candidate["gate"]["candidate_editorial_review"] == "pass"
+    assert candidate["gate"]["image_rights"] == "blocked"
+    assert candidate["gate"]["publication_editorial_review"] == "pending"
+    assert candidate["gate"]["formal_publication"] == "blocked"
+    assert candidate["publication_status"] == "unpublished"
+    assert candidate["media"]["rights_source"] == "https://www.chimei.com.tw/conditions"
+    assert candidate["media"]["rights_contact"] == "lcd@mail.chimei.com.tw"
+
+# V3.8 media-rights workflow is prepared but not sent.
+assert media_rights_requests["version"] == "V3.8 Media Rights Requests"
+assert len(media_rights_requests["requests"]) == 2
+assert {row["record_id"] for row in media_rights_requests["requests"]} == candidate_ids
+for request in media_rights_requests["requests"]:
+    assert request["rights_status"] == "permission_required"
+    assert request["request_status"] == "ready_to_contact"
+    assert request["request_sent"] is False
+    assert request["contact_email"] == "lcd@mail.chimei.com.tw"
+    assert request["terms_source"] == "https://www.chimei.com.tw/conditions"
 
 # Brand-origin separation remains explicit.
 for token in ["V3.6 · BRAND-ORIGIN SEPARATION", "台灣製", "不一定是台灣品牌", "非台灣品牌已確認", "MIT 精確型號有效", "mit-appliance-0200001303970-nr-c507xvs", "mit-appliance-0200003802031-kd-703hp1"]:
@@ -102,12 +121,12 @@ for token in ["V3.6 · BRAND-ORIGIN SEPARATION", "台灣製", "不一定是台�
 for token in [".brand-origin-section", ".brand-origin-metrics", ".brand-origin-card", ".origin-pill.tw", ".origin-pill.non-tw", ".origin-pill.mit"]:
     assert token in brand_origin_css, token
 
-# V3.7 Promotion Audit is visible and remains classification-only.
-for token in ["data/promotion-audit.json", "V3.7 · PROMOTION AUDIT", "20 筆都查完", "Deep Candidate 條件", "非台灣品牌 · 台灣製 exact-model", "eligible_for_deep_candidate_review", "exclude_from_taiwan_brand_recommendation", "FORMAL PUBLISHED"]:
+# V3.8 Promotion Audit shows two registered blocked candidates.
+for token in ["data/promotion-audit.json", "V3.8 · CANDIDATE PROMOTION REVIEW", "20 筆研究完成", "registered_deep_candidates", "已登錄 Deep Candidate", "非台灣品牌 · 台灣製 exact-model", "exclude_from_taiwan_brand_recommendation", "FORMAL PUBLISHED"]:
     assert token in promotion_js, token
 for token in [".promotion-audit-section", ".promotion-audit-metrics", ".promotion-audit-grid", ".promotion-bucket", ".promotion-state.candidate", ".promotion-state.exclude"]:
     assert token in promotion_css, token
-for token in ["V3.7 Promotion Audit", "deep_candidate_assets_blocked", "taiwan_brand_research_only", "non_taiwan_brand_taiwan_made", "brand_origin_unverified_research_only", "eligible_for_deep_candidate_review", "exclude_from_taiwan_brand_recommendation", "formal_published"]:
+for token in ["V3.8 Candidate Promotion Review", "deep_candidate_assets_blocked", "taiwan_brand_research_only", "non_taiwan_brand_taiwan_made", "brand_origin_unverified_research_only", "registered_deep_candidate", "exclude_from_taiwan_brand_recommendation", "formal_published"]:
     assert token in promotion_builder, token
 
 # Builders retain source lineage and create deploy-time artifacts only.
@@ -131,13 +150,15 @@ assert len(registry_manifest["shards"]) == 3
 for token in ["pilot-sampo-sr-c58dv", "pilot-tatung-tac11hnm", "pilot-oright-bio-caffeine", "permission_pending"]:
     assert token in overrides, token
 
-# Deployment fingerprint matches V3.7.
-assert build_info["version"] == "V3.7 Enrichment Complete 20/20"
+# Deployment fingerprint matches V3.8.
+assert build_info["version"] == "V3.8 Candidate Promotion Review"
 assert build_info["data_snapshot"] == "2026-08-13"
 assert build_info["real_research_candidates"] == 104
 assert build_info["deep_editorial_cases"] == 4
-assert build_info["deep_editorial_candidates"] == 1
-assert build_info["deep_candidates_blocked"] == 1
+assert build_info["deep_editorial_candidates"] == 2
+assert build_info["deep_candidates_blocked"] == 2
+assert build_info["candidate_editorial_review_pass"] == 2
+assert build_info["publication_editorial_review_pending"] == 2
 assert build_info["mit_active_exact_models"] == 100
 assert build_info["registry_shards"] == 3
 assert build_info["isolated_demo_records"] == 6
@@ -156,12 +177,15 @@ assert build_info["enrichment_exact_official_product_page_confirmed"] == 2
 assert build_info["enrichment_result_batches"] == 4
 assert build_info["brand_origin_separation_view"] is True
 assert build_info["promotion_audit"] is True
-assert build_info["promotion_registered_deep_candidates"] == 1
-assert build_info["promotion_eligible_unregistered_deep_candidates"] == 1
+assert build_info["promotion_registered_deep_candidates"] == 2
+assert build_info["promotion_eligible_unregistered_deep_candidates"] == 0
 assert build_info["promotion_deep_candidate_assets_blocked"] == 2
 assert build_info["promotion_taiwan_brand_research_only"] == 6
 assert build_info["promotion_non_taiwan_brand_taiwan_made"] == 3
 assert build_info["promotion_brand_origin_unverified_research_only"] == 9
+assert build_info["media_rights_requests"] == 2
+assert build_info["media_rights_ready_to_contact"] == 2
+assert build_info["media_rights_requests_sent"] == 0
 assert build_info["deployment_source"] == "GitHub Actions"
 
 # Media and V2.5 recovery stay available.
@@ -174,4 +198,4 @@ for token in ["publicationGate", "localStorage", "favorites"]:
 assert ".ticker" in magazine_css and ".layout" in magazine_css and ".mobile-nav" in magazine_css
 assert ".ticker" in preview_css and ".layout" in preview_css and ".mobile-nav" in preview_css
 
-print("OK: V3.7 Enrichment Complete enabled; 20/20 researched verified=22 not_found=51 blocked=7 pending=0; promotion audit 2/6/3/9; deep-candidate=1; published=0")
+print("OK: V3.8 Candidate Promotion Review enabled; deep-candidates=2 candidate-review=PASS image-rights=BLOCKED requests-ready=2 unsent=2 published=0")
