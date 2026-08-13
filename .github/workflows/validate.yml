@@ -38,4 +38,5 @@ jobs:
       - run: node --check assets/scale-v3-3.js
       - run: node --check assets/enrichment-v3-4.js
       - run: node --check assets/deep-candidates-v3-5.js
+      - run: node --check assets/brand-origin-v3-6.js
       - run: node --check assets/app.js
