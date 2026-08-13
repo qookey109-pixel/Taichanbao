@@ -1,0 +1,12 @@
+{
+  "project": "Taichanbao",
+  "version": "V3.0 Evidence Catalog",
+  "data_snapshot": "2026-08-13",
+  "real_research_candidates": 19,
+  "deep_editorial_cases": 4,
+  "mit_active_exact_models": 15,
+  "isolated_demo_records": 6,
+  "formal_published": 0,
+  "deployment_source": "GitHub Actions",
+  "note": "Use this file to verify the version actually served by GitHub Pages."
+}
