@@ -1,13 +1,14 @@
 from pathlib import Path
 from datetime import date
 from urllib.parse import urlparse
+from collections import Counter
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
 manifest = json.loads((ROOT / "data/registry.manifest.json").read_text(encoding="utf-8"))
-assert manifest["version"] == "V3.1 Registry Scale 50"
-assert manifest["total_records"] == 50
-assert len(manifest["shards"]) == 2
+assert manifest["version"] == "V3.3 Registry Scale 100"
+assert manifest["total_records"] == 100
+assert len(manifest["shards"]) == 3
 
 rows = []
 for shard in manifest["shards"]:
@@ -17,11 +18,11 @@ for shard in manifest["shards"]:
     assert len(data) == shard["records"], f"{shard['id']}: manifest count mismatch"
     rows.extend(data)
 
-assert len(rows) == 50
+assert len(rows) == 100
 ids = [row["id"] for row in rows]
 certs = [row["certification"]["certificate_no"] for row in rows]
-assert len(set(ids)) == 50, "duplicate registry id across shards"
-assert len(set(certs)) == 50, "duplicate MIT certificate across shards"
+assert len(set(ids)) == 100, "duplicate registry id across shards"
+assert len(set(certs)) == 100, "duplicate MIT certificate across shards"
 
 today = date.today()
 required = {
@@ -56,4 +57,19 @@ assert any("p=2" in url for url in source_urls), "appliance shard must retain pa
 assert any("p=4" in url for url in source_urls), "appliance shard must retain page-4 provenance"
 assert any("p=5" in url for url in source_urls), "appliance shard must retain page-5 provenance"
 
-print(f"OK: registry scale={len(rows)} across {len(manifest['shards'])} shards; certificates unique=50; appliance expansion=35; published=0")
+lifestyle = json.loads((ROOT / "data/products.registry.lifestyle.json").read_text(encoding="utf-8"))
+assert len(lifestyle) == 50
+lifestyle_counts = Counter(row["category"] for row in lifestyle)
+assert lifestyle_counts == Counter({"寢具": 14, "居家織品": 12, "袋包收納": 12, "居家用品": 12}), lifestyle_counts
+assert all(any(f"classid={class_id}" in row["source_url"] for class_id in (5, 6, 9, 20)) for row in lifestyle)
+
+category_counts = Counter(row["category"] for row in rows)
+largest_category, largest_count = category_counts.most_common(1)[0]
+assert largest_count <= 40, f"category concentration too high: {largest_category}={largest_count}/100"
+assert category_counts["家電"] <= 40
+assert len(category_counts) >= 8, f"category diversity too low: {len(category_counts)}"
+
+print(
+    f"OK: registry scale={len(rows)} across {len(manifest['shards'])} shards; certificates unique=100; "
+    f"lifestyle=50; largest_category={largest_category}:{largest_count}; published=0"
+)
