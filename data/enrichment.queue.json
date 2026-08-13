@@ -1,0 +1,28 @@
+{
+  "version": "V3.4 Enrichment Queue 20",
+  "updated_at": "2026-08-13",
+  "policy": "Queue status and research tasks never change verification or publication state automatically.",
+  "task_types": ["brand_identity", "current_sale", "official_product_page", "image_rights"],
+  "items": [
+    {"record_id":"mit-snug-s9900000015","priority":"P1","reason":"consumer-facing apparel candidate","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-mifiya-mifiya01","priority":"P1","reason":"consumer-facing footwear candidate","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-jump-168","priority":"P1","reason":"consumer-facing footwear candidate","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-adhoc-gentle102","priority":"P1","reason":"consumer-facing eyewear candidate","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-grace-1161-3","priority":"P1","reason":"home textile candidate with exact-model MIT record","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-sanhuan-296","priority":"P1","reason":"home textile candidate with exact-model MIT record","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-appliance-0200003802030-kd-884hp0","priority":"P1","reason":"consumer kitchen appliance candidate","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-appliance-0200003802029-kd-853hm0","priority":"P1","reason":"consumer kitchen appliance candidate","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-appliance-0200003802031-kd-703hp1","priority":"P2","reason":"consumer appliance candidate","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-appliance-0200001303970-nr-c507xvs","priority":"P2","reason":"high-recognition appliance model; brand identity must stay separate from Taiwan manufacturing evidence","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-appliance-0200001303969-nr-d507xvs","priority":"P2","reason":"high-recognition appliance model; brand identity must stay separate from Taiwan manufacturing evidence","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-appliance-0200001303966-nr-c617xvs","priority":"P2","reason":"high-recognition appliance model; brand identity must stay separate from Taiwan manufacturing evidence","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-0150003904089","priority":"P1","reason":"home textile candidate selected for consumer-facing enrichment","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-0150003904088","priority":"P2","reason":"same product family, separate exact-model record","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-0150003904085","priority":"P1","reason":"home textile candidate selected for consumer-facing enrichment","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-0150050700580","priority":"P1","reason":"graphene towel candidate selected for consumer-facing enrichment","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-0150050700579","priority":"P2","reason":"same product family, separate exact-model record","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-0150003904087","priority":"P2","reason":"same product family, separate exact-model record","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-antiarctic-r9k","priority":"P2","reason":"apparel candidate selected to diversify enrichment beyond home products","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-berno-lt9cmw8879","priority":"P2","reason":"apparel accessory candidate selected to diversify enrichment beyond home products","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}}
+  ]
+}
