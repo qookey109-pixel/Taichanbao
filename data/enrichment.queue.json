@@ -1,5 +1,5 @@
 {
-  "version": "V3.4 Enrichment Queue 20",
+  "version": "V3.5 Enrichment Queue 20",
   "updated_at": "2026-08-13",
   "policy": "Queue status and research tasks never change verification or publication state automatically.",
   "task_types": ["brand_identity", "current_sale", "official_product_page", "image_rights"],
@@ -18,7 +18,7 @@
     {"record_id":"mit-appliance-0200001303966-nr-c617xvs","priority":"P2","reason":"high-recognition appliance model; brand identity must stay separate from Taiwan manufacturing evidence","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
     {"record_id":"mit-0150003904089","priority":"P1","reason":"home textile candidate selected for consumer-facing enrichment","status":"completed","tasks":{"brand_identity":"not_found","current_sale":"not_found","official_product_page":"not_found","image_rights":"not_found"}},
     {"record_id":"mit-0150003904088","priority":"P2","reason":"same product family, separate exact-model record","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
-    {"record_id":"mit-0150003904085","priority":"P1","reason":"home textile candidate selected for consumer-facing enrichment","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
+    {"record_id":"mit-0150003904085","priority":"P1","reason":"home textile candidate selected for consumer-facing enrichment","status":"completed","tasks":{"brand_identity":"not_found","current_sale":"not_found","official_product_page":"not_found","image_rights":"not_found"}},
     {"record_id":"mit-0150050700580","priority":"P1","reason":"graphene towel candidate selected for consumer-facing enrichment","status":"completed","tasks":{"brand_identity":"not_found","current_sale":"not_found","official_product_page":"not_found","image_rights":"not_found"}},
     {"record_id":"mit-0150050700579","priority":"P2","reason":"same product family, separate exact-model record","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
     {"record_id":"mit-0150003904087","priority":"P2","reason":"same product family, separate exact-model record","status":"queued","tasks":{"brand_identity":"pending","current_sale":"pending","official_product_page":"pending","image_rights":"pending"}},
