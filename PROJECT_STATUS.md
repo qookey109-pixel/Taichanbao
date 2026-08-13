@@ -4,42 +4,30 @@
 
 ## Version
 
-`V3.1 Registry Scale 50`
+`V3.2 Registry Lifecycle`
 
 ## 正式網站方向
 
-台產報維持「雜誌選品＋精確型號證據資料庫」雙層架構。品牌身分、單一產品型號、臺灣製造證據、政府標章、圖片權利與正式發布狀態必須分開管理。
+台產報維持「雜誌選品＋精確型號證據資料庫」雙層架構。品牌身分、單一產品型號、臺灣製造證據、政府標章、圖片權利、證據有效期限與正式發布狀態必須分開管理。
 
-## V3.1 已完成
+## V3.2 本次完成
 
-- MIT Registry 從 15 筆擴充到 **50 筆有效精確型號**。
-- 真實研究候選從 19 筆提升到 **54 筆**：50 MIT Registry＋4 深度編輯案例。
-- 新增 35 筆家電型號，來源為經濟部產業發展署 MIT 微笑標章家電查詢第 2、4、5 頁。
-- 新增 `data/products.registry.appliances.json` 作為第二個 Registry shard。
-- 新增 `data/registry.manifest.json`，前端不再假設 Registry 只能存在單一 JSON。
-- `assets/catalog-v3-1.js` 正式站優先讀 deploy-time `data/catalog.public.json`；不存在或不符 V3.1 完整性條件時，才回退 manifest＋shards。
-- `assets/catalog-v3.js` 保留為穩定入口 loader。
-- 新增 `scripts/validate_registry_scale.py`：跨 shard 檢查 50 筆 ID、標章編號、官方來源與有效期限唯一性。
-- 新增 `scripts/validate_v3_1_catalog.py`：強制 6 Demo、4 deep cases、50 MIT Registry、54 real research candidates、published=0。
-- 新增 `scripts/report_registry_expiry.py`：可輸出並驗證 30／90／180／365 天內到期清單；CI 會阻擋已過期 Registry。
-- 新增 `scripts/build_public_catalog.py`：從 4 筆 deep cases＋Registry manifest/shards deterministic 重建單一公開 catalog。
-- public catalog 保留每筆主要來源 URL／來源名稱，避免 build 後證據鏈退化。
-- CI 已加入 public catalog deterministic check 與 Registry expiry check。
-- Pages workflow 在 artifact 上傳前自動產生 `data/catalog.public.json`。
-- `scripts/validate_site.py` 已鎖定 public-catalog-first＋manifest fallback 行為。
-- `build-info.json` 已更新為 V3.1：54 real／50 MIT／4 deep／6 demo／0 published／2 shards。
-- Formal Publication Gate 未降低，正式發布仍維持 0。
+- 保留 V3.1 的 50 筆 MIT 有效精確型號、4 筆深度編輯案例與 6 筆隔離 Demo。
+- 新增 `assets/lifecycle-v3-2.js` 與 `assets/lifecycle-v3-2.css`。
+- 前台新增「到期管理」導覽與 Registry Lifecycle Dashboard。
+- Dashboard 顯示：已過期、30／90／180／365 天內到期、下一筆到期產品與剩餘天數。
+- 到期清單可切換 30／90／180／365 天視窗；點擊項目可沿用 Catalog Drawer 查看該精確型號證據履歷。
+- Catalog 卡片會對 365 天內到期的 MIT 紀錄加上剩餘天數標籤；90 天內與 30 天內使用不同提醒層級。
+- 正式部署優先讀 `data/registry-expiry.json`；若部署產物不存在，前端會從 `catalog.public.json` 或 Registry manifest/shards 自動重算，不造成資料庫白屏。
+- Pages build 在 artifact 上傳前執行 `scripts/report_registry_expiry.py --output data/registry-expiry.json`。
+- 新增 `scripts/validate_lifecycle_v3_2.py`，驗證 Lifecycle UI、50 筆 Registry 有效期限與即將到期 fixture。
+- `scripts/validate_site.py` 升級為 V3.2，鎖定 Dashboard、expiry report、public-catalog-first 與既有 V2.5 preview。
+- `build-info.json` 升級為 V3.2，保存 54 real／50 MIT／4 deep／6 demo／0 published，以及 lifecycle 指標。
+- CI 與 Pages workflow 加入 V3.2 lifecycle Python／Node 檢查。
 
-## Pages Deployment Recovery — 已完成
+## Pages Deployment Recovery／Workflow 修正
 
-2026-08-13 針對公開 Pages 版本無法可靠確認進行一次完整 deployment recovery：
-
-1. 建立一次性最小 Recovery workflow，直接執行 checkout → configure-pages → upload-pages-artifact → deploy-pages。
-2. Recovery workflow 回報 `deploy_result: success`，部署網址為正式站 `https://qookey109-pixel.github.io/Taichanbao/`。
-3. 建立一次性 build-gate diagnostic，完整重跑 production workflow 的 17 個 Python／Node 檢查。
-4. 17 個檢查全部 PASS，包括 50 筆 Registry、54 筆 Catalog、expiry gate、媒體驗證與 JavaScript 語法。
-5. 正式 `.github/workflows/pages.yml` 加入 production 自我回報。
-6. 正式 production workflow 回報：
+2026-08-13 已完成 Pages recovery，正式 production workflow 曾回報：
 
 ```text
 build_result: success
@@ -47,11 +35,16 @@ deploy_result: success
 page_url: https://qookey109-pixel.github.io/Taichanbao/
 ```
 
-7. 兩個一次性 diagnostic workflow 已刪除，避免長期增加 workflow 雜訊；診斷結果 JSON 保留作為證據。
+V3.2 開發期間另外抓到一個 workflow 問題：production workflow 在 deploy 後把 `pages-production-result.json` commit 回 `main`，該 commit 又會再次觸發 Pages workflow，形成自我觸發循環。現已在 `.github/workflows/pages.yml` 加入：
 
-因此 Pages deployment recovery 已結案。搜尋引擎／外部爬蟲仍可能讀到舊快照，但不得再以快照舊內容判定 production deploy 失敗；正式 GitHub Actions 已提供 build/deploy success 證據。
+```yaml
+paths-ignore:
+  - "docs/deployment/pages-production-result.json"
+```
 
-## V3.1 資料狀態
+因此 production report commit 不再觸發下一輪 Pages build；workflow 可以正常收斂。一次性 diagnostic workflows 已刪除，診斷結果 JSON 保留。
+
+## V3.2 資料狀態
 
 ```text
 真實研究候選：54
@@ -67,21 +60,13 @@ page_url: https://qookey109-pixel.github.io/Taichanbao/
 隔離示範資料：6
 正式發布：0
 Registry shards：2
+已過期 Registry：0
+90 天內到期：1
 ```
 
-## 本批 35 筆家電資料範圍
+目前最近到期 fixture 為 TENDAYs `DMIT017-5(白)`，有效期限 `2026-10-27`。Dashboard 只表達政府標章證據的生命週期，不代表品牌身分、現售狀態、圖片權利或正式發布狀態跟著改變。
 
-官方來源：經濟部產業發展署臺灣製產品 MIT 微笑標章網站。
-
-主要來源頁：
-
-- `?classid=10&p=2`：Panasonic 冰箱、奇美家電／烘碗機、Panasonic 窗型變頻冷氣。
-- `?classid=10&p=4`：Panasonic 室內機、東元捕蚊燈、ALASKA 通風扇、ESUN 空氣淨化機。
-- `?classid=10&p=5`：冰點分離式冷氣室內／室外機。
-
-每筆保存：精確型號、申請公司、品牌欄位、標章編號、通過日期、有效期限、官方來源與最後查閱日期。
-
-## 公開 Catalog Pipeline
+## 公開資料 Pipeline
 
 ```text
 products.demo.json
@@ -92,29 +77,32 @@ registry.manifest.json
         ├─ products.registry.json (15)
         └─ products.registry.appliances.json (35)
         │
-        ▼
-scripts/build_public_catalog.py
-        │
-        ▼
-data/catalog.public.json   # deploy-time generated artifact
-        │
-        ▼
-assets/catalog-v3-1.js     # public-first; shards fallback
+        ├───────────────┐
+        ▼               ▼
+build_public_catalog   report_registry_expiry
+        │               │
+        ▼               ▼
+catalog.public.json    registry-expiry.json
+        │               │
+        └───────┬───────┘
+                ▼
+       assets/catalog-v3-1.js
+       assets/lifecycle-v3-2.js
 ```
 
-`catalog.public.json` 不提交作為人工維護主檔；Pages build 會從受控來源重新生成，因此可避免公開資料與研究來源逐漸漂移。
-
-Repository 的既有 SQLite schema 尚未從可搜尋文字檔可靠定位，因此目前不猜測或硬接未知 SQLite 表。
+兩個 JSON 都是 deploy-time artifact，不作為人工維護 source of truth。研究來源仍是 deep cases／Registry shards。
 
 ## 證據治理
 
-- MIT 有效紀錄只證明該 Registry 所列精確型號符合標章資料，不可外推同品牌其他型號。
-- MIT 製造證據不等於品牌國籍證據；多數新家電紀錄仍維持 `brand_origin_status: unverified`。
-- `government_registry_verified` 與 `evidence_level: A` 不代表可直接正式發布；仍需台產報發布 Gate。
+- MIT 有效紀錄只套用到該 Registry 所列精確型號，不可外推同品牌其他產品。
+- MIT 製造證據不等於品牌國籍證據。
+- `evidence_level: A` 不等於正式發布。
 - Registry 一律 `publication_status: unpublished`。
-- 標章有效期限若早於驗證執行日，部署驗證必須失敗。
-- 官方網站的 MIT 標章圖樣不直接複製進本站；只保存文字型證據欄位與來源。
-- 圖片權利仍與製造證據分離。
+- 已過期 MIT 紀錄必須阻擋 Registry 驗證，不可繼續顯示為有效證據。
+- 到期提醒只改變維護優先順序，不自動改任何產品查證／發布欄位。
+- MIT 標章圖樣不直接複製進網站；只保存文字型證據與官方來源。
+- 圖片權利與製造證據分離。
+- 搜尋、收藏、圖片、排序、metadata、到期 UI 都不得升級發布狀態。
 
 ## 核心檔案
 
@@ -123,6 +111,8 @@ index.html
 assets/catalog-v3.js
 assets/catalog-v3-1.js
 assets/catalog-v3.css
+assets/lifecycle-v3-2.js
+assets/lifecycle-v3-2.css
 assets/magazine.js
 assets/product-image-enhancements.js
 
@@ -133,25 +123,24 @@ data/registry.manifest.json
 data/product.media.overrides.json
 
 scripts/build_public_catalog.py
+scripts/report_registry_expiry.py
+scripts/validate_lifecycle_v3_2.py
 scripts/validate_registry.py
 scripts/validate_registry_scale.py
 scripts/validate_v3_catalog.py
 scripts/validate_v3_1_catalog.py
-scripts/report_registry_expiry.py
-scripts/import_registry_batch.py
 scripts/validate_site.py
 
+.github/workflows/validate.yml
 .github/workflows/pages.yml
 build-info.json
-docs/deployment/pages-recovery-result.json
-docs/deployment/pages-build-diagnostic.json
 docs/deployment/pages-production-result.json
 ```
 
 ## 尚未完成
 
-- 建立 Registry expiry dashboard／管理頁，把 30／90／180／365 天到期狀態做成前台可視化。
-- Registry 50 → 100 時優先補餐廚、居家用品、清潔與其他生活類別，避免家電占比繼續過高。
+- Registry 50 → 100：下一批優先補餐廚、居家用品、清潔、日用品與其他非家電類，降低家電集中度。
+- 逐步替現有 Registry 補台灣品牌身分、現售狀態、官方產品頁與可合法使用圖片，而不是只增加 MIT 筆數。
 - 若要接既有 SQLite，需要先定位正式資料庫檔、schema 與 import lineage，再建立 adapter；目前不猜測舊表。
 - 取得四個深度案例的圖片授權與實體標示證據。
 - 選一筆完整通過圖片權利、實體證據與編輯審核的產品，測試第一筆正式發布。
@@ -164,16 +153,15 @@ docs/deployment/pages-production-result.json
 - V2.8 Complete Media Architecture。
 - TENDAYS、SAMPO、大同、O'right 四個深度案例。
 - V3.0 Evidence Catalog 資料治理。
-- V3.1 Registry shard／manifest 架構。
-- V3.1 public-catalog-first＋research fallback 架構。
+- V3.1 Registry shard／manifest 與 public-catalog-first 架構。
+- V3.2 Registry Lifecycle／expiry report 架構。
 - 臺灣品牌 ≠ 臺灣製造。
 - MIT 精確型號證據不得外推同品牌其他產品。
-- 搜尋、收藏、圖片與 metadata 不得升級查證或發布狀態。
 
 ## 下一步
 
-1. 建立 Registry expiry dashboard／管理頁。
-2. Registry 50 → 100：優先擴充餐廚、居家用品、清潔與其他生活類別。
-3. 逐步替 50 筆 Registry 補品牌身分與現售狀態，而不是只增加 MIT 筆數。
-4. 若找到既有 SQLite 正式 schema，再建立 SQLite adapter，不直接修改既有資料庫。
-5. 第一筆正式發布仍必須通過現有 Gate。
+1. Registry 50 → 100：優先增加非家電 MIT 精確型號。
+2. 新增資料分類集中度 Gate，避免單一類別占比過高。
+3. 逐步替既有 50 筆補品牌身分與現售狀態。
+4. 若定位到既有 SQLite 正式 schema，再建立 SQLite adapter，不直接修改既有資料庫。
+5. 第一筆正式發布仍必須完整通過現有 Gate。
