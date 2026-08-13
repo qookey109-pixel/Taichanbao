@@ -4,7 +4,7 @@
 
 ## Version
 
-`V3.4 Enrichment Queue 20`
+`V3.4 Enrichment Queue 20 — Batch 2`
 
 ## 正式網站方向
 
@@ -13,21 +13,19 @@
 ## V3.4 目前完成
 
 - V3.3 Scale 100 完整保留：100 筆 MIT 有效精確型號＋4 筆深度案例＝104 筆真實研究候選。
-- `data/enrichment.queue.json`：20 筆優先候選、每筆 4 個研究任務，共 80 個任務。
-- 已完成第一批 5 筆 P1 外部查核：SNUG、MIFIYA、JUMP、ADHOC、格蕾絲。
-- 新增 `data/enrichment.results.v1.json` 保存第一批每一項 finding、摘要、來源 URL、查核日期與結果範圍。
-- 第一批結果：5 verified、12 not_found、3 blocked；尚餘 60 pending。
-- 5 筆已研究紀錄全部標為 `completed`，但 completed 只表示本輪研究結束，不表示每項都取得正面證據。
-- SNUG、ADHOC、格蕾絲取得可引用的台灣品牌身分證據。
-- ADHOC GENTLE 102(金) 與格蕾絲 1161-3(米) 取得官方／政府登錄的銷售通路或客製供應證據；不宣稱即時庫存。
-- MIFIYA MIFIYA01(白) 與 JUMP 168(藍) 的 MIT 精確型號製造證據仍有效，但本輪未找到足以確認品牌國籍、品牌官方現售頁或精確型號官方商品頁的證據。
-- SNUG、ADHOC、格蕾絲官方網站均未提供可重用圖片授權；相關 image-rights 任務為 `blocked`，不得直接下載／重製官方圖片。
-- `assets/enrichment-v3-4.js` / `.css` 已能分開顯示 verified、not_found、blocked、pending，並顯示已研究紀錄數與本輪結果摘要。
-- `scripts/validate_enrichment_v3_4.py` 已驗證 Queue 與 Results 狀態一致，並鎖定 5 researched／5 verified／12 not_found／3 blocked／60 pending。
-- `scripts/build_public_catalog.py` 已讀取 enrichment results：只把人工 verified 的品牌身分與現售狀態合併至 deploy-time `catalog.public.json`；原始 MIT Registry 不被改寫。
-- deploy-time Catalog 目前會把 SNUG、ADHOC、格蕾絲標為 `taiwan_brand_confirmed`；ADHOC、格蕾絲帶 `current_sale_confirmed: true`，並保存 enrichment evidence。
+- Enrichment Queue 固定 20 筆、每筆 4 任務，共 80 個任務；目前已完成兩批、共 **10 筆 P1** 外部查核。
+- 第一批：SNUG、MIFIYA、JUMP、ADHOC、格蕾絲。
+- 第二批：三環牌 296、奇美 KD-884HP0、奇美 KD-853HM0、YYMe 1157508(紫)、NINO1881 L2425(粉色)。
+- `data/enrichment.results.v1.json` 已升到 `V3.4 Enrichment Results Batch 2`，保存 10 筆逐項 findings、來源 URL、查核日期與證據範圍。
+- 累計結果：**12 verified、23 not_found、5 blocked、40 pending**。
+- 台灣品牌身分已確認的 enrichment records：6 筆（SNUG、ADHOC、格蕾絲、三環牌，以及兩筆奇美）。
+- 現售／供應通路已確認：5 筆；這個欄位只表示有官方／政府登錄銷售證據，不等於即時庫存。
+- 精確型號品牌官方產品頁已確認：目前 **1 筆，奇美 KD-884HP0**。
+- `scripts/validate_enrichment_v3_4.py` 已鎖定 10 researched／12 verified／23 not_found／5 blocked／40 pending。
+- `scripts/build_public_catalog.py` 會把人工 verified 的品牌身分與 current-sale 結果受控合併到 deploy-time `catalog.public.json`；原始 MIT Registry 不被改寫。
+- `assets/enrichment-v3-4.js` / `.css` 繼續分開呈現 verified／not_found／blocked／pending，並顯示已研究紀錄與查核日期。
+- `scripts/validate_site.py`、`build-info.json` 已同步第二批統計。
 - `verification_status`、`manufacturing_evidence_status`、`publication_status` 均未因 enrichment 自動升級。
-- `build-info.json` 與 `scripts/validate_site.py` 已同步第一批 enrichment 指標。
 
 ## 目前資料狀態
 
@@ -37,68 +35,71 @@
 └─ MIT 有效精確型號：100
 
 Enrichment Queue：20
-├─ 已研究紀錄：5
-├─ 已驗證任務：5
-├─ 查無官方證據：12
-├─ 權利阻擋：3
-└─ 待處理任務：60
+├─ 已研究紀錄：10
+├─ 已驗證任務：12
+├─ 查無官方證據：23
+├─ 權利阻擋：5
+└─ 待處理任務：40
 
-Enrichment 台灣品牌已確認：3
-Enrichment 現售／供應通路已確認：2
+Enrichment 台灣品牌已確認：6 records
+Enrichment 現售／供應通路已確認：5 records
+精確型號品牌官方頁已確認：1 record
 隔離 Demo：6
 正式發布：0
 Registry shards：3
 已過期 Registry：0
 ```
 
-## 第一批 5 筆結果
+## 第二批 5 筆結果
 
-### SNUG `S9900000015(紫藕)`
-- 品牌身分：verified → 台灣品牌已確認。
-- 現售：not_found；MIT 有效不等於精確型號仍可下單。
-- 精確型號品牌官方頁：not_found。
-- 圖片權利：blocked；官方站保留一切權利，未取得重用授權。
+### 三環牌 `296#(1082#)(白)`
+- 品牌身分：verified → 中大棉織官方說明 1951 年創立於雲林虎尾，以三環牌為品牌識別，並稱為台灣 MIT 品牌。
+- 現售／供應：verified → MIT 精確型號頁列自營店面、傳統市場、展售會；不宣稱即時庫存。
+- 精確型號品牌官方頁：not_found；官方站只有一般產品／品牌介紹。
+- 圖片權利：blocked；官方圖片沒有找到第三方重用授權。
 
-### MIFIYA `MIFIYA01(白)`
-- 品牌身分：not_found。
-- 現售：not_found。
-- 精確型號品牌官方頁：not_found。
-- 圖片權利：not_found；沒有找到可審核的精確型號官方素材頁。
+### 奇美 `KD-884HP0`
+- 品牌身分：verified → CHIMEI 奇美品牌由台灣奇美集團發展。
+- 現售：verified → 奇美家電目前烘碗機列表仍列 KD-884HP0 為 NEW。
+- 精確型號品牌官方頁：verified → 官方頁完整列型號、規格，並明列「製造產地：台灣」。
+- 圖片權利：blocked → 奇美官網 All rights reserved，未取得重用授權。
+- 目前為 Enrichment Queue 中最完整的 exact-model 官方頁案例；但仍未通過 Formal Publication Gate。
 
-### JUMP `168(藍)`
-- 品牌身分：not_found。
-- 現售：not_found。
-- 精確型號品牌官方頁：not_found。
-- 圖片權利：not_found。
+### 奇美 `KD-853HM0(白)`
+- 品牌身分：verified。
+- 現售／供應：verified → MIT 精確型號頁列新視代科技經銷通路；不宣稱即時庫存。
+- 精確型號品牌官方頁：not_found；目前奇美家電烘碗機產品列表未找到此型號。
+- 圖片權利：not_found；沒有找到 exact-model 品牌官方素材頁。
 
-### ADHOC `GENTLE 102(金)`
-- 品牌身分：verified → 台灣品牌已確認。
-- 現售：verified → MIT 精確型號頁列台北／台中／雲林自營銷售通路；不宣稱即時庫存。
-- 精確型號品牌官方頁：not_found。
-- 圖片權利：blocked；官方站 All Rights Reserved。
+### YYMe `1157508(紫)`
+- MIT 精確型號製造證據有效至 2029-07-02。
+- 品牌身分：not_found；不能從元維棉織廠／MIT 申請資料直接推成台灣品牌。
+- 現售：not_found；該精確型號沒有取得官方銷售通路／品牌現售頁證據。
+- 精確型號官方頁、圖片權利：not_found。
 
-### 格蕾絲 `1161-3(米)`
-- 品牌身分：verified → 台灣品牌已確認。
-- 現售：verified → MIT 精確型號頁列「客製化商品」供應通路；不是一般零售現貨聲明。
-- 精確型號品牌官方頁：not_found。
-- 圖片權利：blocked；未取得官方圖片重用授權。
+### NINO1881 `L2425(粉色)`
+- MIT 精確型號製造證據有效至 2029-07-21。
+- 品牌身分：not_found；寶佳貿易與 MIT 品牌欄不足以單獨證明品牌國籍，且同名床墊網站不拿來混用。
+- 現售：not_found；未取得 exact-model 官方銷售證據。
+- 精確型號官方頁、圖片權利：not_found。
 
 ## Enrichment 治理
 
-- `brand_identity` 與 MIT 製造證據分離；製造商在台灣不等於品牌一定是台灣品牌。
-- `current_sale` 必須限定精確型號；有效 MIT 標章本身不等於現售。
-- `official_product_page` 只接受品牌／公司官方精確型號頁；同系列頁不能冒充。
-- `image_rights` 未有明確重用授權時只能 `blocked`／`not_found`，不能因圖片公開可見就存進 repo。
-- Enrichment results 可人工合併品牌身分／現售欄位到 public catalog，但不得自動修改製造證據等級或正式發布狀態。
+- `completed` 只代表本輪研究已結束，不代表四項都 verified。
+- `brand_identity` 與 MIT 製造證據分離；製造商／申請者在台灣不等於品牌一定是台灣品牌。
+- `current_sale` 必須限定精確型號；政府登錄銷售通路不等於即時庫存。
+- `official_product_page` 只接受品牌／公司官方 exact-model 頁；同系列或第三方零售頁不能冒充。
+- `image_rights` 沒有明確重用授權時只能 blocked／not_found。
+- KD-884HP0 官方頁的「製造產地：台灣」只適用 KD-884HP0，不外推到 KD-853HM0 或其他奇美商品。
+- Enrichment verified 可經 builder 反映到 public catalog，但不得自動修改 manufacturing evidence 等級、verification status 或 publication status。
 - Formal Publication Gate 維持不變，正式發布仍為 0。
 
 ## V3.3 / V3.2 基線保留
 
-- Registry：100 筆／3 shards。
-- 真實研究候選：104。
+- Registry：100 筆／3 shards；真實研究候選 104。
 - 分類集中度 Gate：任一分類 <= 40%，家電 <= 40／100，至少 8 個分類。
 - Lifecycle Dashboard：已過期／30／90／180／365 天到期；過期 MIT Registry 阻擋驗證。
-- public catalog 為 deploy-time artifact，研究來源仍是 Registry shards＋受控 enrichment results。
+- public catalog 為 deploy-time artifact，研究 source of truth 仍是 Registry shards＋受控 enrichment results。
 
 ## 核心檔案
 
@@ -118,16 +119,16 @@ PROJECT_STATUS.md
 
 ## 尚未完成
 
-- 驗收第一批 enrichment 更新後最新 production build／deploy。
-- 繼續 P1：三環牌 296、奇美 KD-884HP0、奇美 KD-853HM0、YYMe 1157508、YYMe 1147508、NINO1881 L2425 等。
-- 精確型號官方商品頁目前仍是第一批最大缺口。
+- 驗收 Batch 2 更新後最新 production build／deploy。
+- Queue 尚餘 10 筆未研究；其中 P1 尚有 YYMe `1147508(紫)`，其他為 P2。
 - 取得可合法使用的產品圖片／授權。
+- 對 KD-884HP0 評估是否值得升級成新的 deep editorial case，但不得跳過圖片權利與正式發布 Gate。
 - 補餐廚與清潔用品 Registry 類別。
 - 第一筆正式發布仍必須完整通過 Formal Publication Gate。
 
 ## 下一步
 
-1. 驗收本輪 production build／deploy。
-2. 再處理下一批 5 筆 P1，優先奇美烘碗機、三環牌與 YYMe／NINO1881。
-3. 對已確認品牌身分的產品，繼續找精確型號官方商品頁與圖片授權。
+1. 驗收最新 production build／deploy。
+2. 對 `KD-884HP0` 建立 deep-case 候選評估，而不是直接發布。
+3. 完成剩餘 P1 `YYMe 1147508(紫)`，再開始 P2（KD-703HP1、Panasonic 冰箱、YYMe/NINO1881 同系列、Anti Arctic、伯諾）。
 4. 不為了提高 verified 數量而把 MIT 有效、同系列頁或第三方零售頁誤當正式證據。
