@@ -24,11 +24,17 @@ jobs:
       - name: Validate editorial data
         run: python scripts/validate_data.py
 
-      - name: Validate V3 evidence registry
+      - name: Validate V3 seed registry
         run: python scripts/validate_registry.py
 
-      - name: Validate V3 cross-dataset catalog
+      - name: Validate V3.1 sharded registry scale
+        run: python scripts/validate_registry_scale.py
+
+      - name: Validate V3 seed catalog
         run: python scripts/validate_v3_catalog.py
+
+      - name: Validate V3.1 catalog totals
+        run: python scripts/validate_v3_1_catalog.py
 
       - name: Validate image rights
         run: python scripts/validate_media_rights.py
@@ -51,8 +57,11 @@ jobs:
       - name: Check image enhancements
         run: node --check assets/product-image-enhancements.js
 
-      - name: Check V3 evidence catalog JavaScript
+      - name: Check V3 loader JavaScript
         run: node --check assets/catalog-v3.js
+
+      - name: Check V3.1 catalog JavaScript
+        run: node --check assets/catalog-v3-1.js
 
       - name: Check V2.5 preview JavaScript
         run: node --check assets/app.js
