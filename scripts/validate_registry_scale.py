@@ -1,0 +1,56 @@
+from pathlib import Path
+from datetime import date
+from urllib.parse import urlparse
+import json
+
+ROOT = Path(__file__).resolve().parents[1]
+manifest = json.loads((ROOT / "data/registry.manifest.json").read_text(encoding="utf-8"))
+assert manifest["version"] == "V3.1 Registry Scale 50"
+assert manifest["total_records"] == 50
+assert len(manifest["shards"]) == 2
+
+rows = []
+for shard in manifest["shards"]:
+    path = ROOT / shard["path"]
+    data = json.loads(path.read_text(encoding="utf-8"))
+    assert isinstance(data, list), f"{shard['id']}: shard must be an array"
+    assert len(data) == shard["records"], f"{shard['id']}: manifest count mismatch"
+    rows.extend(data)
+
+assert len(rows) == 50
+ids = [row["id"] for row in rows]
+certs = [row["certification"]["certificate_no"] for row in rows]
+assert len(set(ids)) == 50, "duplicate registry id across shards"
+assert len(set(certs)) == 50, "duplicate MIT certificate across shards"
+
+today = date.today()
+required = {
+    "id", "record_origin", "brand", "brand_origin_status", "company", "name", "category", "scene",
+    "model", "model_confirmed", "verification_status", "publication_status", "manufacturing_evidence_status",
+    "evidence_level", "record_scope", "origin_summary", "certification", "source_url", "source_name",
+    "source_type", "source_checked_at", "emoji", "tags"
+}
+for row in rows:
+    missing = required - row.keys()
+    assert not missing, f"{row.get('id')}: missing {sorted(missing)}"
+    assert row["record_origin"] == "mit_registry"
+    assert row["verification_status"] == "government_registry_verified"
+    assert row["publication_status"] == "unpublished"
+    assert row["manufacturing_evidence_status"] == "mit_certified_active"
+    assert row["evidence_level"] == "A"
+    assert row["record_scope"] == "exact_model"
+    assert row["model_confirmed"] is True
+    parsed = urlparse(row["source_url"])
+    assert parsed.scheme == "https" and parsed.netloc == "keid.nat.gov.tw", f"{row['id']}: non-official source"
+    cert = row["certification"]
+    assert cert["scheme"] == "MIT微笑標章"
+    assert cert["status"] == "有效"
+    assert date.fromisoformat(cert["valid_until"]) >= today, f"{row['id']}: expired MIT record"
+
+appliance = json.loads((ROOT / "data/products.registry.appliances.json").read_text(encoding="utf-8"))
+assert len(appliance) == 35
+assert all(row["category"] == "家電" for row in appliance)
+assert len({row["brand"] for row in appliance}) >= 6
+assert {"p=2", "p=4", "p=5"} <= {fragment for row in appliance for fragment in [next((p for p in ["p=2", "p=4", "p=5"] if p in row["source_url"]), "")]}
+
+print(f"OK: registry scale={len(rows)} across {len(manifest['shards'])} shards; certificates unique=50; appliance expansion=35; published=0")
