@@ -18,6 +18,20 @@ def load(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def load_enrichment_results():
+    manifest = load("data/enrichment.results.manifest.json")
+    rows = []
+    for batch in manifest["batches"]:
+        payload = load(batch["path"])
+        batch_rows = payload.get("records", [])
+        assert len(batch_rows) == int(batch["records"]), f"enrichment result batch mismatch: {batch['id']}"
+        rows.extend(batch_rows)
+    assert len(rows) == int(manifest["total_researched_records"])
+    ids = [row["record_id"] for row in rows]
+    assert len(set(ids)) == len(ids), "duplicate enrichment result record_id across batches"
+    return rows
+
+
 def first_source(row):
     external = row.get("external_evidence") or []
     if external:
@@ -55,6 +69,14 @@ def merge_deep(base, override):
     return merged
 
 
+def first_verified_source(finding):
+    for source in finding.get("sources", []) if isinstance(finding, dict) else []:
+        url = source.get("url", "")
+        if url.startswith("https://"):
+            return url
+    return ""
+
+
 def apply_enrichment(row, result):
     if not result:
         return row, None
@@ -63,16 +85,28 @@ def apply_enrichment(row, result):
     brand_finding = findings.get("brand_identity") or {}
     if brand_finding.get("status") == "verified" and brand_finding.get("result") == "taiwan_brand_confirmed":
         brand_status = "taiwan_brand_confirmed"
+    elif brand_finding.get("status") == "verified" and brand_finding.get("result") == "non_taiwan_brand":
+        brand_status = "non_taiwan_brand"
 
     current_sale = None
     sale_finding = findings.get("current_sale") or {}
     if sale_finding.get("status") == "verified":
         current_sale = True
 
+    official_page_finding = findings.get("official_product_page") or {}
+    official_page_url = ""
+    if official_page_finding.get("status") == "verified":
+        official_page_url = first_verified_source(official_page_finding)
+
+    rights_finding = findings.get("image_rights") or {}
+    image_rights_status = rights_finding.get("status") if rights_finding.get("status") in {"verified", "blocked", "not_found"} else ""
+
     enriched = {
         **row,
         "brand_origin_status": brand_status,
         "current_sale_confirmed": current_sale,
+        "official_product_page_url": official_page_url,
+        "image_rights_research_status": image_rights_status,
         "enrichment": {
             "checked_at": result.get("checked_at"),
             "findings": findings,
@@ -96,9 +130,9 @@ def build():
     base = load("data/products.demo.json")
     overrides = load("data/product.media.overrides.json")
     manifest = load("data/registry.manifest.json")
-    enrichment_results = load("data/enrichment.results.v1.json")
+    enrichment_results = load_enrichment_results()
     override_map = {row["id"]: row for row in overrides}
-    enrichment_map = {row["record_id"]: row for row in enrichment_results.get("records", [])}
+    enrichment_map = {row["record_id"]: row for row in enrichment_results}
 
     deep = [merge_deep(row, override_map.get(row["id"])) for row in base if row["verification_status"] != "demo_only"]
     demos = [row for row in base if row["verification_status"] == "demo_only"]
@@ -120,9 +154,10 @@ def build():
     enriched_registry = [row for row in registry if row.get("enrichment")]
     confirmed_brands = [row for row in enriched_registry if row.get("brand_origin_status") == "taiwan_brand_confirmed"]
     confirmed_sales = [row for row in enriched_registry if row.get("current_sale_confirmed") is True]
+    confirmed_pages = [row for row in enriched_registry if row.get("official_product_page_url")]
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "catalog_version": manifest["version"],
         "generated_at": date.today().isoformat(),
         "counts": {
@@ -135,6 +170,8 @@ def build():
             "enrichment_researched_records": len(enriched_registry),
             "enrichment_taiwan_brand_confirmed": len(confirmed_brands),
             "enrichment_current_sale_confirmed": len(confirmed_sales),
+            "enrichment_exact_official_product_page_confirmed": len(confirmed_pages),
+            "enrichment_result_batches": len(load("data/enrichment.results.manifest.json")["batches"]),
         },
         "records": records,
     }
