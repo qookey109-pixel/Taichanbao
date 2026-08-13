@@ -36,10 +36,10 @@ p1 = sum(item["priority"] == "P1" for item in queue["items"])
 assert p1 >= 8
 assert len({registry[item["record_id"]]["category"] for item in queue["items"]}) >= 4
 
-assert results["version"] == "V3.4 Enrichment Results Batch 1"
+assert results["version"] == "V3.4 Enrichment Results Batch 2"
 assert results["updated_at"] == "2026-08-13"
-assert len(results["records"]) == 5
-assert len({row["record_id"] for row in results["records"]}) == 5
+assert len(results["records"]) == 10
+assert len({row["record_id"] for row in results["records"]}) == 10
 
 result_states = []
 for result in results["records"]:
@@ -67,14 +67,29 @@ for result in results["records"]:
 verified_tasks = sum(state == "verified" for item in queue["items"] for state in item["tasks"].values())
 pending_tasks = sum(state == "pending" for item in queue["items"] for state in item["tasks"].values())
 completed_records = sum(item["status"] == "completed" for item in queue["items"])
-assert completed_records == 5
-assert verified_tasks == 5
-assert pending_tasks == 60
-assert result_states.count("verified") == 5
-assert result_states.count("not_found") == 12
-assert result_states.count("blocked") == 3
+assert completed_records == 10
+assert verified_tasks == 12
+assert pending_tasks == 40
+assert result_states.count("verified") == 12
+assert result_states.count("not_found") == 23
+assert result_states.count("blocked") == 5
+
+confirmed_brand_records = 0
+confirmed_sale_records = 0
+exact_official_page_records = 0
+for result in results["records"]:
+    findings = result["findings"]
+    if findings["brand_identity"]["status"] == "verified" and findings["brand_identity"]["result"] == "taiwan_brand_confirmed":
+        confirmed_brand_records += 1
+    if findings["current_sale"]["status"] == "verified":
+        confirmed_sale_records += 1
+    if findings["official_product_page"]["status"] == "verified":
+        exact_official_page_records += 1
+assert confirmed_brand_records == 6
+assert confirmed_sale_records == 5
+assert exact_official_page_records == 1
 
 print(
-    "OK: enrichment queue=20; researched=5; verified_tasks=5; "
-    "not_found=12; blocked=3; pending=60; publication unchanged"
+    "OK: enrichment queue=20; researched=10; verified_tasks=12; "
+    "not_found=23; blocked=5; pending=40; Taiwan-brand=6; sale=5; exact-page=1; publication unchanged"
 )
