@@ -1,0 +1,10 @@
+{
+  "version": "V3.5 Enrichment Results Manifest",
+  "updated_at": "2026-08-13",
+  "batches": [
+    {"id":"batch-1-2","path":"data/enrichment.results.v1.json","records":10,"scope":"P1 batches 1 and 2"},
+    {"id":"batch-3","path":"data/enrichment.results.v2.json","records":1,"scope":"remaining P1 YYMe 1147508 purple"}
+  ],
+  "total_researched_records": 11,
+  "policy": "Batch result files are append-only research evidence inputs. They may enrich deploy-time catalog fields only through controlled builders and never change manufacturing evidence or publication status automatically."
+}
