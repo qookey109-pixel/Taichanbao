@@ -36,6 +36,9 @@ jobs:
       - name: Validate V3.1 catalog totals
         run: python scripts/validate_v3_1_catalog.py
 
+      - name: Build public catalog
+        run: python scripts/build_public_catalog.py --output data/catalog.public.json
+
       - name: Validate image rights
         run: python scripts/validate_media_rights.py
 
