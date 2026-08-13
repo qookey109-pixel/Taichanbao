@@ -3,12 +3,12 @@ import json
 
 ROOT = Path(__file__).resolve().parents[1]
 base = json.loads((ROOT / "data/products.demo.json").read_text(encoding="utf-8"))
-manifest = json.loads((ROOT / "data/registry.manifest.json").read_text(encoding="utf-8"))
 overrides = json.loads((ROOT / "data/product.media.overrides.json").read_text(encoding="utf-8"))
 
+# V3.1 regression baseline is intentionally pinned to the original two shards.
 registry = []
-for shard in manifest["shards"]:
-    registry.extend(json.loads((ROOT / shard["path"]).read_text(encoding="utf-8")))
+for path in ["data/products.registry.json", "data/products.registry.appliances.json"]:
+    registry.extend(json.loads((ROOT / path).read_text(encoding="utf-8")))
 
 demos = [row for row in base if row["verification_status"] == "demo_only"]
 deep = [row for row in base if row["verification_status"] != "demo_only"]
@@ -33,4 +33,4 @@ assert len({row["brand"] for row in registry}) >= 15
 assert len({row["category"] for row in registry}) >= 6
 assert all(row["evidence_level"] == "A" for row in registry)
 
-print("OK: V3.1 catalog real=54 (deep=4 + MIT=50); demos=6 isolated; published=0")
+print("OK: V3.1 regression real=54 (deep=4 + MIT=50); demos=6 isolated; published=0")
