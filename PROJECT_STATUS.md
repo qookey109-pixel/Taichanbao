@@ -22,7 +22,10 @@
 - `assets/catalog-v3.js` 改為穩定入口 loader，既有首頁引用不必破壞性修改。
 - 新增 `scripts/validate_registry_scale.py`：跨 shard 檢查 50 筆 ID、標章編號、官方來源與有效期限唯一性。
 - 新增 `scripts/validate_v3_1_catalog.py`：強制 6 Demo、4 deep cases、50 MIT Registry、54 real research candidates、published=0。
-- 新增 `scripts/report_registry_expiry.py`：可輸出 30／90／180／365 天內到期清單。
+- 新增 `scripts/report_registry_expiry.py`：可輸出並驗證 30／90／180／365 天內到期清單；CI 會阻擋已過期 Registry。
+- 新增 `scripts/build_public_catalog.py`：可從 4 筆 deep cases＋Registry manifest/shards deterministic 重建單一公開 catalog；支援 `--check-only` 與輸出 `data/catalog.public.json`。
+- CI 已加入 public catalog deterministic check 與 Registry expiry check。
+- Pages workflow 已在 artifact 上傳前自動產生 `data/catalog.public.json`。
 - `validate_registry.py` 仍驗證原始 15 筆 seed；V3.1 scale validator 驗證完整 50 筆，保留分層回歸測試。
 - GitHub Actions 與 Pages workflow 已加入 V3.1 sharded Registry 與新 JavaScript 驗證。
 - `build-info.json` 已更新為 V3.1：54 real／50 MIT／4 deep／6 demo／0 published／2 shards。
@@ -58,6 +61,28 @@ Registry shards：2
 
 每筆保存：精確型號、申請公司、品牌欄位、標章編號、通過日期、有效期限、官方來源與最後查閱日期。
 
+## 公開 Catalog Pipeline
+
+```text
+products.demo.json
+        │
+        ├─ 4 deep editorial cases
+        │
+registry.manifest.json
+        ├─ products.registry.json (15)
+        └─ products.registry.appliances.json (35)
+        │
+        ▼
+scripts/build_public_catalog.py
+        │
+        ▼
+data/catalog.public.json   # deploy-time generated artifact
+```
+
+`catalog.public.json` 不提交作為人工維護主檔；Pages build 會從受控來源重新生成，因此可避免公開資料與研究來源逐漸漂移。
+
+目前 build pipeline 直接使用 JSON deep cases／Registry shards。Repository 的既有 SQLite schema 尚未從可搜尋文字檔可靠定位，因此本次沒有假設或硬接未知 SQLite 表。
+
 ## 證據治理
 
 - MIT 有效紀錄只證明該 Registry 所列精確型號符合標章資料，不可外推同品牌其他型號。
@@ -84,6 +109,7 @@ data/products.registry.appliances.json
 data/registry.manifest.json
 data/product.media.overrides.json
 
+scripts/build_public_catalog.py
 scripts/validate_registry.py
 scripts/validate_registry_scale.py
 scripts/validate_v3_catalog.py
@@ -96,10 +122,11 @@ build-info.json
 
 ## 尚未完成
 
-- 公開 GitHub Pages 尚需確認實際部署到 V3.1，而不是只確認 main。
+- 公開 GitHub Pages 尚未確認實際部署到 V3.1；外部讀取仍看到舊 VOL.001 頁面。
 - 將 Registry 擴到 100 筆時，要優先補餐廚、居家用品、清潔與其他生活類別，避免家電占比繼續過高。
-- 建立 SQLite → public catalog 的正式 build 產物，取代瀏覽器端永久合併多資料源。
-- 將到期報表納入可視化管理頁或定期檢查。
+- 將 `catalog.public.json` 改成前端優先來源、manifest/shards 作 fallback，可作為後續優化。
+- 若要接既有 SQLite，需要先定位正式資料庫檔、schema 與 import lineage，再建立 adapter；目前不猜測舊表。
+- 將到期報表做成可視化管理頁；Pages 直接發布 expiry JSON 的 workflow 更新本次被工具安全層擋下，CI check 已完成。
 - 取得四個深度案例的圖片授權與實體標示證據。
 - 選一筆完整通過圖片權利、實體證據與編輯審核的產品，測試第一筆正式發布。
 
@@ -118,7 +145,8 @@ build-info.json
 
 ## 下一步
 
-1. 檢查 GitHub Actions／Pages 是否成功部署 V3.1。
-2. 建立 SQLite → `catalog.public.json` 的可重建發布管線。
-3. 建立 Registry expiry dashboard／報表 Gate。
+1. 找出 GitHub Pages 為何仍服務舊 VOL.001，完成 V3.1 deployment recovery。
+2. 前端優先改讀 deploy-time `catalog.public.json`，manifest/shards 保留 fallback。
+3. 建立 Registry expiry dashboard／管理頁。
 4. 下一批擴充優先補非家電類，將 Registry 推進 100 筆。
+5. 若找到既有 SQLite 正式 schema，再建立 SQLite adapter，不直接修改既有資料庫。
