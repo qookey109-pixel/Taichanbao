@@ -36,7 +36,7 @@ jobs:
         run: python scripts/validate_v3_3_catalog.py
       - name: Validate category concentration
         run: python scripts/validate_category_balance.py
-      - name: Validate V3.5 enrichment batches
+      - name: Validate V3.6 enrichment and brand-origin separation
         run: python scripts/validate_enrichment_v3_4.py
       - name: Validate V3.5 deep candidate Gate
         run: python scripts/validate_deep_candidates_v3_5.py
@@ -56,7 +56,7 @@ jobs:
         run: python scripts/validate_tatung_media.py
       - name: Validate O'right media scope
         run: python scripts/validate_oright_media.py
-      - name: Validate V3.5 site
+      - name: Validate V3.6 site
         run: python scripts/validate_site.py
       - name: Check magazine JavaScript
         run: node --check assets/magazine.js
@@ -74,6 +74,8 @@ jobs:
         run: node --check assets/enrichment-v3-4.js
       - name: Check V3.5 deep candidate JavaScript
         run: node --check assets/deep-candidates-v3-5.js
+      - name: Check V3.6 brand-origin JavaScript
+        run: node --check assets/brand-origin-v3-6.js
       - name: Check V2.5 preview JavaScript
         run: node --check assets/app.js
       - name: Configure Pages
