@@ -18,7 +18,7 @@ required = {
     "source_name", "source_type", "source_checked_at", "emoji", "tags"
 }
 
-today = date(2026, 8, 13)
+as_of = date.today()
 categories = set()
 brands = set()
 
@@ -44,9 +44,10 @@ for row in rows:
     assert cert["scheme"] == "MIT微笑標章"
     assert cert["status"] == "有效"
     valid_until = date.fromisoformat(cert["valid_until"])
-    assert valid_until >= today, f"{row['id']}: certification expired on {valid_until}"
+    assert valid_until >= as_of, f"{row['id']}: certification expired on {valid_until}; refresh registry before deployment"
     date.fromisoformat(cert["passed_at"])
-    date.fromisoformat(row["source_checked_at"])
+    checked_at = date.fromisoformat(row["source_checked_at"])
+    assert checked_at <= as_of, f"{row['id']}: source_checked_at cannot be in the future"
 
     categories.add(row["category"])
     brands.add(row["brand"])
@@ -59,5 +60,5 @@ assert any(row["certification"]["valid_until"] == "2029-07-27" for row in rows)
 
 print(
     f"OK: registry={len(rows)}; categories={len(categories)}; brands={len(brands)}; "
-    "all records exact-model MIT active and unpublished"
+    f"all records exact-model MIT active as of {as_of.isoformat()} and unpublished"
 )
