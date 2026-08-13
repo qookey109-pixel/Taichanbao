@@ -1,8 +1,8 @@
 {
   "workflow": "Deploy GitHub Pages",
-  "trigger_sha": "b9bbb91aa7974609890ea7af0ae10d8bafe3a4ae",
-  "build_result": "cancelled",
-  "deploy_result": "cancelled",
+  "trigger_sha": "1d52f8654e28e20e2bf741d43a8da275eab27a1c",
+  "build_result": "failure",
+  "deploy_result": "skipped",
   "page_url": "",
-  "recorded_at": "2026-08-13T09:43:10.041203+00:00"
+  "recorded_at": "2026-08-13T09:43:35.779641+00:00"
 }
