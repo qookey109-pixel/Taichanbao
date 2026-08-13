@@ -18,6 +18,17 @@ def load(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def first_source(row):
+    external = row.get("external_evidence") or []
+    if external:
+        source = external[0]
+        return source.get("source_url", ""), source.get("source_name", "")
+    return (
+        row.get("image_source_url") or row.get("brand_product_url") or "",
+        row.get("image_source_name") or "官方來源",
+    )
+
+
 def merge_deep(base, override):
     override = override or {}
     merged = {**base, **override}
@@ -32,11 +43,14 @@ def merge_deep(base, override):
     }
     merged["external_evidence"] = override.get("external_evidence") if isinstance(override.get("external_evidence"), list) else base.get("external_evidence", [])
     status = merged.get("origin_evidence_status", "insufficient")
+    source_url, source_name = first_source(merged)
     merged.update({
         "catalog_source": "deep_case",
         "evidence_level": LEVEL_MAP.get(status, "D"),
         "brand_origin_status": "taiwan_brand_confirmed" if merged.get("taiwan_brand") is True else "unverified",
         "record_scope": "exact_model",
+        "source_url": source_url,
+        "source_name": source_name,
     })
     return merged
 
@@ -70,6 +84,8 @@ def build():
     assert len(records) == 54
     assert len(set(ids)) == len(ids)
     assert all(row.get("publication_status") == "unpublished" for row in records)
+    assert all(row.get("source_url") for row in records), "every public record needs a primary source URL"
+    assert all(row.get("source_name") for row in records), "every public record needs a primary source name"
 
     return {
         "schema_version": 1,
