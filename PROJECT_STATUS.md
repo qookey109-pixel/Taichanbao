@@ -26,6 +26,7 @@
 - `assets/enrichment-v3-4.js` / `.css` 繼續分開呈現 verified／not_found／blocked／pending，並顯示已研究紀錄與查核日期。
 - `scripts/validate_site.py`、`build-info.json` 已同步第二批統計。
 - `verification_status`、`manufacturing_evidence_status`、`publication_status` 均未因 enrichment 自動升級。
+- **Batch 2 production deployment 已驗收成功**：trigger SHA `81c1b7b1e878927229f1300d82b399e1080cd86a`，build=`success`、deploy=`success`。
 
 ## 目前資料狀態
 
@@ -119,7 +120,6 @@ PROJECT_STATUS.md
 
 ## 尚未完成
 
-- 驗收 Batch 2 更新後最新 production build／deploy。
 - Queue 尚餘 10 筆未研究；其中 P1 尚有 YYMe `1147508(紫)`，其他為 P2。
 - 取得可合法使用的產品圖片／授權。
 - 對 KD-884HP0 評估是否值得升級成新的 deep editorial case，但不得跳過圖片權利與正式發布 Gate。
@@ -128,7 +128,6 @@ PROJECT_STATUS.md
 
 ## 下一步
 
-1. 驗收最新 production build／deploy。
-2. 對 `KD-884HP0` 建立 deep-case 候選評估，而不是直接發布。
-3. 完成剩餘 P1 `YYMe 1147508(紫)`，再開始 P2（KD-703HP1、Panasonic 冰箱、YYMe/NINO1881 同系列、Anti Arctic、伯諾）。
-4. 不為了提高 verified 數量而把 MIT 有效、同系列頁或第三方零售頁誤當正式證據。
+1. 對 `KD-884HP0` 建立 deep-case 候選評估，而不是直接發布。
+2. 完成剩餘 P1 `YYMe 1147508(紫)`，再開始 P2（KD-703HP1、Panasonic 冰箱、YYMe/NINO1881 同系列、Anti Arctic、伯諾）。
+3. 不為了提高 verified 數量而把 MIT 有效、同系列頁或第三方零售頁誤當正式證據。
