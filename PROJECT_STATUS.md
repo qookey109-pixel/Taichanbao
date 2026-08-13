@@ -4,130 +4,138 @@
 
 ## Version
 
-`V3.4 Enrichment Queue 20 — Batch 2`
+`V3.5 Deep Candidate Gate`
 
 ## 正式網站方向
 
-台產報維持「雜誌選品＋精確型號證據資料庫」雙層架構。台灣品牌身分、精確型號、臺灣製造證據、政府標章、現售狀態、官方產品頁、圖片權利、證據有效期限與正式發布狀態分開管理。
+台產報維持「雜誌選品＋精確型號證據資料庫」雙層架構，並新增「Deep Candidate」中間層。台灣品牌身分、精確型號、臺灣製造證據、政府標章、現售狀態、官方產品頁、圖片權利、證據有效期限、深度專題候選與正式發布狀態全部分開管理。
 
-## V3.4 目前完成
+## V3.5 本次完成
 
-- V3.3 Scale 100 完整保留：100 筆 MIT 有效精確型號＋4 筆深度案例＝104 筆真實研究候選。
-- Enrichment Queue 固定 20 筆、每筆 4 任務，共 80 個任務；目前已完成兩批、共 **10 筆 P1** 外部查核。
-- 第一批：SNUG、MIFIYA、JUMP、ADHOC、格蕾絲。
-- 第二批：三環牌 296、奇美 KD-884HP0、奇美 KD-853HM0、YYMe 1157508(紫)、NINO1881 L2425(粉色)。
-- `data/enrichment.results.v1.json` 已升到 `V3.4 Enrichment Results Batch 2`，保存 10 筆逐項 findings、來源 URL、查核日期與證據範圍。
-- 累計結果：**12 verified、23 not_found、5 blocked、40 pending**。
-- 台灣品牌身分已確認的 enrichment records：6 筆（SNUG、ADHOC、格蕾絲、三環牌，以及兩筆奇美）。
-- 現售／供應通路已確認：5 筆；這個欄位只表示有官方／政府登錄銷售證據，不等於即時庫存。
-- 精確型號品牌官方產品頁已確認：目前 **1 筆，奇美 KD-884HP0**。
-- `scripts/validate_enrichment_v3_4.py` 已鎖定 10 researched／12 verified／23 not_found／5 blocked／40 pending。
-- `scripts/build_public_catalog.py` 會把人工 verified 的品牌身分與 current-sale 結果受控合併到 deploy-time `catalog.public.json`；原始 MIT Registry 不被改寫。
-- `assets/enrichment-v3-4.js` / `.css` 繼續分開呈現 verified／not_found／blocked／pending，並顯示已研究紀錄與查核日期。
-- `scripts/validate_site.py`、`build-info.json` 已同步第二批統計。
-- `verification_status`、`manufacturing_evidence_status`、`publication_status` 均未因 enrichment 自動升級。
-- **Batch 2 production deployment 已驗收成功**：trigger SHA `81c1b7b1e878927229f1300d82b399e1080cd86a`，build=`success`、deploy=`success`。
+- V3.3 Scale 100、V3.2 Lifecycle、V3.4 Enrichment 架構全部保留。
+- Enrichment P1 **11 / 11 全部完成**。
+- 最後 P1 `YYMe 1147508(紫)` 已查核：MIT 精確型號有效至 2029-07-02，但品牌國籍、現售、exact-model 品牌官方頁、官方圖片權利均 `not_found`；不從台灣申請廠商或 MIT 製造證據反推品牌國籍。
+- Enrichment 累計：11 researched、12 verified、27 not_found、5 blocked、36 pending；剩餘全部為 P2。
+- 新增 `data/enrichment.results.manifest.json`，Enrichment Results 改為可分批累積：
+  - `data/enrichment.results.v1.json`：前兩批 10 records。
+  - `data/enrichment.results.v2.json`：第三批 1 record。
+- `scripts/build_public_catalog.py` 改為依 Results Manifest 合併所有 enrichment batches，並保存人工 verified 的品牌身分、current sale、exact official page URL 與 enrichment findings；raw Registry 不改寫。
+- 新增 `data/deep_case.candidates.json`。
+- 第一個 Deep Candidate：**CHIMEI 奇美 KD-884HP0**。
+- KD-884HP0 Deep Candidate 前置 Gate：品牌身分、精確型號、MIT 製造證據、現售／供應、exact official product page、重大衝突初查全部 PASS。
+- KD-884HP0 官方精確型號頁明列 `製造產地：台灣`；MIT 標章 `02000038-02030` 有效至 2029-06-01。證據只適用此型號。
+- KD-884HP0 仍被 `image_rights: blocked` 與 `editorial_review: pending` 阻擋，因此 `formal_publication: blocked`、`publication_status: unpublished`。
+- 新增 `assets/deep-candidates-v3-5.js` / `.css`，前台直接顯示 Candidate Gate 與阻擋原因。
+- 新增 `scripts/validate_deep_candidates_v3_5.py`，從 Registry＋Enrichment Results 交叉驗證 candidate，不允許跳過圖片權利或人工編輯審核。
+- `assets/catalog-v3.js` 已載入 V3.5 Deep Candidate Layer；V3.5 是目前前台最終版本標記。
+- `scripts/validate_enrichment_v3_4.py` 已升級為 Manifest 驗證並鎖定 P1 完成。
+- `scripts/validate_site.py`、GitHub Actions、Pages workflow、README、`build-info.json` 均已升級到 V3.5。
 
 ## 目前資料狀態
 
 ```text
 真實研究候選：104
-├─ 深度多圖案例：4
+├─ 既有深度編輯案例：4
 └─ MIT 有效精確型號：100
 
-Enrichment Queue：20
-├─ 已研究紀錄：10
-├─ 已驗證任務：12
-├─ 查無官方證據：23
-├─ 權利阻擋：5
-└─ 待處理任務：40
+Deep editorial candidates：1
+└─ CHIMEI KD-884HP0 → blocked_assets
 
-Enrichment 台灣品牌已確認：6 records
-Enrichment 現售／供應通路已確認：5 records
-精確型號品牌官方頁已確認：1 record
-隔離 Demo：6
+Enrichment Queue：20
+├─ P1：11 / 11 完成
+├─ 已研究紀錄：11
+├─ verified：12
+├─ not_found：27
+├─ blocked：5
+└─ P2 pending tasks：36
+
+台灣品牌已確認 enrichment records：6
+現售／供應已確認：5
+exact official product page 已確認：1
 正式發布：0
 Registry shards：3
 已過期 Registry：0
 ```
 
-## 第二批 5 筆結果
+## KD-884HP0 Deep Candidate Gate
 
-### 三環牌 `296#(1082#)(白)`
-- 品牌身分：verified → 中大棉織官方說明 1951 年創立於雲林虎尾，以三環牌為品牌識別，並稱為台灣 MIT 品牌。
-- 現售／供應：verified → MIT 精確型號頁列自營店面、傳統市場、展售會；不宣稱即時庫存。
-- 精確型號品牌官方頁：not_found；官方站只有一般產品／品牌介紹。
-- 圖片權利：blocked；官方圖片沒有找到第三方重用授權。
+```text
+brand_identity                  PASS
+exact_model_identity             PASS
+mit_manufacturing_evidence       PASS
+current_sale_or_supply           PASS
+exact_official_product_page      PASS
+key_conflict_review              PASS · no conflict found
+image_rights                     BLOCKED
+editorial_review                 PENDING
+formal_publication               BLOCKED
+```
 
-### 奇美 `KD-884HP0`
-- 品牌身分：verified → CHIMEI 奇美品牌由台灣奇美集團發展。
-- 現售：verified → 奇美家電目前烘碗機列表仍列 KD-884HP0 為 NEW。
-- 精確型號品牌官方頁：verified → 官方頁完整列型號、規格，並明列「製造產地：台灣」。
-- 圖片權利：blocked → 奇美官網 All rights reserved，未取得重用授權。
-- 目前為 Enrichment Queue 中最完整的 exact-model 官方頁案例；但仍未通過 Formal Publication Gate。
+重要：官方 exact-model 頁的「製造產地：台灣」不得外推到 KD-853HM0、KD-703HP1 或其他奇美商品。
 
-### 奇美 `KD-853HM0(白)`
-- 品牌身分：verified。
-- 現售／供應：verified → MIT 精確型號頁列新視代科技經銷通路；不宣稱即時庫存。
-- 精確型號品牌官方頁：not_found；目前奇美家電烘碗機產品列表未找到此型號。
-- 圖片權利：not_found；沒有找到 exact-model 品牌官方素材頁。
+## Enrichment Results Pipeline
 
-### YYMe `1157508(紫)`
-- MIT 精確型號製造證據有效至 2029-07-02。
-- 品牌身分：not_found；不能從元維棉織廠／MIT 申請資料直接推成台灣品牌。
-- 現售：not_found；該精確型號沒有取得官方銷售通路／品牌現售頁證據。
-- 精確型號官方頁、圖片權利：not_found。
+```text
+data/enrichment.results.manifest.json
+├─ enrichment.results.v1.json (10)
+└─ enrichment.results.v2.json (1)
+          │
+          ▼
+scripts/build_public_catalog.py
+          │
+          ▼
+data/catalog.public.json  # deploy-time artifact
+```
 
-### NINO1881 `L2425(粉色)`
-- MIT 精確型號製造證據有效至 2029-07-21。
-- 品牌身分：not_found；寶佳貿易與 MIT 品牌欄不足以單獨證明品牌國籍，且同名床墊網站不拿來混用。
-- 現售：not_found；未取得 exact-model 官方銷售證據。
-- 精確型號官方頁、圖片權利：not_found。
+`completed` 只表示該輪研究結束；`not_found` / `blocked` 都是正式結果，不代表尚未處理。
 
-## Enrichment 治理
+## 證據治理
 
-- `completed` 只代表本輪研究已結束，不代表四項都 verified。
-- `brand_identity` 與 MIT 製造證據分離；製造商／申請者在台灣不等於品牌一定是台灣品牌。
-- `current_sale` 必須限定精確型號；政府登錄銷售通路不等於即時庫存。
-- `official_product_page` 只接受品牌／公司官方 exact-model 頁；同系列或第三方零售頁不能冒充。
-- `image_rights` 沒有明確重用授權時只能 blocked／not_found。
-- KD-884HP0 官方頁的「製造產地：台灣」只適用 KD-884HP0，不外推到 KD-853HM0 或其他奇美商品。
-- Enrichment verified 可經 builder 反映到 public catalog，但不得自動修改 manufacturing evidence 等級、verification status 或 publication status。
-- Formal Publication Gate 維持不變，正式發布仍為 0。
-
-## V3.3 / V3.2 基線保留
-
-- Registry：100 筆／3 shards；真實研究候選 104。
-- 分類集中度 Gate：任一分類 <= 40%，家電 <= 40／100，至少 8 個分類。
-- Lifecycle Dashboard：已過期／30／90／180／365 天到期；過期 MIT Registry 阻擋驗證。
-- public catalog 為 deploy-time artifact，研究 source of truth 仍是 Registry shards＋受控 enrichment results。
+- 台灣品牌 ≠ 台灣製造。
+- MIT 製造證據不得推定品牌國籍或現售。
+- 有效 MIT 標章 ≠ 即時在售。
+- 銷售通路紀錄 ≠ 即時庫存。
+- 同系列頁 ≠ exact-model 官方頁。
+- 官方圖片公開可見 ≠ 已取得重用授權。
+- Deep candidate ≠ deep editorial case ≠ formal publication。
+- Candidate Gate、Enrichment、圖片、搜尋、Lifecycle、metadata 均不能自動升級 publication。
+- Formal Publication Gate 不降低，正式發布維持 0。
 
 ## 核心檔案
 
 ```text
 data/enrichment.queue.json
+data/enrichment.results.manifest.json
 data/enrichment.results.v1.json
+data/enrichment.results.v2.json
+data/deep_case.candidates.json
+
 assets/enrichment-v3-4.js
 assets/enrichment-v3-4.css
-scripts/validate_enrichment_v3_4.py
-scripts/build_public_catalog.py
-scripts/validate_site.py
-build-info.json
-PROJECT_STATUS.md
-```
+assets/deep-candidates-v3-5.js
+assets/deep-candidates-v3-5.css
 
-其餘 V3.3 Registry、V3.2 Lifecycle、V2.8 Media、V2.5 Recovery、V2.3 Formal Publication Gate 均保留，不得重做或降低標準。
+scripts/build_public_catalog.py
+scripts/validate_enrichment_v3_4.py
+scripts/validate_deep_candidates_v3_5.py
+scripts/validate_site.py
+
+.github/workflows/validate.yml
+.github/workflows/pages.yml
+build-info.json
+```
 
 ## 尚未完成
 
-- Queue 尚餘 10 筆未研究；其中 P1 尚有 YYMe `1147508(紫)`，其他為 P2。
-- 取得可合法使用的產品圖片／授權。
-- 對 KD-884HP0 評估是否值得升級成新的 deep editorial case，但不得跳過圖片權利與正式發布 Gate。
-- 補餐廚與清潔用品 Registry 類別。
-- 第一筆正式發布仍必須完整通過 Formal Publication Gate。
+- 驗收 V3.5 最後 production build／deploy。
+- Deep Candidate KD-884HP0 的圖片重用授權／可合法替代素材仍未解決。
+- KD-884HP0 尚未完成 deep editorial review，因此不能加入正式 deep cases，更不能 published。
+- P2 尚有 9 records／36 tasks：KD-703HP1、Panasonic 三個冰箱型號、YYMe 同系列、NINO1881 同系列、Anti Arctic、伯諾。
+- 補餐廚／清潔用品 Registry 廣度仍可在後續進行。
 
 ## 下一步
 
-1. 對 `KD-884HP0` 建立 deep-case 候選評估，而不是直接發布。
-2. 完成剩餘 P1 `YYMe 1147508(紫)`，再開始 P2（KD-703HP1、Panasonic 冰箱、YYMe/NINO1881 同系列、Anti Arctic、伯諾）。
-3. 不為了提高 verified 數量而把 MIT 有效、同系列頁或第三方零售頁誤當正式證據。
+1. 驗收 V3.5 production。
+2. 進 P2 enrichment，優先 `KD-703HP1` 與三個 Panasonic 冰箱；Panasonic 品牌國籍必須獨立查證，不因台灣 MIT 製造紀錄視為台灣品牌。
+3. 另開圖片授權／替代素材工作流處理 KD-884HP0，未解決前保持 blocked candidate。
+4. Formal published 維持 0。
