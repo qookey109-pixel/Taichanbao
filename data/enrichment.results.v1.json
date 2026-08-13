@@ -1,0 +1,172 @@
+{
+  "version": "V3.4 Enrichment Results Batch 1",
+  "updated_at": "2026-08-13",
+  "scope": "First five P1 queue records; findings are evidence notes only and never change publication state automatically.",
+  "records": [
+    {
+      "record_id": "mit-snug-s9900000015",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "verified",
+          "result": "taiwan_brand_confirmed",
+          "summary": "sNug 官方品牌介紹將品牌定位為 MIT，頁尾列斯傑利企業有限公司、台灣台中總部與 Made in Taiwan；MIT 業者頁亦將 SNUG 與該台灣公司及官方商城連結。",
+          "sources": [
+            {"name":"sNug 官方品牌介紹","url":"https://shop.snug.com.tw/about","type":"brand_official"},
+            {"name":"MIT 微笑標章－斯傑利企業有限公司","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=1734","type":"government_registry"}
+          ]
+        },
+        "current_sale": {
+          "status": "not_found",
+          "result": "exact_model_sale_not_confirmed",
+          "summary": "精確型號 S9900000015(紫藕) 的 MIT 紀錄目前有效，但本次未在 sNug 官方商城索引找到可確認精確型號仍可下單的商品頁；有效標章不等同現售。",
+          "sources": [
+            {"name":"MIT 微笑標章產品查詢","url":"https://keid.nat.gov.tw/mittw/products/","type":"government_registry"},
+            {"name":"sNug 官方商城全部商品","url":"https://shop.snug.com.tw/products","type":"brand_official"}
+          ]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次未找到品牌官方站上以 S9900000015 或健康能量睡眠襪精確對應的獨立商品頁。",
+          "sources": [{"name":"sNug 官方商城全部商品","url":"https://shop.snug.com.tw/products","type":"brand_official"}]
+        },
+        "image_rights": {
+          "status": "blocked",
+          "result": "permission_required",
+          "summary": "sNug 官方商城頁尾標示 Copyright © 2026 sNug 保留一切權利；未找到可重用授權，因此官方圖片不可直接存入本站，需另取得授權。",
+          "sources": [{"name":"sNug 官方商城","url":"https://shop.snug.com.tw/zh-hant/","type":"brand_official"}]
+        }
+      }
+    },
+    {
+      "record_id": "mit-mifiya-mifiya01",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "not_found",
+          "result": "brand_origin_unverified",
+          "summary": "MIT 業者頁確認通用工業社位於台中並列 MIFIYA 品牌，但公司所在地與製造證據不能自動證明品牌國籍；本次未找到足以確認 MIFIYA 為台灣品牌的品牌官方說明。",
+          "sources": [{"name":"MIT 微笑標章－通用工業社","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=3122","type":"government_registry"}]
+        },
+        "current_sale": {
+          "status": "not_found",
+          "result": "exact_model_sale_not_confirmed",
+          "summary": "MIT 紀錄確認 MIFIYA01(白) 有效至 2029-07-10，但本次未找到品牌官方現售頁或官方庫存證據。",
+          "sources": [{"name":"MIT 微笑標章－通用工業社","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=3122","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次未找到 MIFIYA01(白) 的品牌官方獨立商品頁。",
+          "sources": [{"name":"MIT 微笑標章－通用工業社","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=3122","type":"government_registry"}]
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "official_image_candidate_not_found",
+          "summary": "因未找到精確型號的品牌官方商品頁／媒體素材頁，本次無可進一步判定權利狀態的官方圖片候選。",
+          "sources": []
+        }
+      }
+    },
+    {
+      "record_id": "mit-jump-168",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "not_found",
+          "result": "brand_origin_unverified",
+          "summary": "MIT 業者頁確認通用工業社的 168(藍) 以 JUMP 品牌獲證，但製造商在台灣不等同 JUMP 品牌國籍已證實；本次未找到品牌官方起源證據。",
+          "sources": [{"name":"MIT 微笑標章－通用工業社","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=3122","type":"government_registry"}]
+        },
+        "current_sale": {
+          "status": "not_found",
+          "result": "exact_model_sale_not_confirmed",
+          "summary": "2026 MIT 紀錄顯示 168(藍) 有效至 2029-07-02，但未找到 JUMP 品牌官方現售或即時庫存頁。",
+          "sources": [{"name":"MIT 微笑標章－通用工業社","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=3122","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次未找到 JUMP 168(藍) 的品牌官方獨立商品頁。",
+          "sources": [{"name":"MIT 微笑標章－通用工業社","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=3122","type":"government_registry"}]
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "official_image_candidate_not_found",
+          "summary": "未找到精確型號的品牌官方素材頁，因此沒有可進行權利審核的官方圖片候選。",
+          "sources": []
+        }
+      }
+    },
+    {
+      "record_id": "mit-adhoc-gentle102",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "verified",
+          "result": "taiwan_brand_confirmed",
+          "summary": "ADHOC 官方品牌頁說明艾德國際於 2002 年在台灣設立運動光學配光中心，官方頁列台灣門市與艾德國際有限公司；MIT 業者頁亦以 ADHOC 為該公司的品牌名稱。",
+          "sources": [
+            {"name":"ADHOC 官方品牌精神","url":"https://www.adhoceyewear.com/about_view.php?kind1=1&lang=tw&pid=1","type":"brand_official"},
+            {"name":"MIT 微笑標章－艾德國際有限公司","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=2797","type":"government_registry"}
+          ]
+        },
+        "current_sale": {
+          "status": "verified",
+          "result": "sales_channel_confirmed_no_stock_claim",
+          "summary": "MIT 精確型號頁對 GENTLE 102(金) 列出艾德國際台北、雲林、台中自營店面為銷售通路；可確認有官方銷售通路紀錄，但不宣稱即時庫存。",
+          "sources": [{"name":"MIT 微笑標章－GENTLE 102(金)","url":"https://keid.nat.gov.tw/mittw/products/prod_more?id=280668","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "ADHOC 官方站可確認品牌與產品分類，但本次未找到精確型號 GENTLE 102(金) 的獨立商品頁。",
+          "sources": [{"name":"ADHOC 官方網站","url":"https://www.adhoceyewear.com/","type":"brand_official"}]
+        },
+        "image_rights": {
+          "status": "blocked",
+          "result": "permission_required",
+          "summary": "ADHOC 官方網站標示 2026 COPYRIGHT ADHOC INC. ALL RIGHTS RESERVED；未取得圖片重用授權前，只能保存來源連結，不下載或重製。",
+          "sources": [{"name":"ADHOC 官方網站","url":"https://www.adhoceyewear.com/","type":"brand_official"}]
+        }
+      }
+    },
+    {
+      "record_id": "mit-grace-1161-3",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "verified",
+          "result": "taiwan_brand_confirmed",
+          "summary": "泓棨企業官方網站直接說明『本公司的 GRACE TOWEL(格蕾絲名牌毛巾)』品牌起源，MIT 業者頁列公司登記／聯絡地址在彰化並以格蕾絲為品牌名稱，品牌與台灣公司關係可確認。",
+          "sources": [
+            {"name":"GRACE TOWEL 官方品牌起源","url":"https://www.gracetowel.net/","type":"brand_official"},
+            {"name":"MIT 微笑標章－泓棨企業股份有限公司","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=332","type":"government_registry"}
+          ]
+        },
+        "current_sale": {
+          "status": "verified",
+          "result": "custom_order_channel_confirmed",
+          "summary": "MIT 精確型號頁對 1161-3(米) 列出銷售通路為『客製化／客製化商品』；可確認仍有官方登錄的客製化供應通路，但不視為一般零售現貨。",
+          "sources": [{"name":"MIT 微笑標章－1164毛巾 1161-3(米)","url":"https://keid.nat.gov.tw/mittw/products/prod_more?id=287833","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "格蕾絲官方網站與購物網站均可確認品牌及毛巾產品線，但本次未找到 1161-3(米) 的品牌官方獨立商品頁。",
+          "sources": [
+            {"name":"GRACE TOWEL 官方網站","url":"https://www.gracetowel.net/","type":"brand_official"},
+            {"name":"格蕾絲官方購物網站","url":"https://www.gracetowel.com.tw/","type":"brand_official"}
+          ]
+        },
+        "image_rights": {
+          "status": "blocked",
+          "result": "permission_required",
+          "summary": "官方購物網站有商品圖片與版權標示，但未提供可重用授權；在取得同意前不將官方圖片複製進本站。",
+          "sources": [{"name":"格蕾絲官方購物網站","url":"https://www.gracetowel.com.tw/","type":"brand_official"}]
+        }
+      }
+    }
+  ]
+}
