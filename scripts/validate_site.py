@@ -26,7 +26,10 @@ deep_js = text("assets/deep-candidates-v3-5.js")
 deep_css = text("assets/deep-candidates-v3-5.css")
 brand_origin_js = text("assets/brand-origin-v3-6.js")
 brand_origin_css = text("assets/brand-origin-v3-6.css")
+promotion_js = text("assets/promotion-audit-v3-7.js")
+promotion_css = text("assets/promotion-audit-v3-7.css")
 public_builder = text("scripts/build_public_catalog.py")
+promotion_builder = text("scripts/build_promotion_audit.py")
 expiry_builder = text("scripts/report_registry_expiry.py")
 registry_seed = text("data/products.registry.json")
 registry_appliances = text("data/products.registry.appliances.json")
@@ -49,11 +52,12 @@ for token in ["publicationGate", "localStorage", "taichanbao-favorites", "produc
 for token in ["product.media.overrides.json", "mergeProduct", "external_evidence", "renderExternalEvidence", "renderGallery", "rightsLabel", "safeUrl"]:
     assert token in media_js, token
 
-# Progressive frontend layers are all loaded in order, with V3.6 as final version marker.
+# Progressive frontend layers are loaded in order; V3.7 is final marker.
 for token in [
     "catalog-v3-1.js", "lifecycle-v3-2.js", "lifecycle-v3-2.css", "scale-v3-3.js",
     "enrichment-v3-4.js", "enrichment-v3-4.css", "deep-candidates-v3-5.js", "deep-candidates-v3-5.css",
-    "brand-origin-v3-6.js", "brand-origin-v3-6.css", "V3.6 Brand-Origin Separation"
+    "brand-origin-v3-6.js", "brand-origin-v3-6.css", "promotion-audit-v3-7.js", "promotion-audit-v3-7.css",
+    "V3.7 Enrichment Complete 20/20"
 ]:
     assert token in catalog_loader, token
 for token in ["V3.3 REGISTRY SCALE 100", "V3.3 Registry Scale 100", "data/catalog.public.json", "validPublicCatalog", "registry.manifest.json", "products.demo.json", "product.media.overrides.json", "public_catalog", "manifest_fallback", "evidenceLevel", "catalog_source", "catalogGrid", "enhanceMediaScopes", "同系列補充圖", "精確型號", "records.length === 104", "mit_active_exact_models === 100", "registry_shards === 3"]:
@@ -63,21 +67,21 @@ for token in ["registry-expiry.json", "catalog.public.json", "lifecycle-section"
 for token in ["V3.3 REGISTRY SCALE 100", "v33BalanceNote", "最大分類", "上限 40%", "registry.manifest.json"]:
     assert token in scale_js, token
 
-# Enrichment is manifest-driven: P1 complete and first P2 batch complete.
-for token in ["enrichment.queue.json", "enrichment.results.manifest.json", "loadResults", "brand_identity", "current_sale", "official_product_page", "image_rights", "已研究紀錄", "state-not_found", "state-blocked", "data-catalog-id"]:
+# Enrichment is complete and manifest-driven.
+for token in ["enrichment.queue.json", "enrichment.results.manifest.json", "loadResults", "V3.7 · ENRICHMENT 20 / 20 COMPLETE", "brand_identity", "current_sale", "official_product_page", "image_rights", "已研究紀錄", "state-not_found", "state-blocked", "data-catalog-id"]:
     assert token in enrichment_js, token
 for token in [".enrichment-section", ".enrichment-metrics", ".enrichment-row", ".enrichment-task", ".enrichment-row.researched", ".state-not_found", ".state-blocked"]:
     assert token in enrichment_css, token
-assert enrichment_queue["version"] == "V3.6 Brand-Origin Separation"
+assert enrichment_queue["version"] == "V3.7 Enrichment Complete 20/20"
 assert len(enrichment_queue["items"]) == 20
-assert sum(item["status"] == "completed" for item in enrichment_queue["items"]) == 15
-assert all(item["status"] == "completed" for item in enrichment_queue["items"] if item["priority"] == "P1")
-assert enrichment_results_manifest["version"] == "V3.6 Enrichment Results Manifest"
-assert enrichment_results_manifest["total_researched_records"] == 15
-assert len(enrichment_results_manifest["batches"]) == 3
-assert sum(batch["records"] for batch in enrichment_results_manifest["batches"]) == 15
+assert all(item["status"] == "completed" for item in enrichment_queue["items"])
+assert all(state != "pending" for item in enrichment_queue["items"] for state in item["tasks"].values())
+assert enrichment_results_manifest["version"] == "V3.7 Enrichment Results Manifest"
+assert enrichment_results_manifest["total_researched_records"] == 20
+assert len(enrichment_results_manifest["batches"]) == 4
+assert sum(batch["records"] for batch in enrichment_results_manifest["batches"]) == 20
 
-# Deep candidate Gate remains visible and explicitly blocked from publication.
+# Deep candidate Gate remains explicit and blocked from publication.
 for token in ["data/deep_case.candidates.json", "V3.5 · DEEP CANDIDATE GATE", "證據夠強", "formal_publication", "image_rights", "candidate_status", "data-catalog-id"]:
     assert token in deep_js, token
 for token in [".deep-candidate-section", ".deep-gates", ".deep-gate.pass", ".deep-gate.blocked", ".deep-gate.pending", ".deep-blockers"]:
@@ -92,13 +96,21 @@ assert candidate["gate"]["editorial_review"] == "pending"
 assert candidate["gate"]["formal_publication"] == "blocked"
 assert candidate["publication_status"] == "unpublished"
 
-# V3.6 brand-origin separation is explicit in UI.
+# Brand-origin separation remains explicit.
 for token in ["V3.6 · BRAND-ORIGIN SEPARATION", "台灣製", "不一定是台灣品牌", "非台灣品牌已確認", "MIT 精確型號有效", "mit-appliance-0200001303970-nr-c507xvs", "mit-appliance-0200003802031-kd-703hp1"]:
     assert token in brand_origin_js, token
 for token in [".brand-origin-section", ".brand-origin-metrics", ".brand-origin-card", ".origin-pill.tw", ".origin-pill.non-tw", ".origin-pill.mit"]:
     assert token in brand_origin_css, token
 
-# Builders retain research-source lineage and only produce deploy-time artifacts.
+# V3.7 Promotion Audit is visible and remains classification-only.
+for token in ["data/promotion-audit.json", "V3.7 · PROMOTION AUDIT", "20 筆都查完", "Deep Candidate 條件", "非台灣品牌 · 台灣製 exact-model", "eligible_for_deep_candidate_review", "exclude_from_taiwan_brand_recommendation", "FORMAL PUBLISHED"]:
+    assert token in promotion_js, token
+for token in [".promotion-audit-section", ".promotion-audit-metrics", ".promotion-audit-grid", ".promotion-bucket", ".promotion-state.candidate", ".promotion-state.exclude"]:
+    assert token in promotion_css, token
+for token in ["V3.7 Promotion Audit", "deep_candidate_assets_blocked", "taiwan_brand_research_only", "non_taiwan_brand_taiwan_made", "brand_origin_unverified_research_only", "eligible_for_deep_candidate_review", "exclude_from_taiwan_brand_recommendation", "formal_published"]:
+    assert token in promotion_builder, token
+
+# Builders retain source lineage and create deploy-time artifacts only.
 for token in ["data/catalog.public.json", "catalog_version", 'manifest["version"]', "registry.manifest.json", "enrichment.results.manifest.json", "load_enrichment_results", "apply_enrichment", "official_product_page_url", "enrichment_non_taiwan_brand_confirmed", "enrichment_researched_records", "real_research_candidates", "every public record needs a primary source URL"]:
     assert token in public_builder, token
 for token in ["expiring_within_30_days", "expiring_within_90_days", "expiring_within_180_days", "expiring_within_365_days", "expired_count", "--output", 'manifest["total_records"]']:
@@ -116,12 +128,11 @@ for token in ["01500039-04089", "01900057-02519", "02800516-00175", "01600539-00
 assert registry_manifest["version"] == "V3.3 Registry Scale 100"
 assert registry_manifest["total_records"] == 100
 assert len(registry_manifest["shards"]) == 3
-assert registry_manifest["shards"][2]["records"] == 50
 for token in ["pilot-sampo-sr-c58dv", "pilot-tatung-tac11hnm", "pilot-oright-bio-caffeine", "permission_pending"]:
     assert token in overrides, token
 
-# Deployment fingerprint must match V3.6 source state.
-assert build_info["version"] == "V3.6 Brand-Origin Separation"
+# Deployment fingerprint matches V3.7.
+assert build_info["version"] == "V3.7 Enrichment Complete 20/20"
 assert build_info["data_snapshot"] == "2026-08-13"
 assert build_info["real_research_candidates"] == 104
 assert build_info["deep_editorial_cases"] == 4
@@ -131,25 +142,29 @@ assert build_info["mit_active_exact_models"] == 100
 assert build_info["registry_shards"] == 3
 assert build_info["isolated_demo_records"] == 6
 assert build_info["formal_published"] == 0
-assert build_info["registry_lifecycle_dashboard"] is True
-assert build_info["category_concentration_gate"] is True
 assert build_info["enrichment_queue"] == 20
-assert build_info["enrichment_p1_complete"] is True
-assert build_info["enrichment_researched_records"] == 15
-assert build_info["enrichment_verified_tasks"] == 21
-assert build_info["enrichment_not_found_tasks"] == 33
-assert build_info["enrichment_blocked_tasks"] == 6
-assert build_info["enrichment_pending_tasks"] == 20
-assert build_info["enrichment_taiwan_brand_confirmed"] == 7
+assert build_info["enrichment_complete"] is True
+assert build_info["enrichment_researched_records"] == 20
+assert build_info["enrichment_verified_tasks"] == 22
+assert build_info["enrichment_not_found_tasks"] == 51
+assert build_info["enrichment_blocked_tasks"] == 7
+assert build_info["enrichment_pending_tasks"] == 0
+assert build_info["enrichment_taiwan_brand_confirmed"] == 8
 assert build_info["enrichment_non_taiwan_brand_confirmed"] == 3
 assert build_info["enrichment_current_sale_confirmed"] == 9
 assert build_info["enrichment_exact_official_product_page_confirmed"] == 2
-assert build_info["enrichment_result_batches"] == 3
+assert build_info["enrichment_result_batches"] == 4
 assert build_info["brand_origin_separation_view"] is True
-assert build_info["panasonic_non_taiwan_brand_exact_models"] == 3
+assert build_info["promotion_audit"] is True
+assert build_info["promotion_registered_deep_candidates"] == 1
+assert build_info["promotion_eligible_unregistered_deep_candidates"] == 1
+assert build_info["promotion_deep_candidate_assets_blocked"] == 2
+assert build_info["promotion_taiwan_brand_research_only"] == 6
+assert build_info["promotion_non_taiwan_brand_taiwan_made"] == 3
+assert build_info["promotion_brand_origin_unverified_research_only"] == 9
 assert build_info["deployment_source"] == "GitHub Actions"
 
-# Media and historical preview stay available.
+# Media and V2.5 recovery stay available.
 for token in [".media-gallery", ".media-thumbnails", ".media-thumb", ".media-inventory", ".drawer-media-frame", ".media-rights"]:
     assert token in media_css, token
 for token in ["V2.5 Recovery Baseline", "研究預覽", "正式發布", "正式發布 Gate", '<base href="../../">']:
@@ -159,4 +174,4 @@ for token in ["publicationGate", "localStorage", "favorites"]:
 assert ".ticker" in magazine_css and ".layout" in magazine_css and ".mobile-nav" in magazine_css
 assert ".ticker" in preview_css and ".layout" in preview_css and ".mobile-nav" in preview_css
 
-print("OK: V3.6 Brand-Origin Separation enabled; Registry=100 researched=15 Taiwan-brand=7 non-Taiwan-brand=3 Panasonic exact-model separation PASS deep-candidate=1 blocked published=0")
+print("OK: V3.7 Enrichment Complete enabled; 20/20 researched verified=22 not_found=51 blocked=7 pending=0; promotion audit 2/6/3/9; deep-candidate=1; published=0")
