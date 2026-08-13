@@ -1,6 +1,6 @@
 {
   "project": "Taichanbao",
-  "version": "V3.1 Registry Scale 50",
+  "version": "V3.2 Registry Lifecycle",
   "data_snapshot": "2026-08-13",
   "real_research_candidates": 54,
   "deep_editorial_cases": 4,
@@ -8,6 +8,10 @@
   "registry_shards": 2,
   "isolated_demo_records": 6,
   "formal_published": 0,
+  "registry_lifecycle_dashboard": true,
+  "registry_expired": 0,
+  "registry_expiring_within_90_days": 1,
+  "lifecycle_report": "data/registry-expiry.json",
   "deployment_source": "GitHub Actions",
-  "note": "V3.1 uses a sharded MIT registry manifest. Use this file to verify the version actually served by GitHub Pages."
+  "note": "V3.2 adds a deploy-time Registry expiry report and lifecycle dashboard. Formal publication remains gated independently."
 }
