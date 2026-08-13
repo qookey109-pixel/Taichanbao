@@ -152,7 +152,8 @@ def build():
     assert all(row.get("source_name") for row in records), "every public record needs a primary source name"
 
     enriched_registry = [row for row in registry if row.get("enrichment")]
-    confirmed_brands = [row for row in enriched_registry if row.get("brand_origin_status") == "taiwan_brand_confirmed"]
+    confirmed_taiwan_brands = [row for row in enriched_registry if row.get("brand_origin_status") == "taiwan_brand_confirmed"]
+    confirmed_non_taiwan_brands = [row for row in enriched_registry if row.get("brand_origin_status") == "non_taiwan_brand"]
     confirmed_sales = [row for row in enriched_registry if row.get("current_sale_confirmed") is True]
     confirmed_pages = [row for row in enriched_registry if row.get("official_product_page_url")]
 
@@ -168,7 +169,8 @@ def build():
             "formal_published": sum(row.get("publication_status") == "published" for row in records),
             "registry_shards": len(manifest["shards"]),
             "enrichment_researched_records": len(enriched_registry),
-            "enrichment_taiwan_brand_confirmed": len(confirmed_brands),
+            "enrichment_taiwan_brand_confirmed": len(confirmed_taiwan_brands),
+            "enrichment_non_taiwan_brand_confirmed": len(confirmed_non_taiwan_brands),
             "enrichment_current_sale_confirmed": len(confirmed_sales),
             "enrichment_exact_official_product_page_confirmed": len(confirmed_pages),
             "enrichment_result_batches": len(load("data/enrichment.results.manifest.json")["batches"]),
