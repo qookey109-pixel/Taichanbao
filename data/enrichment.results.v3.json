@@ -1,0 +1,133 @@
+{
+  "version": "V3.6 Enrichment Results P2 Batch 1",
+  "updated_at": "2026-08-13",
+  "scope": "First P2 batch: CHIMEI KD-703HP1 and three Panasonic refrigerator exact models. Brand origin remains separate from Taiwan manufacturing evidence.",
+  "records": [
+    {
+      "record_id": "mit-appliance-0200003802031-kd-703hp1",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "verified",
+          "result": "taiwan_brand_confirmed",
+          "summary": "奇美家電官方品牌故事說明 CHIMEI 奇美品牌由台灣奇美集團發展，品牌台灣起源可確認。",
+          "sources": [{"name":"奇美家電官方－品牌故事","url":"https://www.chimei.com.tw/brand-story","type":"brand_official"}]
+        },
+        "current_sale": {
+          "status": "verified",
+          "result": "official_current_catalog_confirmed",
+          "summary": "奇美家電目前烘碗機官方列表仍列 KD-703HP1 為 HOT，exact-model 官方頁可正常讀取並提供銷售據點入口；確認為目前官方產品線，不宣稱單一門市即時庫存。",
+          "sources": [
+            {"name":"奇美家電－烘碗機產品列表","url":"https://www.chimei.com.tw/dish-dryer/ultraviolet%20%20rays","type":"brand_official"},
+            {"name":"奇美家電－KD-703HP1","url":"https://www.chimei.com.tw/dish-dryer/ultraviolet%20%20rays/kd-703hp1","type":"brand_official"}
+          ]
+        },
+        "official_product_page": {
+          "status": "verified",
+          "result": "exact_model_official_page_confirmed",
+          "summary": "奇美家電存在 KD-703HP1 精確型號官方頁，列 70L、110V、250W 等規格，並明列『製造產地：台灣』。",
+          "sources": [{"name":"奇美家電－KD-703HP1","url":"https://www.chimei.com.tw/dish-dryer/ultraviolet%20%20rays/kd-703hp1","type":"brand_official"}]
+        },
+        "image_rights": {
+          "status": "blocked",
+          "result": "permission_required",
+          "summary": "KD-703HP1 官方頁提供多張產品圖片，但奇美家電網站標示 All rights reserved；未取得第三方重用授權前不複製至本站。",
+          "sources": [{"name":"奇美家電－KD-703HP1","url":"https://www.chimei.com.tw/dish-dryer/ultraviolet%20%20rays/kd-703hp1","type":"brand_official"}]
+        }
+      }
+    },
+    {
+      "record_id": "mit-appliance-0200001303970-nr-c507xvs",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "verified",
+          "result": "non_taiwan_brand",
+          "summary": "Panasonic 官方歷史資料記載公司由松下幸之助於 1918 年在大阪創立；Panasonic 是日本品牌。台灣松下作為台灣申請／製造公司不會改變品牌起源。",
+          "sources": [
+            {"name":"Panasonic Museum 官方新聞－公司創立於大阪","url":"https://news.panasonic.com/global/press/en180307-2","type":"brand_official"},
+            {"name":"Panasonic Global－History of Reliability","url":"https://www.panasonic.com/global/consumer/history.html","type":"brand_official"}
+          ]
+        },
+        "current_sale": {
+          "status": "verified",
+          "result": "government_sales_channels_confirmed_no_stock_claim",
+          "summary": "MIT 精確型號 NR-C507XVS 目前有效至 2029-06-15，並列 Panasonic 台灣經銷商、量販店、網路購物通路；確認官方登錄供應通路，但不宣稱即時庫存。",
+          "sources": [{"name":"MIT 微笑標章－NR-C507XVS","url":"https://keid.nat.gov.tw/mittw/products/prod_more?id=287469","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次在 Panasonic 官方網域未找到 NR-C507XVS 的可索引 exact-model 產品頁；MIT 紀錄與台灣松下歷史頁不能冒充品牌 exact-model 商品頁。",
+          "sources": [{"name":"Panasonic Taiwan－社史","url":"https://www.panasonic.com/tw/corporate/profile/history.html","type":"brand_official"}]
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "exact_model_official_image_not_found",
+          "summary": "因未找到可驗證的 Panasonic exact-model 官方頁，本次沒有建立 NR-C507XVS 官方圖片候選，也不使用第三方零售圖片替代。",
+          "sources": []
+        }
+      }
+    },
+    {
+      "record_id": "mit-appliance-0200001303969-nr-d507xvs",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "verified",
+          "result": "non_taiwan_brand",
+          "summary": "Panasonic 官方資料確認品牌／公司源自 1918 年日本大阪；此型號雖由台灣松下申請 MIT，也不能標成台灣品牌。",
+          "sources": [{"name":"Panasonic Museum 官方新聞－公司創立於大阪","url":"https://news.panasonic.com/global/press/en180307-2","type":"brand_official"}]
+        },
+        "current_sale": {
+          "status": "verified",
+          "result": "government_sales_channels_confirmed_no_stock_claim",
+          "summary": "MIT 精確型號 NR-D507XVS 有效至 2029-06-15，並列 Panasonic 台灣經銷商、量販店與網路購物通路；僅確認供應通路，不宣稱即時庫存。",
+          "sources": [{"name":"MIT 微笑標章－NR-D507XVS","url":"https://keid.nat.gov.tw/mittw/products/prod_more?id=287468","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次在 Panasonic 官方網域未找到 NR-D507XVS 的可索引 exact-model 商品頁。",
+          "sources": [{"name":"Panasonic Taiwan－社史","url":"https://www.panasonic.com/tw/corporate/profile/history.html","type":"brand_official"}]
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "exact_model_official_image_not_found",
+          "summary": "沒有找到可驗證的 exact-model Panasonic 官方頁，因此不建立官方圖片候選，也不採用第三方零售圖。",
+          "sources": []
+        }
+      }
+    },
+    {
+      "record_id": "mit-appliance-0200001303966-nr-c617xvs",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "verified",
+          "result": "non_taiwan_brand",
+          "summary": "Panasonic 官方歷史資料確認品牌源自日本；NR-C617XVS 的台灣 MIT 製造證據與 Panasonic 品牌國籍是兩條不同證據鏈。",
+          "sources": [{"name":"Panasonic Museum 官方新聞－公司創立於大阪","url":"https://news.panasonic.com/global/press/en180307-2","type":"brand_official"}]
+        },
+        "current_sale": {
+          "status": "verified",
+          "result": "government_sales_channels_confirmed_no_stock_claim",
+          "summary": "MIT 精確型號 NR-C617XVS 有效至 2029-06-15，並列 Panasonic 台灣經銷商、量販店與網路購物通路；確認供應通路，不宣稱即時庫存。",
+          "sources": [{"name":"MIT 微笑標章－NR-C617XVS","url":"https://keid.nat.gov.tw/mittw/products/prod_more?id=287465","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次在 Panasonic 官方網域未找到 NR-C617XVS 的可索引 exact-model 商品頁。",
+          "sources": [{"name":"Panasonic Taiwan－社史","url":"https://www.panasonic.com/tw/corporate/profile/history.html","type":"brand_official"}]
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "exact_model_official_image_not_found",
+          "summary": "沒有找到可驗證的 exact-model Panasonic 官方頁，因此不建立官方圖片候選，也不採用第三方零售圖。",
+          "sources": []
+        }
+      }
+    }
+  ]
+}
