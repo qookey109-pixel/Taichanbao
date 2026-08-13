@@ -29,14 +29,20 @@ jobs:
       - name: Validate V3 seed registry
         run: python scripts/validate_registry.py
 
-      - name: Validate V3.1 sharded registry scale
+      - name: Validate V3.3 sharded registry scale
         run: python scripts/validate_registry_scale.py
 
       - name: Validate V3 seed catalog
         run: python scripts/validate_v3_catalog.py
 
-      - name: Validate V3.1 catalog totals
+      - name: Validate V3.1 regression catalog
         run: python scripts/validate_v3_1_catalog.py
+
+      - name: Validate V3.3 catalog totals
+        run: python scripts/validate_v3_3_catalog.py
+
+      - name: Validate category concentration
+        run: python scripts/validate_category_balance.py
 
       - name: Build public catalog
         run: python scripts/build_public_catalog.py --output data/catalog.public.json
@@ -47,7 +53,7 @@ jobs:
       - name: Build registry expiry report
         run: python scripts/report_registry_expiry.py --output data/registry-expiry.json
 
-      - name: Validate V3.2 lifecycle dashboard
+      - name: Validate Registry lifecycle dashboard
         run: python scripts/validate_lifecycle_v3_2.py
 
       - name: Validate image rights
@@ -62,7 +68,7 @@ jobs:
       - name: Validate O'right media scope
         run: python scripts/validate_oright_media.py
 
-      - name: Validate V3 site
+      - name: Validate V3.3 site
         run: python scripts/validate_site.py
 
       - name: Check magazine JavaScript
@@ -74,11 +80,14 @@ jobs:
       - name: Check V3 loader JavaScript
         run: node --check assets/catalog-v3.js
 
-      - name: Check V3.1 catalog JavaScript
+      - name: Check Scale 100 catalog JavaScript
         run: node --check assets/catalog-v3-1.js
 
-      - name: Check V3.2 lifecycle JavaScript
+      - name: Check lifecycle JavaScript
         run: node --check assets/lifecycle-v3-2.js
+
+      - name: Check V3.3 scale layer JavaScript
+        run: node --check assets/scale-v3-3.js
 
       - name: Check V2.5 preview JavaScript
         run: node --check assets/app.js
