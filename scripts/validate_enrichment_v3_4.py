@@ -3,6 +3,7 @@ import json
 
 ROOT = Path(__file__).resolve().parents[1]
 queue = json.loads((ROOT / "data/enrichment.queue.json").read_text(encoding="utf-8"))
+results = json.loads((ROOT / "data/enrichment.results.v1.json").read_text(encoding="utf-8"))
 manifest = json.loads((ROOT / "data/registry.manifest.json").read_text(encoding="utf-8"))
 
 rows = []
@@ -17,8 +18,10 @@ assert set(queue["task_types"]) == {"brand_identity", "current_sale", "official_
 
 allowed_task_states = {"pending", "in_progress", "verified", "not_found", "blocked", "not_applicable"}
 allowed_queue_states = {"queued", "in_progress", "completed", "blocked"}
+queue_map = {}
 for item in queue["items"]:
     rid = item["record_id"]
+    queue_map[rid] = item
     assert rid in registry, f"queue record missing from Registry: {rid}"
     assert item["priority"] in {"P1", "P2", "P3"}
     assert item["status"] in allowed_queue_states
@@ -32,5 +35,46 @@ for item in queue["items"]:
 p1 = sum(item["priority"] == "P1" for item in queue["items"])
 assert p1 >= 8
 assert len({registry[item["record_id"]]["category"] for item in queue["items"]}) >= 4
+
+assert results["version"] == "V3.4 Enrichment Results Batch 1"
+assert results["updated_at"] == "2026-08-13"
+assert len(results["records"]) == 5
+assert len({row["record_id"] for row in results["records"]}) == 5
+
+result_states = []
+for result in results["records"]:
+    rid = result["record_id"]
+    assert rid in queue_map, f"result record not in enrichment queue: {rid}"
+    item = queue_map[rid]
+    assert item["status"] == "completed", f"researched record must be completed: {rid}"
+    assert result["checked_at"] == "2026-08-13"
+    findings = result["findings"]
+    assert set(findings) == set(queue["task_types"])
+    for task_type, finding in findings.items():
+        state = finding["status"]
+        result_states.append(state)
+        assert state in allowed_task_states - {"pending", "in_progress"}
+        assert item["tasks"][task_type] == state, f"queue/result state mismatch: {rid}/{task_type}"
+        assert finding.get("result")
+        assert finding.get("summary")
+        assert isinstance(finding.get("sources", []), list)
+        for source in finding.get("sources", []):
+            assert source.get("name")
+            assert source.get("type")
+            assert source.get("url", "").startswith("https://")
+    assert registry[rid]["publication_status"] == "unpublished"
+
 verified_tasks = sum(state == "verified" for item in queue["items"] for state in item["tasks"].values())
-print(f"OK: enrichment queue=20; P1={p1}; categories={len({registry[item['record_id']]['category'] for item in queue['items']})}; verified_tasks={verified_tasks}; publication unchanged")
+pending_tasks = sum(state == "pending" for item in queue["items"] for state in item["tasks"].values())
+completed_records = sum(item["status"] == "completed" for item in queue["items"])
+assert completed_records == 5
+assert verified_tasks == 5
+assert pending_tasks == 60
+assert result_states.count("verified") == 5
+assert result_states.count("not_found") == 12
+assert result_states.count("blocked") == 3
+
+print(
+    "OK: enrichment queue=20; researched=5; verified_tasks=5; "
+    "not_found=12; blocked=3; pending=60; publication unchanged"
+)
