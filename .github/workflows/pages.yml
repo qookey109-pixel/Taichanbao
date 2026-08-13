@@ -40,7 +40,13 @@ jobs:
         run: python scripts/build_public_catalog.py --output data/catalog.public.json
 
       - name: Validate registry expiry state
-        run: python scripts/report_registry_expiry.py --check
+        run: python scripts/report_registry_expiry.py --check-only
+
+      - name: Build registry expiry report
+        run: python scripts/report_registry_expiry.py --output data/registry-expiry.json
+
+      - name: Validate V3.2 lifecycle dashboard
+        run: python scripts/validate_lifecycle_v3_2.py
 
       - name: Validate image rights
         run: python scripts/validate_media_rights.py
@@ -68,6 +74,9 @@ jobs:
 
       - name: Check V3.1 catalog JavaScript
         run: node --check assets/catalog-v3-1.js
+
+      - name: Check V3.2 lifecycle JavaScript
+        run: node --check assets/lifecycle-v3-2.js
 
       - name: Check V2.5 preview JavaScript
         run: node --check assets/app.js
