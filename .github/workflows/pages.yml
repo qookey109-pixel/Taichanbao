@@ -21,8 +21,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Validate data
+      - name: Validate editorial data
         run: python scripts/validate_data.py
+
+      - name: Validate V3 evidence registry
+        run: python scripts/validate_registry.py
 
       - name: Validate image rights
         run: python scripts/validate_media_rights.py
@@ -36,7 +39,7 @@ jobs:
       - name: Validate O'right media scope
         run: python scripts/validate_oright_media.py
 
-      - name: Validate site
+      - name: Validate V3 site
         run: python scripts/validate_site.py
 
       - name: Check magazine JavaScript
@@ -44,6 +47,9 @@ jobs:
 
       - name: Check image enhancements
         run: node --check assets/product-image-enhancements.js
+
+      - name: Check V3 evidence catalog JavaScript
+        run: node --check assets/catalog-v3.js
 
       - name: Check V2.5 preview JavaScript
         run: node --check assets/app.js
