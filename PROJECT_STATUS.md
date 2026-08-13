@@ -8,137 +8,126 @@
 
 ## 正式網站方向
 
-台產報維持「雜誌選品＋精確型號證據資料庫」雙層架構。品牌身分、單一產品型號、臺灣製造證據、政府標章、圖片權利、證據有效期限、深化查證進度與正式發布狀態必須分開管理。
+台產報維持「雜誌選品＋精確型號證據資料庫」雙層架構。台灣品牌身分、精確型號、臺灣製造證據、政府標章、現售狀態、官方產品頁、圖片權利、證據有效期限與正式發布狀態分開管理。
 
-## V3.4 本次完成
+## V3.4 目前完成
 
-- V3.3 Registry Scale 100 完整保留：100 筆 MIT 有效精確型號＋4 筆深度案例＝104 筆真實研究候選。
-- 新增 `data/enrichment.queue.json`，建立第一批 **20 筆深化查證候選**。
-- 每筆拆成 4 個獨立任務：`brand_identity`、`current_sale`、`official_product_page`、`image_rights`，合計 80 個研究任務。
-- Queue 初始狀態全部為 `pending`；任務狀態不會自動修改 Registry verification 或 publication status。
-- 新增 `scripts/validate_enrichment_v3_4.py`：20 個 Queue ID 必須全部存在 100 筆 Registry、不得重複、不得指向 published 資料，且至少涵蓋 4 個分類。
-- 新增 `assets/enrichment-v3-4.js` / `assets/enrichment-v3-4.css`，前台顯示「深化查證工作台」。
-- 工作台顯示 Queue 總數、P1 數量、已完成任務、待處理任務，並可切換 P1／P2。
-- Queue 項目沿用 Catalog `data-catalog-id`，可直接開啟精確型號證據履歷。
-- `assets/catalog-v3.js` 已串接 V3.4 workbench，並保留 V3.3 Scale 100、V3.2 Lifecycle、V3.1 public-catalog-first 架構。
-- CI 與 Pages workflow 加入 enrichment validator 與 JavaScript syntax Gate。
-- `scripts/validate_site.py` 升級到 V3.4，鎖定 enrichment queue、workbench、Scale 100、Lifecycle 與 V2.5 Preview 共存。
-- `build-info.json` 升級為 V3.4：104 real／100 MIT／20 enrichment queue／80 tasks／0 verified tasks／0 published。
+- V3.3 Scale 100 完整保留：100 筆 MIT 有效精確型號＋4 筆深度案例＝104 筆真實研究候選。
+- `data/enrichment.queue.json`：20 筆優先候選、每筆 4 個研究任務，共 80 個任務。
+- 已完成第一批 5 筆 P1 外部查核：SNUG、MIFIYA、JUMP、ADHOC、格蕾絲。
+- 新增 `data/enrichment.results.v1.json` 保存第一批每一項 finding、摘要、來源 URL、查核日期與結果範圍。
+- 第一批結果：5 verified、12 not_found、3 blocked；尚餘 60 pending。
+- 5 筆已研究紀錄全部標為 `completed`，但 completed 只表示本輪研究結束，不表示每項都取得正面證據。
+- SNUG、ADHOC、格蕾絲取得可引用的台灣品牌身分證據。
+- ADHOC GENTLE 102(金) 與格蕾絲 1161-3(米) 取得官方／政府登錄的銷售通路或客製供應證據；不宣稱即時庫存。
+- MIFIYA MIFIYA01(白) 與 JUMP 168(藍) 的 MIT 精確型號製造證據仍有效，但本輪未找到足以確認品牌國籍、品牌官方現售頁或精確型號官方商品頁的證據。
+- SNUG、ADHOC、格蕾絲官方網站均未提供可重用圖片授權；相關 image-rights 任務為 `blocked`，不得直接下載／重製官方圖片。
+- `assets/enrichment-v3-4.js` / `.css` 已能分開顯示 verified、not_found、blocked、pending，並顯示已研究紀錄數與本輪結果摘要。
+- `scripts/validate_enrichment_v3_4.py` 已驗證 Queue 與 Results 狀態一致，並鎖定 5 researched／5 verified／12 not_found／3 blocked／60 pending。
+- `scripts/build_public_catalog.py` 已讀取 enrichment results：只把人工 verified 的品牌身分與現售狀態合併至 deploy-time `catalog.public.json`；原始 MIT Registry 不被改寫。
+- deploy-time Catalog 目前會把 SNUG、ADHOC、格蕾絲標為 `taiwan_brand_confirmed`；ADHOC、格蕾絲帶 `current_sale_confirmed: true`，並保存 enrichment evidence。
+- `verification_status`、`manufacturing_evidence_status`、`publication_status` 均未因 enrichment 自動升級。
+- `build-info.json` 與 `scripts/validate_site.py` 已同步第一批 enrichment 指標。
 
-## 資料狀態
+## 目前資料狀態
 
 ```text
 真實研究候選：104
 ├─ 深度多圖案例：4
 └─ MIT 有效精確型號：100
-   ├─ Seed shard：15
-   ├─ Appliance shard：35
-   └─ Lifestyle shard：50
 
 Enrichment Queue：20
-├─ 每筆任務：4
-├─ 總研究任務：80
-├─ 已完成任務：0
-└─ 待處理任務：80
+├─ 已研究紀錄：5
+├─ 已驗證任務：5
+├─ 查無官方證據：12
+├─ 權利阻擋：3
+└─ 待處理任務：60
 
-隔離示範資料：6
+Enrichment 台灣品牌已確認：3
+Enrichment 現售／供應通路已確認：2
+隔離 Demo：6
 正式發布：0
 Registry shards：3
 已過期 Registry：0
 ```
 
-## Enrichment 原則
+## 第一批 5 筆結果
 
-- `brand_identity`：只查品牌國籍／品牌歸屬，不因 MIT 製造證據自動判定為台灣品牌。
-- `current_sale`：只確認精確型號是否仍有可靠現售證據。
-- `official_product_page`：只保存品牌／公司官方產品頁；同系列頁不可冒充精確型號頁。
-- `image_rights`：官方圖片存在不等於有使用授權；權利狀態必須獨立記錄。
-- 任一 enrichment 任務變成 `verified` 都不會自動升級 `publication_status`。
+### SNUG `S9900000015(紫藕)`
+- 品牌身分：verified → 台灣品牌已確認。
+- 現售：not_found；MIT 有效不等於精確型號仍可下單。
+- 精確型號品牌官方頁：not_found。
+- 圖片權利：blocked；官方站保留一切權利，未取得重用授權。
 
-## V3.3 Scale 100 基線
+### MIFIYA `MIFIYA01(白)`
+- 品牌身分：not_found。
+- 現售：not_found。
+- 精確型號品牌官方頁：not_found。
+- 圖片權利：not_found；沒有找到可審核的精確型號官方素材頁。
+
+### JUMP `168(藍)`
+- 品牌身分：not_found。
+- 現售：not_found。
+- 精確型號品牌官方頁：not_found。
+- 圖片權利：not_found。
+
+### ADHOC `GENTLE 102(金)`
+- 品牌身分：verified → 台灣品牌已確認。
+- 現售：verified → MIT 精確型號頁列台北／台中／雲林自營銷售通路；不宣稱即時庫存。
+- 精確型號品牌官方頁：not_found。
+- 圖片權利：blocked；官方站 All Rights Reserved。
+
+### 格蕾絲 `1161-3(米)`
+- 品牌身分：verified → 台灣品牌已確認。
+- 現售：verified → MIT 精確型號頁列「客製化商品」供應通路；不是一般零售現貨聲明。
+- 精確型號品牌官方頁：not_found。
+- 圖片權利：blocked；未取得官方圖片重用授權。
+
+## Enrichment 治理
+
+- `brand_identity` 與 MIT 製造證據分離；製造商在台灣不等於品牌一定是台灣品牌。
+- `current_sale` 必須限定精確型號；有效 MIT 標章本身不等於現售。
+- `official_product_page` 只接受品牌／公司官方精確型號頁；同系列頁不能冒充。
+- `image_rights` 未有明確重用授權時只能 `blocked`／`not_found`，不能因圖片公開可見就存進 repo。
+- Enrichment results 可人工合併品牌身分／現售欄位到 public catalog，但不得自動修改製造證據等級或正式發布狀態。
+- Formal Publication Gate 維持不變，正式發布仍為 0。
+
+## V3.3 / V3.2 基線保留
 
 - Registry：100 筆／3 shards。
 - 真實研究候選：104。
-- 分類集中度 Gate：任一分類 <= 40%；家電 <= 40／100；至少 8 個分類。
-- Lifestyle shard：寢具 14、居家織品 12、袋包收納 12、居家用品 12。
-- public catalog 由 `scripts/build_public_catalog.py` 依 manifest deterministic 重建。
-
-## V3.2 Lifecycle 基線
-
-- 已過期／30／90／180／365 天到期 Dashboard。
-- `data/registry-expiry.json` 為 deploy-time artifact。
-- 過期 MIT Registry 阻擋驗證。
-- 到期狀態不影響品牌身分、現售、圖片權利或發布狀態。
-
-## Pages / CI
-
-- Pages recovery 已完成。
-- production report commit 已用 `paths-ignore` 阻止自我觸發循環。
-- V3.4 production 必須以 `docs/deployment/pages-production-result.json` 的 trigger SHA／build／deploy 結果驗收。
-- 搜尋引擎舊快照不得作為 deployment failure 判據。
+- 分類集中度 Gate：任一分類 <= 40%，家電 <= 40／100，至少 8 個分類。
+- Lifecycle Dashboard：已過期／30／90／180／365 天到期；過期 MIT Registry 阻擋驗證。
+- public catalog 為 deploy-time artifact，研究來源仍是 Registry shards＋受控 enrichment results。
 
 ## 核心檔案
 
 ```text
-index.html
-assets/catalog-v3.js
-assets/catalog-v3-1.js
-assets/catalog-v3.css
-assets/lifecycle-v3-2.js
-assets/lifecycle-v3-2.css
-assets/scale-v3-3.js
+data/enrichment.queue.json
+data/enrichment.results.v1.json
 assets/enrichment-v3-4.js
 assets/enrichment-v3-4.css
-assets/magazine.js
-assets/product-image-enhancements.js
-
-data/products.demo.json
-data/products.registry.json
-data/products.registry.appliances.json
-data/products.registry.lifestyle.json
-data/registry.manifest.json
-data/enrichment.queue.json
-data/product.media.overrides.json
-
-scripts/build_public_catalog.py
-scripts/report_registry_expiry.py
-scripts/validate_registry.py
-scripts/validate_registry_scale.py
-scripts/validate_v3_3_catalog.py
-scripts/validate_category_balance.py
-scripts/validate_lifecycle_v3_2.py
 scripts/validate_enrichment_v3_4.py
+scripts/build_public_catalog.py
 scripts/validate_site.py
-
-.github/workflows/validate.yml
-.github/workflows/pages.yml
 build-info.json
+PROJECT_STATUS.md
 ```
 
-## 證據治理 / 禁止事項
-
-- 台灣品牌 ≠ 台灣製造。
-- MIT 精確型號證據不得外推同品牌其他型號。
-- `evidence_level: A` 不等於正式發布。
-- Registry 與 Queue 均不得自動改成 `published`。
-- 搜尋、收藏、圖片、排序、Lifecycle、分類 Gate、Queue 任務與 metadata 都不得升級發布狀態。
-- MIT 標章圖樣不直接複製進網站。
-- 圖片來源與圖片使用權分開。
-- 未定位既有 SQLite schema 前，不猜測、不修改未知資料表。
+其餘 V3.3 Registry、V3.2 Lifecycle、V2.8 Media、V2.5 Recovery、V2.3 Formal Publication Gate 均保留，不得重做或降低標準。
 
 ## 尚未完成
 
-- V3.4 production build／deploy 最終驗收。
-- 開始處理 P1 Queue：逐筆補品牌身分、現售、官方產品頁、圖片權利。
-- 優先選 5–10 筆把四項 enrichment 做完整，再決定是否擴 Queue。
+- 驗收第一批 enrichment 更新後最新 production build／deploy。
+- 繼續 P1：三環牌 296、奇美 KD-884HP0、奇美 KD-853HM0、YYMe 1157508、YYMe 1147508、NINO1881 L2425 等。
+- 精確型號官方商品頁目前仍是第一批最大缺口。
+- 取得可合法使用的產品圖片／授權。
 - 補餐廚與清潔用品 Registry 類別。
-- 取得四個深度案例的圖片授權與實體標示證據。
-- 第一筆正式發布仍必須完整通過現有 Formal Publication Gate。
+- 第一筆正式發布仍必須完整通過 Formal Publication Gate。
 
 ## 下一步
 
-1. 驗收 V3.4 production deploy。
-2. 從 P1 Queue 開始逐筆做 enrichment，不再盲目增加 Registry 筆數。
-3. 第一批優先完成至少 5 筆的品牌身分＋現售＋官方頁查核。
-4. 圖片權利若無明確授權，一律維持 pending／blocked。
-5. Formal Publication Gate 維持不變，正式發布仍為 0。
+1. 驗收本輪 production build／deploy。
+2. 再處理下一批 5 筆 P1，優先奇美烘碗機、三環牌與 YYMe／NINO1881。
+3. 對已確認品牌身分的產品，繼續找精確型號官方商品頁與圖片授權。
+4. 不為了提高 verified 數量而把 MIT 有效、同系列頁或第三方零售頁誤當正式證據。
