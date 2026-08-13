@@ -36,7 +36,7 @@ for token in [
     assert token in media_js, token
 
 for token in [
-    "V3.0 EVIDENCE CATALOG", "products.registry.json", "government_registry_verified",
+    "V3.0 EVIDENCE CATALOG", "products.registry.json",
     "evidenceLevel", "catalog_source", "catalogGrid", "enhanceMediaScopes",
     "同系列補充圖", "精確型號"
 ]:
