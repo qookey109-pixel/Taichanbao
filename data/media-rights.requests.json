@@ -1,0 +1,49 @@
+{
+  "version": "V3.8 Media Rights Requests",
+  "updated_at": "2026-08-13",
+  "policy": "A public product image is not reusable unless the rights owner grants permission or another explicit reusable license applies. Request tracking never changes publication status automatically.",
+  "requests": [
+    {
+      "request_id": "chimei-kd884hp0-media-rights",
+      "record_id": "mit-appliance-0200003802030-kd-884hp0",
+      "brand": "CHIMEI 奇美",
+      "model": "KD-884HP0",
+      "rights_owner_or_contact": "新視代科技股份有限公司 / CHIMEI",
+      "contact_email": "lcd@mail.chimei.com.tw",
+      "contact_source": "https://www.chimei.com.tw/contact",
+      "terms_source": "https://www.chimei.com.tw/conditions",
+      "rights_status": "permission_required",
+      "request_status": "ready_to_contact",
+      "request_sent": false,
+      "requested_scope": [
+        "台產報網站產品介紹頁使用官方產品圖片",
+        "允許為響應式版面進行尺寸縮放與必要裁切",
+        "以來源標示方式註明 CHIMEI 奇美官方",
+        "非專屬、非轉授權、僅限台產報編輯用途"
+      ],
+      "publication_effect": "blocked_until_permission_or_licensed_alternative",
+      "checked_at": "2026-08-13"
+    },
+    {
+      "request_id": "chimei-kd703hp1-media-rights",
+      "record_id": "mit-appliance-0200003802031-kd-703hp1",
+      "brand": "CHIMEI 奇美",
+      "model": "KD-703HP1",
+      "rights_owner_or_contact": "新視代科技股份有限公司 / CHIMEI",
+      "contact_email": "lcd@mail.chimei.com.tw",
+      "contact_source": "https://www.chimei.com.tw/contact",
+      "terms_source": "https://www.chimei.com.tw/conditions",
+      "rights_status": "permission_required",
+      "request_status": "ready_to_contact",
+      "request_sent": false,
+      "requested_scope": [
+        "台產報網站產品介紹頁使用官方產品圖片",
+        "允許為響應式版面進行尺寸縮放與必要裁切",
+        "以來源標示方式註明 CHIMEI 奇美官方",
+        "非專屬、非轉授權、僅限台產報編輯用途"
+      ],
+      "publication_effect": "blocked_until_permission_or_licensed_alternative",
+      "checked_at": "2026-08-13"
+    }
+  ]
+}
