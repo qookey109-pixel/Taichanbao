@@ -2,7 +2,7 @@
   "use strict";
 
   const VERSION = "V3.2 REGISTRY LIFECYCLE";
-  const state = { report: null, rows: [], window: 365 };
+  const state = { report: null, rows: [], window: 90 };
   const DAY = 86400000;
 
   boot();
@@ -66,15 +66,23 @@
       };
     }).filter(row => Number.isInteger(row.days_remaining));
     const within = limit => rows.filter(row => row.days_remaining >= 0 && row.days_remaining <= limit).sort(byDays);
+    const expired = rows.filter(row => row.days_remaining < 0).sort(byDays);
     return {
       generated_at: localDate(),
       registry_records: registry.length,
-      expired: rows.filter(row => row.days_remaining < 0).length,
+      expired_count: expired.length,
+      expired,
       expiring_within_30_days: within(30),
       expiring_within_90_days: within(90),
       expiring_within_180_days: within(180),
       expiring_within_365_days: within(365)
     };
+  }
+
+  function expiredCount(report) {
+    if (Number.isInteger(report?.expired_count)) return report.expired_count;
+    if (Array.isArray(report?.expired)) return report.expired.length;
+    return Number(report?.expired || 0);
   }
 
   function normalizeRows(report) {
@@ -142,7 +150,8 @@
   }
 
   function render() {
-    setText("#lifeExpired", state.report.expired ?? 0);
+    const expired = expiredCount(state.report);
+    setText("#lifeExpired", expired);
     setText("#life30", state.report.expiring_within_30_days?.length ?? 0);
     setText("#life90", state.report.expiring_within_90_days?.length ?? 0);
     setText("#life180", state.report.expiring_within_180_days?.length ?? 0);
@@ -155,7 +164,7 @@
         : '<b>NEXT EXPIRY</b><strong>365 天內無到期項目</strong><span>目前無需處理</span>';
     }
     const source = document.querySelector("#lifecycleSource");
-    if (source) source.textContent = `Registry ${state.report.registry_records || 0} 筆 · 報表日期 ${state.report.generated_at || localDate()} · 已過期 ${state.report.expired || 0} 筆。`;
+    if (source) source.textContent = `Registry ${state.report.registry_records || 0} 筆 · 報表日期 ${state.report.generated_at || localDate()} · 已過期 ${expired} 筆。`;
     renderRows();
   }
 
