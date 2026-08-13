@@ -1,8 +1,8 @@
 {
   "workflow": "Deploy GitHub Pages",
-  "trigger_sha": "744f57f57cfbbb94a65451a938b3443f3fd374e8",
+  "trigger_sha": "99b91a3dd1ec412cbe0eccf8049ec7c3d040e969",
   "build_result": "success",
-  "deploy_result": "cancelled",
-  "page_url": "",
-  "recorded_at": "2026-08-13T09:31:17.707596+00:00"
+  "deploy_result": "success",
+  "page_url": "https://qookey109-pixel.github.io/Taichanbao/",
+  "recorded_at": "2026-08-13T09:32:25.072972+00:00"
 }
