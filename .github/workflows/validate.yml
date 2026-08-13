@@ -15,6 +15,7 @@ jobs:
           python-version: "3.12"
       - run: python scripts/validate_data.py
       - run: python scripts/validate_registry.py
+      - run: python scripts/validate_v3_catalog.py
       - run: python scripts/validate_media_rights.py
       - run: python scripts/validate_sampo_media.py
       - run: python scripts/validate_tatung_media.py
