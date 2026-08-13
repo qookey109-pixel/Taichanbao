@@ -49,8 +49,8 @@ for token in [".enrichment-section", ".enrichment-metrics", ".enrichment-row", "
     assert token in enrichment_css, token
 assert enrichment_queue["version"] == "V3.4 Enrichment Queue 20"
 assert len(enrichment_queue["items"]) == 20
-assert enrichment_results["version"] == "V3.4 Enrichment Results Batch 1"
-assert len(enrichment_results["records"]) == 5
+assert enrichment_results["version"] == "V3.4 Enrichment Results Batch 2"
+assert len(enrichment_results["records"]) == 10
 for token in [".lifecycle-section", ".lifecycle-metrics", ".lifecycle-row", ".lifecycle-pill", ".lifecycle-pill.soon", ".lifecycle-pill.urgent"]:
     assert token in lifecycle_css, token
 for token in ["data/catalog.public.json", "catalog_version", "manifest[\"version\"]", "registry.manifest.json", "data/enrichment.results.v1.json", "apply_enrichment", "enrichment_researched_records", "real_research_candidates", "every public record needs a primary source URL"]:
@@ -82,13 +82,14 @@ assert build_info["formal_published"] == 0
 assert build_info["registry_lifecycle_dashboard"] is True
 assert build_info["category_concentration_gate"] is True
 assert build_info["enrichment_queue"] == 20
-assert build_info["enrichment_researched_records"] == 5
-assert build_info["enrichment_verified_tasks"] == 5
-assert build_info["enrichment_not_found_tasks"] == 12
-assert build_info["enrichment_blocked_tasks"] == 3
-assert build_info["enrichment_pending_tasks"] == 60
-assert build_info["enrichment_taiwan_brand_confirmed"] == 3
-assert build_info["enrichment_current_sale_confirmed"] == 2
+assert build_info["enrichment_researched_records"] == 10
+assert build_info["enrichment_verified_tasks"] == 12
+assert build_info["enrichment_not_found_tasks"] == 23
+assert build_info["enrichment_blocked_tasks"] == 5
+assert build_info["enrichment_pending_tasks"] == 40
+assert build_info["enrichment_taiwan_brand_confirmed"] == 6
+assert build_info["enrichment_current_sale_confirmed"] == 5
+assert build_info["enrichment_exact_official_product_page_confirmed"] == 1
 assert build_info["formal_published"] == 0
 assert build_info["deployment_source"] == "GitHub Actions"
 for token in [".media-gallery", ".media-thumbnails", ".media-thumb", ".media-inventory", ".drawer-media-frame", ".media-rights"]:
@@ -99,4 +100,4 @@ for token in ["publicationGate", "localStorage", "favorites"]:
     assert token in preview_js, token
 assert ".ticker" in magazine_css and ".layout" in magazine_css and ".mobile-nav" in magazine_css
 assert ".ticker" in preview_css and ".layout" in preview_css and ".mobile-nav" in preview_css
-print("OK: V3.4 enrichment workbench enabled; Registry=100 queue=20 researched=5 verified=5 pending=60 published=0; V3.3 scale, lifecycle and V2.5 preview retained")
+print("OK: V3.4 enrichment workbench enabled; Registry=100 queue=20 researched=10 verified=12 pending=40 published=0; V3.3 scale, lifecycle and V2.5 preview retained")
