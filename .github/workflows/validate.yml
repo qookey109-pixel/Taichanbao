@@ -18,6 +18,8 @@ jobs:
       - run: python scripts/validate_registry_scale.py
       - run: python scripts/validate_v3_catalog.py
       - run: python scripts/validate_v3_1_catalog.py
+      - run: python scripts/validate_v3_3_catalog.py
+      - run: python scripts/validate_category_balance.py
       - run: python scripts/build_public_catalog.py --check-only
       - run: python scripts/report_registry_expiry.py --check-only
       - run: python scripts/validate_lifecycle_v3_2.py
@@ -31,4 +33,5 @@ jobs:
       - run: node --check assets/catalog-v3.js
       - run: node --check assets/catalog-v3-1.js
       - run: node --check assets/lifecycle-v3-2.js
+      - run: node --check assets/scale-v3-3.js
       - run: node --check assets/app.js
