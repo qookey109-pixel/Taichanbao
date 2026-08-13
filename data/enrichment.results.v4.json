@@ -1,0 +1,166 @@
+{
+  "version": "V3.7 Enrichment Results Final P2 Batch",
+  "updated_at": "2026-08-13",
+  "scope": "Final five P2 records. Completing the queue does not imply successful verification for every task and never changes publication state automatically.",
+  "records": [
+    {
+      "record_id": "mit-0150003904088",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "not_found",
+          "result": "brand_origin_unverified",
+          "summary": "MIT 官方資料確認元維棉織廠以 YYMe 品牌申請彩緞毛巾 1157508(黃)，但仍沒有找到 YYMe 品牌官方起源頁；不得由台灣申請廠商或 MIT 製造證據反推品牌國籍。",
+          "sources": [{"name":"MIT 微笑標章－毛巾產品查詢","url":"https://keid.nat.gov.tw/mittw/products/?classid=5&p=9","type":"government_registry"}]
+        },
+        "current_sale": {
+          "status": "not_found",
+          "result": "exact_model_sale_not_confirmed",
+          "summary": "1157508(黃) MIT 紀錄有效至 2029-07-02，但本次未取得品牌官方現售頁、即時庫存或政府登錄的精確型號銷售通路。",
+          "sources": [{"name":"MIT 微笑標章－1157508 系列","url":"https://keid.nat.gov.tw/mittw/products/?classid=5&p=9","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次未找到 YYMe 1157508(黃) 的品牌／公司官方 exact-model 商品頁。",
+          "sources": []
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "official_image_candidate_not_found",
+          "summary": "未找到 exact-model 品牌官方商品頁或媒體素材頁，因此沒有可審核重用權利的官方圖片候選。",
+          "sources": []
+        }
+      }
+    },
+    {
+      "record_id": "mit-0150050700579",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "not_found",
+          "result": "brand_origin_unverified",
+          "summary": "MIT 官方資料確認寶佳貿易有限公司以 NINO1881 品牌申請石墨烯毛巾 L2425(藍色)，但沒有足以確認此毛巾品牌國籍的品牌官方來源；同名其他產品網站不混用。",
+          "sources": [{"name":"MIT 微笑標章－毛巾產品查詢","url":"https://keid.nat.gov.tw/mittw/products/?classid=5&p=5","type":"government_registry"}]
+        },
+        "current_sale": {
+          "status": "not_found",
+          "result": "exact_model_sale_not_confirmed",
+          "summary": "L2425(藍色) MIT 紀錄有效至 2029-07-21，但本次未取得 exact-model 官方銷售通路、品牌現售頁或即時庫存證據。",
+          "sources": [{"name":"MIT 微笑標章－L2425 系列","url":"https://keid.nat.gov.tw/mittw/products/?classid=5&p=5","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次未找到 NINO1881 L2425(藍色) 的品牌／公司官方 exact-model 商品頁。",
+          "sources": []
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "official_image_candidate_not_found",
+          "summary": "未找到 exact-model 品牌官方素材頁，因此沒有可審核的官方圖片候選。",
+          "sources": []
+        }
+      }
+    },
+    {
+      "record_id": "mit-0150003904087",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "not_found",
+          "result": "brand_origin_unverified",
+          "summary": "MIT 官方資料確認 YYMe 1157508(粉) 為有效精確型號，但與同系列其他色款一致，本次仍沒有品牌官方起源證據，不從元維棉織廠的台灣身分推定品牌國籍。",
+          "sources": [{"name":"MIT 微笑標章－毛巾產品查詢","url":"https://keid.nat.gov.tw/mittw/products/?classid=5&p=9","type":"government_registry"}]
+        },
+        "current_sale": {
+          "status": "not_found",
+          "result": "exact_model_sale_not_confirmed",
+          "summary": "1157508(粉) MIT 紀錄有效至 2029-07-02，但沒有找到 exact-model 官方現售或官方銷售通路證據。",
+          "sources": [{"name":"MIT 微笑標章－1157508 系列","url":"https://keid.nat.gov.tw/mittw/products/?classid=5&p=9","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次未找到 YYMe 1157508(粉) 的品牌／公司官方 exact-model 商品頁。",
+          "sources": []
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "official_image_candidate_not_found",
+          "summary": "沒有 exact-model 品牌官方頁或素材頁，因此不建立官方圖片候選。",
+          "sources": []
+        }
+      }
+    },
+    {
+      "record_id": "mit-antiarctic-r9k",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "verified",
+          "result": "taiwan_brand_confirmed",
+          "summary": "上比實業官方 Shine Beam 網站由上比實業有限公司營運、頁尾列公司統編與台灣聯絡資訊，並將 Anti-Arctic 明列於『品牌』分類；MIT 成衣資料亦以同一上比實業申請 Anti Arctic 品牌產品，可確認品牌與台灣公司直接關係。",
+          "sources": [
+            {"name":"Shine Beam 上比官方網站","url":"https://www.shine-beam.com/","type":"brand_official"},
+            {"name":"MIT 微笑標章－成衣產品查詢","url":"https://keid.nat.gov.tw/mittw/products/?classid=1","type":"government_registry"}
+          ]
+        },
+        "current_sale": {
+          "status": "not_found",
+          "result": "exact_model_sale_not_confirmed",
+          "summary": "Anti-Arctic 官方商城目前仍有同品牌商品與夏日衣著分類，但本次未找到 R-9-K(紅) exact-model 商品頁或可確認此型號仍可下單的官方證據；同品牌其他商品現售不能外推。",
+          "sources": [
+            {"name":"Anti-Arctic 官方分類","url":"https://www.shine-beam.com/categories/anti-arctic-1","type":"brand_official"},
+            {"name":"MIT 微笑標章－R-9-K(紅)","url":"https://keid.nat.gov.tw/mittw/products/?classid=1","type":"government_registry"}
+          ]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次未在 Shine Beam 官方網域找到 R-9-K(紅) 的 exact-model 商品頁；其他 Anti-Arctic T 恤頁不冒充此型號。",
+          "sources": [{"name":"Anti-Arctic 官方分類","url":"https://www.shine-beam.com/categories/anti-arctic-1","type":"brand_official"}]
+        },
+        "image_rights": {
+          "status": "blocked",
+          "result": "permission_required",
+          "summary": "Shine Beam 官方頁有 Anti-Arctic 圖片，但網站頁尾為上比實業有限公司版權資訊，未提供第三方重用授權；未取得同意前不下載／重製至本站。",
+          "sources": [{"name":"Shine Beam 上比官方網站","url":"https://www.shine-beam.com/","type":"brand_official"}]
+        }
+      }
+    },
+    {
+      "record_id": "mit-berno-lt9cmw8879",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "not_found",
+          "result": "brand_origin_unverified",
+          "summary": "MIT 官方資料確認富立金實業股份有限公司以伯諾品牌申請 LT9CMW8879(白底白字)，並列台北公司地址與公司網站；但本次未在品牌／公司官方網站找到足以確認伯諾品牌國籍的官方品牌起源內容。",
+          "sources": [
+            {"name":"MIT 微笑標章－富立金實業股份有限公司","url":"https://keid.nat.gov.tw/mittw/products/manu_more?id=91&p=4","type":"government_registry"},
+            {"name":"MIT 微笑標章產品查詢","url":"https://keid.nat.gov.tw/mittw/products/","type":"government_registry"}
+          ]
+        },
+        "current_sale": {
+          "status": "not_found",
+          "result": "exact_model_sale_not_confirmed",
+          "summary": "LT9CMW8879(白底白字) MIT 紀錄有效至 2029-07-27，但本次未取得精確型號的官方現售頁、即時庫存或官方銷售通路證據。",
+          "sources": [{"name":"MIT 微笑標章－TOP8 專業機能運動襪","url":"https://keid.nat.gov.tw/mittw/products/","type":"government_registry"}]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "富立金官方網站可開啟，但本次未找到伯諾 LT9CMW8879 的 exact-model 官方商品頁。",
+          "sources": [{"name":"富立金實業官方網站","url":"https://www.ifreeking.com.tw/?lang=zh-TW","type":"company_official"}]
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "exact_model_official_image_not_found",
+          "summary": "因未找到 exact-model 官方商品頁，沒有建立可審核的官方圖片候選；不使用第三方通路圖片替代。",
+          "sources": []
+        }
+      }
+    }
+  ]
+}
