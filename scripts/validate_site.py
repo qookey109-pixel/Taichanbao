@@ -16,6 +16,7 @@ scale_js = (ROOT / "assets/scale-v3-3.js").read_text(encoding="utf-8")
 enrichment_js = (ROOT / "assets/enrichment-v3-4.js").read_text(encoding="utf-8")
 enrichment_css = (ROOT / "assets/enrichment-v3-4.css").read_text(encoding="utf-8")
 enrichment_queue = json.loads((ROOT / "data/enrichment.queue.json").read_text(encoding="utf-8"))
+enrichment_results = json.loads((ROOT / "data/enrichment.results.v1.json").read_text(encoding="utf-8"))
 public_builder = (ROOT / "scripts/build_public_catalog.py").read_text(encoding="utf-8")
 expiry_builder = (ROOT / "scripts/report_registry_expiry.py").read_text(encoding="utf-8")
 registry_seed = (ROOT / "data/products.registry.json").read_text(encoding="utf-8")
@@ -42,15 +43,17 @@ for token in ["registry-expiry.json", "catalog.public.json", "lifecycle-section"
     assert token in lifecycle_js, token
 for token in ["V3.3 REGISTRY SCALE 100", "v33BalanceNote", "最大分類", "上限 40%", "registry.manifest.json"]:
     assert token in scale_js, token
-for token in ["enrichment.queue.json", "V3.4 · ENRICHMENT QUEUE 20", "brand_identity", "current_sale", "official_product_page", "image_rights", "data-catalog-id"]:
+for token in ["enrichment.queue.json", "enrichment.results.v1.json", "V3.4 · ENRICHMENT QUEUE 20", "brand_identity", "current_sale", "official_product_page", "image_rights", "已研究紀錄", "state-not_found", "state-blocked", "data-catalog-id"]:
     assert token in enrichment_js, token
-for token in [".enrichment-section", ".enrichment-metrics", ".enrichment-row", ".enrichment-task"]:
+for token in [".enrichment-section", ".enrichment-metrics", ".enrichment-row", ".enrichment-task", ".enrichment-row.researched", ".state-not_found", ".state-blocked"]:
     assert token in enrichment_css, token
 assert enrichment_queue["version"] == "V3.4 Enrichment Queue 20"
 assert len(enrichment_queue["items"]) == 20
+assert enrichment_results["version"] == "V3.4 Enrichment Results Batch 1"
+assert len(enrichment_results["records"]) == 5
 for token in [".lifecycle-section", ".lifecycle-metrics", ".lifecycle-row", ".lifecycle-pill", ".lifecycle-pill.soon", ".lifecycle-pill.urgent"]:
     assert token in lifecycle_css, token
-for token in ["data/catalog.public.json", "catalog_version", "manifest[\"version\"]", "registry.manifest.json", "real_research_candidates", "every public record needs a primary source URL"]:
+for token in ["data/catalog.public.json", "catalog_version", "manifest[\"version\"]", "registry.manifest.json", "data/enrichment.results.v1.json", "apply_enrichment", "enrichment_researched_records", "real_research_candidates", "every public record needs a primary source URL"]:
     assert token in public_builder, token
 for token in ["expiring_within_30_days", "expiring_within_90_days", "expiring_within_180_days", "expiring_within_365_days", "expired_count", "--output", "manifest[\"total_records\"]"]:
     assert token in expiry_builder, token
@@ -79,7 +82,14 @@ assert build_info["formal_published"] == 0
 assert build_info["registry_lifecycle_dashboard"] is True
 assert build_info["category_concentration_gate"] is True
 assert build_info["enrichment_queue"] == 20
-assert build_info["enrichment_verified_tasks"] == 0
+assert build_info["enrichment_researched_records"] == 5
+assert build_info["enrichment_verified_tasks"] == 5
+assert build_info["enrichment_not_found_tasks"] == 12
+assert build_info["enrichment_blocked_tasks"] == 3
+assert build_info["enrichment_pending_tasks"] == 60
+assert build_info["enrichment_taiwan_brand_confirmed"] == 3
+assert build_info["enrichment_current_sale_confirmed"] == 2
+assert build_info["formal_published"] == 0
 assert build_info["deployment_source"] == "GitHub Actions"
 for token in [".media-gallery", ".media-thumbnails", ".media-thumb", ".media-inventory", ".drawer-media-frame", ".media-rights"]:
     assert token in media_css, token
@@ -89,4 +99,4 @@ for token in ["publicationGate", "localStorage", "favorites"]:
     assert token in preview_js, token
 assert ".ticker" in magazine_css and ".layout" in magazine_css and ".mobile-nav" in magazine_css
 assert ".ticker" in preview_css and ".layout" in preview_css and ".mobile-nav" in preview_css
-print("OK: V3.4 enrichment workbench enabled; Registry=100 queue=20 verified_tasks=0 published=0; V3.3 scale, lifecycle and V2.5 preview retained")
+print("OK: V3.4 enrichment workbench enabled; Registry=100 queue=20 researched=5 verified=5 pending=60 published=0; V3.3 scale, lifecycle and V2.5 preview retained")
