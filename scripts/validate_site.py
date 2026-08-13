@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 ROOT = Path(__file__).resolve().parents[1]
 index = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -10,6 +11,7 @@ catalog_js = (ROOT / "assets/catalog-v3.js").read_text(encoding="utf-8")
 catalog_css = (ROOT / "assets/catalog-v3.css").read_text(encoding="utf-8")
 registry = (ROOT / "data/products.registry.json").read_text(encoding="utf-8")
 overrides = (ROOT / "data/product.media.overrides.json").read_text(encoding="utf-8")
+build_info = json.loads((ROOT / "build-info.json").read_text(encoding="utf-8"))
 preview = (ROOT / "versions_review/v2.5/index.html").read_text(encoding="utf-8")
 preview_js = (ROOT / "assets/app.js").read_text(encoding="utf-8")
 preview_css = (ROOT / "assets/styles.css").read_text(encoding="utf-8")
@@ -60,6 +62,15 @@ for token in [
 ]:
     assert token in overrides, token
 
+assert build_info["version"] == "V3.0 Evidence Catalog"
+assert build_info["data_snapshot"] == "2026-08-13"
+assert build_info["real_research_candidates"] == 19
+assert build_info["deep_editorial_cases"] == 4
+assert build_info["mit_active_exact_models"] == 15
+assert build_info["isolated_demo_records"] == 6
+assert build_info["formal_published"] == 0
+assert build_info["deployment_source"] == "GitHub Actions"
+
 for token in [
     ".media-gallery", ".media-thumbnails", ".media-thumb",
     ".media-inventory", ".drawer-media-frame", ".media-rights"
@@ -82,4 +93,4 @@ assert ".ticker" in preview_css
 assert ".layout" in preview_css
 assert ".mobile-nav" in preview_css
 
-print("OK: V3.0 evidence catalog enabled; legacy editorial media cases and V2.5 preview retained")
+print("OK: V3.0 evidence catalog and deployment fingerprint enabled; legacy editorial media cases and V2.5 preview retained")
