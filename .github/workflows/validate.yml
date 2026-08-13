@@ -21,6 +21,8 @@ jobs:
       - run: python scripts/validate_v3_3_catalog.py
       - run: python scripts/validate_category_balance.py
       - run: python scripts/build_public_catalog.py --check-only
+      - run: python scripts/build_promotion_audit.py --check-only
+      - run: python scripts/validate_promotion_audit_v3_7.py
       - run: python scripts/report_registry_expiry.py --check-only
       - run: python scripts/validate_lifecycle_v3_2.py
       - run: python scripts/validate_enrichment_v3_4.py
@@ -39,4 +41,5 @@ jobs:
       - run: node --check assets/enrichment-v3-4.js
       - run: node --check assets/deep-candidates-v3-5.js
       - run: node --check assets/brand-origin-v3-6.js
+      - run: node --check assets/promotion-audit-v3-7.js
       - run: node --check assets/app.js
