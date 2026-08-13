@@ -77,11 +77,12 @@ def build():
     for shard in manifest["shards"]:
         registry.extend(normalize_registry(row) for row in load(shard["path"]))
 
+    expected_registry = int(manifest["total_records"])
     records = deep + registry
     ids = [row["id"] for row in records]
     assert len(deep) == 4
-    assert len(registry) == 50
-    assert len(records) == 54
+    assert len(registry) == expected_registry, f"registry count mismatch {len(registry)}/{expected_registry}"
+    assert len(records) == len(deep) + expected_registry
     assert len(set(ids)) == len(ids)
     assert all(row.get("publication_status") == "unpublished" for row in records)
     assert all(row.get("source_url") for row in records), "every public record needs a primary source URL"
@@ -89,7 +90,7 @@ def build():
 
     return {
         "schema_version": 1,
-        "catalog_version": "V3.1 Registry Scale 50",
+        "catalog_version": manifest["version"],
         "generated_at": date.today().isoformat(),
         "counts": {
             "real_research_candidates": len(records),
