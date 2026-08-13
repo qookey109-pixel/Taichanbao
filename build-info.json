@@ -1,12 +1,13 @@
 {
   "project": "Taichanbao",
-  "version": "V3.0 Evidence Catalog",
+  "version": "V3.1 Registry Scale 50",
   "data_snapshot": "2026-08-13",
-  "real_research_candidates": 19,
+  "real_research_candidates": 54,
   "deep_editorial_cases": 4,
-  "mit_active_exact_models": 15,
+  "mit_active_exact_models": 50,
+  "registry_shards": 2,
   "isolated_demo_records": 6,
   "formal_published": 0,
   "deployment_source": "GitHub Actions",
-  "note": "Use this file to verify the version actually served by GitHub Pages."
+  "note": "V3.1 uses a sharded MIT registry manifest. Use this file to verify the version actually served by GitHub Pages."
 }
