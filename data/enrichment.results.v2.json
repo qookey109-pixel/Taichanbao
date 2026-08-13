@@ -1,0 +1,41 @@
+{
+  "version": "V3.5 Enrichment Results Batch 3",
+  "updated_at": "2026-08-13",
+  "scope": "Remaining P1 record. Findings are evidence notes only and never change publication state automatically.",
+  "records": [
+    {
+      "record_id": "mit-0150003904085",
+      "checked_at": "2026-08-13",
+      "findings": {
+        "brand_identity": {
+          "status": "not_found",
+          "result": "brand_origin_unverified",
+          "summary": "MIT 官方資料確認元維棉織廠以 YYMe 品牌申請超質感緞檔毛巾 1147508(紫)，但本次仍未找到能確認 YYMe 品牌國籍的品牌官方起源頁；不得由台灣申請廠商或 MIT 製造證據反推品牌國籍。",
+          "sources": [
+            {"name":"MIT 微笑標章－毛巾產品查詢","url":"https://keid.nat.gov.tw/mittw/products/?classid=5&p=9","type":"government_registry"}
+          ]
+        },
+        "current_sale": {
+          "status": "not_found",
+          "result": "exact_model_sale_not_confirmed",
+          "summary": "1147508(紫) MIT 紀錄有效至 2029-07-02，但本次未取得此精確型號的品牌官方現售頁、官方庫存或政府登錄銷售通路證據；有效 MIT 標章不等於現售。",
+          "sources": [
+            {"name":"MIT 微笑標章－毛巾產品查詢","url":"https://keid.nat.gov.tw/mittw/products/?classid=5&p=9","type":"government_registry"}
+          ]
+        },
+        "official_product_page": {
+          "status": "not_found",
+          "result": "exact_model_page_not_found",
+          "summary": "本次未找到 YYMe 1147508(紫) 的品牌／公司官方精確型號商品頁。",
+          "sources": []
+        },
+        "image_rights": {
+          "status": "not_found",
+          "result": "official_image_candidate_not_found",
+          "summary": "因未找到精確型號品牌官方商品頁或官方媒體素材頁，本次沒有可進一步審核重用權利的官方圖片候選。",
+          "sources": []
+        }
+      }
+    }
+  ]
+}
