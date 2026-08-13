@@ -1,6 +1,6 @@
-# 台產報（Taichanbao）V3.2 Registry Lifecycle
+# 台產報（Taichanbao）V3.3 Registry Scale 100
 
-台產報是一個以「雜誌選品＋精確型號證據資料庫」呈現台灣品牌與台灣製產品研究的網站。V3.2 在 V3.1 的 50 筆 MIT 精確型號 Registry 上加入證據生命週期管理：標章有效期限會被持續追蹤，到期前顯示提醒，過期後阻擋驗證。
+台產報是一個以「雜誌選品＋精確型號證據資料庫」呈現台灣品牌與台灣製產品研究的網站。V3.3 將 MIT 精確型號 Registry 從 50 筆擴充至 **100 筆**，同時保留 V3.2 證據生命週期管理，並新增分類集中度 Gate，避免資料庫被單一產品類別灌滿。
 
 ## 線上位置
 
@@ -9,99 +9,86 @@
 - V2.5 Recovery 預覽：`https://qookey109-pixel.github.io/Taichanbao/versions_review/v2.5/`
 - Default branch：`main`
 
-## V3.2 資料快照
+## V3.3 資料快照
 
 ```text
-真實研究候選：54
+真實研究候選：104
 ├─ 深度多圖案例：4
 │  ├─ TENDAYS
 │  ├─ SAMPO
 │  ├─ 大同
 │  └─ O'right
-└─ MIT 有效精確型號：50
+└─ MIT 有效精確型號：100
    ├─ Seed shard：15
-   └─ Appliance shard：35
+   ├─ Appliance shard：35
+   └─ Lifestyle shard：50
 
 隔離介面示範資料：6
 正式發布：0
-Registry shards：2
-已過期 Registry：0
-90 天內到期：1
+Registry shards：3
 ```
 
-## V3.2 Registry Lifecycle Dashboard
+## V3.3 Lifestyle Expansion
 
-正式前台新增「到期管理」：
-
-- 已過期 Registry 數量。
-- 30／90／180／365 天內到期數量。
-- 最近一筆到期的品牌、型號、日期與剩餘天數。
-- 30／90／180／365 天到期清單切換。
-- 到期項目可直接打開原 Catalog 證據履歷。
-- Catalog 卡片會對 365 天內到期的 MIT 紀錄標示剩餘天數；90 天內與 30 天內提高提醒強度。
-
-到期資訊只影響「政府標章證據是否仍有效」，不會自動改變品牌身分、現售狀態、圖片權利或正式發布狀態。
-
-## 部署資料來源
-
-正式 Pages build 會生成兩個公開產物：
+新增 `data/products.registry.lifestyle.json`，共 50 筆官方 MIT 有效精確型號：
 
 ```text
-scripts/build_public_catalog.py
-        → data/catalog.public.json
-
-scripts/report_registry_expiry.py
-        → data/registry-expiry.json
+寢具        14
+居家織品    12
+袋包收納    12
+居家用品    12
 ```
 
-前台資料優先順序：
-
-```text
-Catalog:
-catalog.public.json
-    ↓ unavailable / invalid
-registry.manifest.json + shards
-
-Lifecycle:
-registry-expiry.json
-    ↓ unavailable / invalid
-catalog.public.json
-    ↓ unavailable
-registry.manifest.json + shards
-```
-
-因此正式站可使用 deploy-time 建置產物，本機／研究環境仍保留 fallback。
+這批主要涵蓋毛巾、床包／被單／枕套、收納包／背包／旅行袋、布窗簾等消費生活用品。每一筆仍保留精確型號、申請公司、標章編號、通過日期、有效期限、官方來源與最後查閱日期。
 
 ## Sharded Registry
 
 ```text
 data/registry.manifest.json
-├─ data/products.registry.json              # 15 筆 seed
-└─ data/products.registry.appliances.json   # 35 筆家電擴充
+├─ data/products.registry.json              # 15 seed
+├─ data/products.registry.appliances.json   # 35 appliances
+└─ data/products.registry.lifestyle.json    # 50 lifestyle
 ```
 
-目前 50 筆中家電比重偏高；下一批 50→100 優先補餐廚、居家用品、清潔、日用品與其他非家電類。
+`registry.manifest.json` 是 Registry 規模與 shard 的 source of truth。Public catalog builder、expiry report 與前端 fallback 都會跟 manifest 自動擴充。
 
-## 證據資料庫功能
+## 分類集中度 Gate
 
-- A–D 證據分級。
-- 來源、證據等級、分類、品牌身分與排序篩選。
-- 搜尋品牌、公司、產品、型號、標章編號與標籤。
-- Registry 卡片顯示標章編號與有效期限。
-- 點擊後查看精確型號、申請公司、品牌身分、來源、證據範圍與最後查閱日期。
-- O'right 圖片明確區分「精確型號」與「同系列補充」。
-- MIT 標章只保存文字型證據，不直接複製標章圖樣。
+V3.3 新增 `scripts/validate_category_balance.py`：
 
-## 證據分級
+- 任一分類不得超過 Registry 的 40%。
+- 家電不得超過 40 筆／100 筆。
+- Registry 至少維持 8 個分類。
+- 新增的生活類資料必須實質降低原本家電集中度。
+
+這個 Gate 是資料品質／多樣性限制，不代表分類之間有品質高低。
+
+## Registry Lifecycle
+
+V3.2 的到期管理完整保留：
+
+- 已過期數量。
+- 30／90／180／365 天內到期數量。
+- 下一筆到期產品與剩餘天數。
+- Catalog 卡片到期提醒。
+- deploy-time `data/registry-expiry.json`。
+- 過期 MIT 紀錄阻擋驗證。
+
+Lifecycle 只管理政府標章證據有效期，不自動改品牌身分、現售狀態、圖片權利或正式發布狀態。
+
+## 公開資料 Pipeline
 
 ```text
-A  政府有效標章／可發布級證據來源
-B  精確型號官方來源一致
-C  精確型號部分官方證據
-D  官方宣稱、資料不足或仍待交叉查證
+Deep cases + Registry manifest/shards
+             │
+             ├─ scripts/build_public_catalog.py
+             │        → data/catalog.public.json
+             │
+             └─ scripts/report_registry_expiry.py
+                      → data/registry-expiry.json
 ```
 
-等級描述證據強度，不是產品品質排名，也不代表已正式發布。
+前台優先讀 deploy-time public catalog；若不存在或不符合完整性條件，才回退 manifest＋shards。
 
 ## 核心前端
 
@@ -112,11 +99,14 @@ assets/magazine.js
 assets/product-images.css
 assets/product-image-enhancements.js
 assets/catalog-v3.css
-assets/catalog-v3.js        # stable loader
-assets/catalog-v3-1.js      # V3.1 sharded catalog
+assets/catalog-v3.js
+assets/catalog-v3-1.js
 assets/lifecycle-v3-2.css
-assets/lifecycle-v3-2.js    # V3.2 expiry dashboard
+assets/lifecycle-v3-2.js
+assets/scale-v3-3.js
 ```
+
+`assets/scale-v3-3.js` 負責 Scale 100 版本標示與前台分類平衡摘要；既有 Lifecycle 元件不被重做。
 
 ## 驗證與維護
 
@@ -126,6 +116,8 @@ python scripts/validate_registry.py
 python scripts/validate_registry_scale.py
 python scripts/validate_v3_catalog.py
 python scripts/validate_v3_1_catalog.py
+python scripts/validate_v3_3_catalog.py
+python scripts/validate_category_balance.py
 python scripts/build_public_catalog.py --check-only
 python scripts/report_registry_expiry.py --check-only
 python scripts/validate_lifecycle_v3_2.py
@@ -135,33 +127,25 @@ python scripts/validate_tatung_media.py
 python scripts/validate_oright_media.py
 python scripts/validate_site.py
 
-node --check assets/magazine.js
-node --check assets/product-image-enhancements.js
 node --check assets/catalog-v3.js
 node --check assets/catalog-v3-1.js
 node --check assets/lifecycle-v3-2.js
-node --check assets/app.js
+node --check assets/scale-v3-3.js
 ```
 
-## Pages workflow
-
-V3.2 同時修正 production Pages 自我觸發循環。`pages.yml` 的 production result commit 已加入 `paths-ignore`，因此寫回 `docs/deployment/pages-production-result.json` 後不會再觸發下一輪 Pages build。
-
-GitHub Actions 已提供正式 production `build_result: success`／`deploy_result: success` 的部署證據。
+V3.1 的 50 筆 catalog validator 仍保留為 regression baseline；V3.3 validator 驗證完整 100 筆 Registry／104 筆真實研究候選。
 
 ## 資料治理
 
 - 台灣品牌 ≠ 台灣製造。
-- 有臺灣製造證據 ≠ 自動證明品牌是台灣品牌。
-- 以單一產品與精確型號為查證單位。
-- MIT 標章只套用到 Registry 實際列出的型號，不能外推同品牌其他商品。
-- `brand_origin_status: unverified` 必須保留，不能因 MIT 標章存在就自動改成台灣品牌。
-- 標章到期只能改變該證據的有效性，不能自動改其他欄位。
-- 圖片來源與圖片使用權是兩件事；`permission_pending` 不代表已授權。
-- `demo_only`、`official_source_found`、`government_registry_verified` 都不會自動變成 `published`。
-- 搜尋、排序、收藏、圖片、metadata、到期 Dashboard 都只能改變前台呈現或維護優先級，不能升級查證／發布狀態。
+- MIT 證據只套用 Registry 實際列出的精確型號。
+- MIT 製造證據不得自動升級 `brand_origin_status`。
+- 品牌熟悉度、申請公司名稱或產品名稱都不能替代品牌國籍證據。
+- 政府 Registry A 級證據不等於正式發布。
+- 圖片來源與圖片使用權分開；`permission_pending` 不代表已授權。
+- 搜尋、排序、收藏、圖片、metadata、Lifecycle 與分類 Gate 都不能升級正式發布狀態。
 - 未知維持待確認，衝突不得隱藏。
 
 ## Formal Publication Gate
 
-V3.2 正式發布仍為 0。第一筆正式發布仍必須完成：精確型號識別、現售狀態、可公開產地／製造證據、重大衝突審核、圖片使用權處理與編輯審核。
+V3.3 正式發布仍為 **0**。第一筆正式發布仍必須另外完成精確型號識別、現售狀態、產地／製造證據、重大衝突審核、圖片使用權與編輯審核。
